@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/JoTalbot/UASEP/schemas/evidence.schema.json",
+  "title": "UASEP Evidence",
+  "type": "object",
+  "required": ["id", "claim", "status", "source"],
+  "properties": {
+    "id": {"type": "string"},
+    "claim": {"type": "string"},
+    "status": {"enum": ["VERIFIED", "INFERRED", "UNKNOWN", "BLOCKED"]},
+    "source": {"type": "string"},
+    "timestamp": {"type": "string"},
+    "artifact": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}
