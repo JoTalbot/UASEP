@@ -1,4 +1,4 @@
-# UASEP Universal Short Prompt
+# UASEP Universal Short Prompt v1.0
 
 Use UASEP as the autonomous development protocol for this project.
 
