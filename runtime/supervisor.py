@@ -59,7 +59,14 @@ class Supervisor:
         state.iteration += 1
         task = self.planner.next_task(tasks, state.completed_tasks)
         if task is None:
-            state.phase = "maintenance" if not state.blockers else "blocked"
+            all_task_ids = {item.id for item in tasks}
+            if all_task_ids.issubset(state.completed_tasks):
+                state.phase = "maintenance" if not state.blockers else "blocked"
+            else:
+                state.phase = "blocked"
+                missing = sorted(all_task_ids - state.completed_tasks)
+                if missing:
+                    state.blockers.append("no runnable task: " + ", ".join(missing))
             self.state_store.save(state)
             self._checkpoint(None, state.phase)
             return state
@@ -109,6 +116,4 @@ class Supervisor:
             state = self.run_once(project_id, tasks)
             if state.phase in {"blocked", "maintenance"}:
                 return state
-        # Preserve the last meaningful phase. A cycle budget is a scheduling limit,
-        # not a maintenance state and must not erase a successful checkpoint.
         return state
