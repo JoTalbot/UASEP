@@ -19,6 +19,9 @@ class Capability:
     name: str
     available: bool
     notes: str = ""
+    discovered: bool = True
+    approval_required: bool = False
+    source: str = "host"
 
 
 @dataclass
