@@ -14,21 +14,25 @@ class SupervisorResult:
     completed: list[str]
     blocked: list[str]
     iterations: int
+    stopped_for_stagnation: bool = False
 
 
 class Supervisor:
     """Bounded reference supervisor; execution is supplied by the host adapter."""
 
-    def __init__(self, root: Path, graph: TaskGraph) -> None:
+    def __init__(self, root: Path, graph: TaskGraph, stagnation_window: int = 3) -> None:
         self.root = root
         self.graph = graph
         self.evidence = EvidenceStore(root / ".uasep" / "evidence" / "runtime.json")
-        self.stagnation = StagnationDetector()
+        self.stagnation = StagnationDetector(window=stagnation_window)
 
     def run(self, executor: Callable[[TaskNode], bool], max_iterations: int = 100) -> SupervisorResult:
+        if max_iterations < 1:
+            raise ValueError("max_iterations must be >= 1")
         completed: list[str] = []
         blocked: list[str] = []
         iterations = 0
+        stopped_for_stagnation = False
         while iterations < max_iterations:
             ready = self.graph.ready()
             if not ready:
@@ -40,10 +44,12 @@ class Supervisor:
                 self.graph.mark_done(task.id)
                 completed.append(task.id)
                 self.evidence.record(Evidence("task", task.id, "VERIFIED", "executor returned success"))
-                self.stagnation.observe(task.id, True)
+                self.stagnation.reset()
             else:
                 blocked.append(task.id)
                 self.evidence.record(Evidence("task", task.id, "FAILED", "executor returned failure"))
-                if self.stagnation.observe(task.id, False):
+                self.stagnation.record(task.id)
+                if self.stagnation.stagnant:
+                    stopped_for_stagnation = True
                     break
-        return SupervisorResult(completed, blocked, iterations)
+        return SupervisorResult(completed, blocked, iterations, stopped_for_stagnation)
