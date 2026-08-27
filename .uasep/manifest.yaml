@@ -1,0 +1,7 @@
+protocol: UASEP
+protocol_version: 3.1.0
+project_instance: protocol-reference
+project_state: initializing
+autonomy_level: L4
+source_of_truth: protocol/
+local_state: .uasep/
