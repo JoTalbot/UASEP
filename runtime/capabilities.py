@@ -31,6 +31,9 @@ class CapabilityRegistry:
     def has(self, name: str) -> bool:
         return self.capabilities.get(name, Capability(name, False)).available
 
+    def available(self) -> list[str]:
+        return sorted(name for name, capability in self.capabilities.items() if capability.available)
+
     def snapshot(self) -> dict[str, dict[str, str | bool]]:
         return {
             name: {"available": cap.available, "notes": cap.notes}
