@@ -9,14 +9,18 @@ from .project_bootstrap import bootstrap_project
 
 @dataclass(slots=True)
 class AIOS2Adapter:
-    """Thin integration boundary for embedding UASEP into AIOS2.
-
-    It deliberately does not assume that AIOS2 exposes shell, network, or GitHub
-    access. The host registers only capabilities it can actually provide.
-    """
+    """Thin host-neutral integration boundary for embedding UASEP into AIOS2."""
 
     root: Path
     capabilities: CapabilityRegistry
+
+    def discover(self) -> dict[str, object]:
+        return {
+            "root": str(self.root.resolve()),
+            "project_id": self.root.name,
+            "exists": self.root.exists(),
+            "capabilities": self.capability_names(),
+        }
 
     def bootstrap(self) -> list[Path]:
         return bootstrap_project(self.root, self.root.name)
