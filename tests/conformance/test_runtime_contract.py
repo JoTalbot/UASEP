@@ -1,8 +1,9 @@
 from pathlib import Path
 
-from runtime.aios2_adapter import ProjectAdapter
+from runtime.aios2_adapter import AIOS2Adapter
 from runtime.approval_gate import ApprovalGate, ApprovalRequest
 from runtime.autonomous_loop import AutonomousLoop
+from runtime.capabilities import CapabilityRegistry
 from runtime.checkpoint_store import CheckpointStore
 from runtime.retry_policy import RetryPolicy
 from runtime.task_graph import TaskGraph, TaskNode
@@ -10,9 +11,9 @@ from runtime.verification import VerificationEngine
 
 
 def test_conformance_project_adapter_bootstraps(tmp_path: Path):
-    adapter = ProjectAdapter(tmp_path, "demo")
-    assert adapter.discover()["project_id"] == "demo"
-    assert adapter.bootstrap().is_dir()
+    adapter = AIOS2Adapter(tmp_path, CapabilityRegistry.empty())
+    assert adapter.discover()["project_id"] == tmp_path.name
+    assert adapter.bootstrap()
 
 
 def test_conformance_verification_is_explicit():
