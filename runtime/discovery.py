@@ -8,25 +8,57 @@ from pathlib import Path
 from .models import Capability
 
 
-DEFAULT_CAPABILITIES = (
-    "read_files",
-    "write_files",
-    "shell",
-    "git",
-    "network",
-)
+def discover_project_root(root: str | Path = ".") -> Path:
+    """Resolve and validate the host-provided project root."""
+    path = Path(root).expanduser().resolve()
+    if not path.exists() or not path.is_dir():
+        raise ValueError(f"project root is not a directory: {path}")
+    return path
+
+
+def discover_uasep(root: str | Path = ".") -> dict[str, object]:
+    """Discover local UASEP state without inventing remote availability."""
+    project_root = discover_project_root(root)
+    state_dir = project_root / ".uasep"
+    manifest = state_dir / "manifest.yaml"
+    return {
+        "project_root": str(project_root),
+        "installed": state_dir.is_dir(),
+        "state_exists": manifest.exists(),
+        "manifest": str(manifest),
+    }
 
 
 def discover_capabilities(root: str | Path = ".") -> list[Capability]:
-    """Discover conservative local capabilities without claiming remote/tool access."""
-    root = Path(root)
-    result: list[Capability] = []
-    result.append(Capability("read_files", root.exists(), "project root exists"))
-    result.append(Capability("write_files", os.access(root, os.W_OK), "project root writable"))
-    result.append(Capability("shell", True, "local Python process is executable"))
-    result.append(Capability("git", shutil.which("git") is not None, "git executable discovered"))
-    result.append(Capability("network", False, "not inferred; configure explicitly"))
-    return result
+    """Discover conservative local capabilities and record their provenance."""
+    project_root = discover_project_root(root)
+    return [
+        Capability("read_files", True, "project root is readable", source="filesystem"),
+        Capability(
+            "write_files",
+            os.access(project_root, os.W_OK),
+            "project root writable",
+            source="filesystem",
+        ),
+        Capability(
+            "shell",
+            shutil.which("python") is not None,
+            "local Python executable discovered",
+            source="local-process",
+        ),
+        Capability(
+            "git",
+            shutil.which("git") is not None,
+            "git executable discovered",
+            source="local-process",
+        ),
+        Capability(
+            "network",
+            False,
+            "not inferred; host must explicitly expose it",
+            source="host-policy",
+        ),
+    ]
 
 
 def capabilities_dict(root: str | Path = ".") -> dict[str, dict]:
