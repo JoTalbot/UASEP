@@ -103,13 +103,12 @@ class Supervisor:
         return state
 
     def run_until_blocked(self, project_id: str, tasks: list[Task], max_cycles: int = 100) -> ProjectState:
-        """Continue from persisted state until no work remains, a blocker occurs, or budget is exhausted."""
+        """Continue from persisted state until blocked, maintenance, or the cycle budget is exhausted."""
         state = self.state_store.load(project_id)
         for _ in range(max_cycles):
             state = self.run_once(project_id, tasks)
             if state.phase in {"blocked", "maintenance"}:
                 return state
-        state.phase = "maintenance"
-        self.state_store.save(state)
-        self._checkpoint(state.current_task, "maintenance")
+        # Preserve the last meaningful phase. A cycle budget is a scheduling limit,
+        # not a maintenance state and must not erase a successful checkpoint.
         return state
