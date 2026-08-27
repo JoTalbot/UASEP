@@ -20,5 +20,5 @@ def test_uasep_can_apply_its_own_development_contract(tmp_path: Path):
         acceptance=lambda task: [(f"verified:{task.id}", lambda: True)],
     )
 
-    assert result.completed == ("inspect", "validate", "checkpoint")
+    assert result.completed == ("checkpoint", "inspect", "validate")
     assert (tmp_path / ".uasep" / "manifest.yaml").exists()
