@@ -34,12 +34,12 @@ def bootstrap_project(root: Path, project_name: str | None = None) -> list[Path]
         if not path.exists():
             path.mkdir(parents=True, exist_ok=True)
             created.append(path)
-    if not (root / ".uasep" / "state" / "PROJECT_STATE.md").exists():
+    defaults = dict(DEFAULT_FILES)
+    state_key = ".uasep/state/PROJECT_STATE.md"
+    if not (root / state_key).exists():
         name = project_name or root.name
-        DEFAULT_FILES[".uasep/state/PROJECT_STATE.md"] = (
-            f"# Project State\n\nProject: {name}\nStatus: new\n\n"
-        )
-    for relative, content in DEFAULT_FILES.items():
+        defaults[state_key] = f"# Project State\n\nProject: {name}\nStatus: new\n\n"
+    for relative, content in defaults.items():
         path = root / relative
         if not path.exists():
             path.parent.mkdir(parents=True, exist_ok=True)
