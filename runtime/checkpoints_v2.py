@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -24,7 +24,7 @@ class CheckpointStore:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         entries = self.all()
         checkpoint = Checkpoint(len(entries) + 1, task_id, phase, datetime.now(timezone.utc).isoformat())
-        entries.append(checkpoint.__dict__)
+        entries.append(asdict(checkpoint))
         self.path.write_text(json.dumps(entries, indent=2), encoding="utf-8")
         return checkpoint
 
