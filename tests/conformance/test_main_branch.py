@@ -7,7 +7,7 @@ def test_repository_instructions_require_explicit_branch_discipline():
     agents = (ROOT / "AGENTS.md").read_text()
     assert "branch" in agents.lower()
     assert "ownership" in agents.lower()
-    assert "write_set" in agents
+    assert "write set" in agents.lower()
 
 
 def test_conformance_does_not_depend_on_hidden_chat_state():
