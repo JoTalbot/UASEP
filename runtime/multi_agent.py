@@ -18,11 +18,7 @@ class AgentSlot:
 
 @dataclass
 class MultiAgentCoordinator:
-    """Minimal parallel allocation: assign ready tasks to free agent slots.
-
-    Write-set conflicts are the caller's responsibility; this only tracks
-    occupancy and returns assignment decisions.
-    """
+    """Parallel allocation with optional write-set conflict filtering."""
 
     agents: list[AgentSlot] = field(default_factory=list)
 
@@ -34,10 +30,27 @@ class MultiAgentCoordinator:
     def free_agents(self) -> list[AgentSlot]:
         return [a for a in self.agents if not a.busy]
 
-    def assign(self, ready: list[Task]) -> list[tuple[AgentSlot, Task]]:
+    @staticmethod
+    def conflicts(a: Task, b: Task) -> bool:
+        """True when write sets overlap (empty sets never conflict)."""
+        if not a.write_set or not b.write_set:
+            return False
+        return bool(set(a.write_set) & set(b.write_set))
+
+    def filter_compatible(self, ready: list[Task]) -> list[Task]:
+        """Greedy select tasks with pairwise non-overlapping write sets."""
+        selected: list[Task] = []
+        for task in ready:
+            if any(self.conflicts(task, s) for s in selected):
+                continue
+            selected.append(task)
+        return selected
+
+    def assign(self, ready: list[Task], *, respect_write_sets: bool = True) -> list[tuple[AgentSlot, Task]]:
+        pool = self.filter_compatible(ready) if respect_write_sets else list(ready)
         assignments: list[tuple[AgentSlot, Task]] = []
         free = self.free_agents()
-        for task, agent in zip(ready, free):
+        for task, agent in zip(pool, free):
             agent.busy = True
             agent.current_task = task.id
             task.status = TaskStatus.IN_PROGRESS
@@ -55,10 +68,11 @@ class MultiAgentCoordinator:
         self,
         ready: list[Task],
         execute: Callable[[Task], bool],
+        *,
+        respect_write_sets: bool = True,
     ) -> list[tuple[str, str, bool]]:
-        """Assign and execute; returns (agent, task_id, success)."""
         results: list[tuple[str, str, bool]] = []
-        for agent, task in self.assign(ready):
+        for agent, task in self.assign(ready, respect_write_sets=respect_write_sets):
             ok = bool(execute(task))
             results.append((agent.name, task.id, ok))
             self.release(agent.name)

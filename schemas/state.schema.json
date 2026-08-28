@@ -12,7 +12,12 @@
     "objective": {"type": "string"},
     "active_task": {"type": ["string", "null"]},
     "last_verified": {"type": "string"},
-    "next_best_actions": {"type": "array", "items": {"type": "string"}}
+    "next_best_actions": {"type": "array", "items": {"type": "string"}},
+    "task_failures": {
+      "type": "object",
+      "additionalProperties": {"type": "integer", "minimum": 0},
+      "description": "Per-task failure counts for cold resume (RUNTIME-005)"
+    }
   },
   "additionalProperties": true
 }

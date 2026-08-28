@@ -33,6 +33,7 @@ class Task:
     dependencies: list[str] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
     failure_count: int = 0
+    write_set: list[str] = field(default_factory=list)
 
     def is_ready(self, completed: set[str], max_failures: int = 3) -> bool:
         pending = self.status in {TaskStatus.BACKLOG, TaskStatus.READY}
