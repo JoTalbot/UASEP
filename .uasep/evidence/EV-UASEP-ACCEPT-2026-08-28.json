@@ -1,0 +1,19 @@
+{
+  "evidence_id": "EV-UASEP-ACCEPT-2026-08-28",
+  "task_id": "UASEP-ACCEPT-2026-08-28",
+  "timestamp": "2026-08-28 UTC",
+  "agent": "fresh-agent-session-2026-08-28",
+  "operation": "Fresh-agent acceptance assessment",
+  "scope": "Repository bootstrap and acceptance criteria at main HEAD 7794dcc5eda08eddf1c9578bed5710f4cc651e86",
+  "result": "VERIFIED",
+  "source": "Repository files and GitHub read operations",
+  "observed": "From repository state alone, the agent identified JoTalbot/UASEP on main; read AGENTS.md and SESSION_BOOTSTRAP.md; restored STATUS.md, PROJECT_STATE.md, HANDOFF.md and state.json; identified UASEP protocol version 3.4.0, ADOPTED phase, runtime NONE, no active tasks, no known blockers, and the documented next action; inspected the acceptance runbook, manifest, conformance workflow, conformance tests, and recent commit history. Historical runtime/AIOS2 references were treated as provenance only. The fresh-agent acceptance criteria are satisfied by this independent repository-native bootstrap assessment.",
+  "commit": "7794dcc5eda08eddf1c9578bed5710f4cc651e86",
+  "changed_files": [],
+  "verification": "Manual acceptance checklist from examples/FRESH_AGENT_ACCEPTANCE.md cross-checked against repository state and recent history.",
+  "limitations": [
+    "This evidence verifies the fresh-agent repository bootstrap/assessment only; it does not establish a GitHub Actions execution result.",
+    "The current commit status was observed as pending with zero reported statuses; canonical workflow execution remains UNKNOWN."
+  ],
+  "related": ["UASEP-HARDEN-2026-08-28", "UASEP-ACCEPT-2026-08-28"]
+}
