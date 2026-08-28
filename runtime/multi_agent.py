@@ -18,11 +18,15 @@ class AgentSlot:
 
 @dataclass
 class MultiAgentCoordinator:
-    """Parallel allocation with optional write-set conflict filtering."""
+    """Deterministic parallel allocation with write-set conflict filtering."""
 
     agents: list[AgentSlot] = field(default_factory=list)
 
     def register(self, name: str, role: str = "developer") -> AgentSlot:
+        if not name:
+            raise ValueError("agent name must not be empty")
+        if any(agent.name == name for agent in self.agents):
+            raise ValueError(f"agent already registered: {name}")
         slot = AgentSlot(name=name, role=role)
         self.agents.append(slot)
         return slot
@@ -38,7 +42,7 @@ class MultiAgentCoordinator:
         return bool(set(a.write_set) & set(b.write_set))
 
     def filter_compatible(self, ready: list[Task]) -> list[Task]:
-        """Greedy select tasks with pairwise non-overlapping write sets."""
+        """Greedy deterministic selection of pairwise compatible tasks."""
         selected: list[Task] = []
         for task in ready:
             if any(self.conflicts(task, s) for s in selected):
@@ -63,6 +67,7 @@ class MultiAgentCoordinator:
                 agent.busy = False
                 agent.current_task = None
                 return
+        raise ValueError(f"unknown agent: {agent_name}")
 
     def run_parallel(
         self,
@@ -73,7 +78,11 @@ class MultiAgentCoordinator:
     ) -> list[tuple[str, str, bool]]:
         results: list[tuple[str, str, bool]] = []
         for agent, task in self.assign(ready, respect_write_sets=respect_write_sets):
-            ok = bool(execute(task))
+            try:
+                ok = bool(execute(task))
+            except Exception:
+                ok = False
+            finally:
+                self.release(agent.name)
             results.append((agent.name, task.id, ok))
-            self.release(agent.name)
         return results
