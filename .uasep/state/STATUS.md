@@ -2,11 +2,11 @@
 
 ## Objective
 
-Make UASEP a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.
+Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.
 
 ## Phase
 
-- Phase: ADOPT
+- Phase: ADOPTED
 
 ## Current task
 
@@ -16,31 +16,27 @@ Make UASEP a complete runtime-free operating protocol for AI agents working thro
 
 ## Progress
 
-- Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.2; mandatory agent contract and workflow skills established; canonical task lifecycle added; session bootstrap skill added; practical conformance scenarios added.
-- In progress: final documentation consistency and adoption audit.
-- Unverified: exhaustive historical wording scan; manual execution of all conformance scenarios by a fresh independent agent.
-- Blocked: NONE
-
-## Recent changes
-
-- Commits: `0de41cf`, `5d4397b`, `608a9a0`
-- Files: `protocol/TASK_LIFECYCLE.md`, `skills/SESSION_BOOTSTRAP.md`, `examples/CONFORMANCE_SCENARIOS.md`
+- Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.3; mandatory agent contract and workflow skills established; canonical task lifecycle and ownership/lease protocol added; session bootstrap and practical conformance scenarios added; multi-machine, conflict/recovery, new-project, existing-project adoption, parallel-batch, and drift-detection guidance added.
+- Remaining implementation work: NONE in the current documentation-first scope.
+- Unverified: fresh independent-agent execution of every manual conformance scenario; historical search indexes may retain provenance from retired architecture.
+- Blocked: NONE known.
 
 ## Evidence
 
-- Tests/CI: UNKNOWN — no canonical automated CI result is established for the documentation-first protocol.
-- Review: protocol, skills, state, and practical scenarios inspected.
-- External effects: GitHub commits to `main` succeeded for the recorded changes.
+- Repository changes: confirmed through successful GitHub content operations.
+- Automated CI: UNKNOWN — no canonical automated CI result is established for the documentation-first protocol.
+- Manual conformance execution: NOT_RUN as a complete independent-agent pass.
 
 ## Decisions
 
 - UASEP remains runtime-free. Do not add executable infrastructure unless a concrete connector/chat limitation requires it.
 - `.uasep/state/` is the canonical durable operational state.
-- Practical conformance is validated through repository-backed scenarios and evidence, not through a UASEP executable.
+- `protocol/` is normative; `AGENTS.md` is the mandatory project contract; `skills/` are reusable procedures; examples illustrate compliant behavior.
+- Historical references to retired runtime/AIOS2 architecture are provenance and are not treated as active-tree requirements.
 
 ## Next action
 
-Complete the final documentation consistency/adoption audit and reconcile any remaining stale references or state inconsistencies.
+No required implementation action remains. On the next session, perform a fresh bootstrap from repository state, run the manual conformance scenarios relevant to the requested work, and create a new task if project direction changes.
 
 ## Updated
 
