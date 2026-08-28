@@ -7,10 +7,11 @@ from pathlib import Path
 from .bootstrap import bootstrap_project
 from .conformance import check_project
 from .discovery import capabilities_dict
+from .migration import migrate_runtime_state, needs_migration
 from .models import Task
 from .planner import Planner
 from .runner import run_project
-from .state import StateStore
+from .state import RUNTIME_VERSION, StateStore
 
 
 def main() -> int:
@@ -21,6 +22,7 @@ def main() -> int:
     sub.add_parser("check", help="check project conformance")
     state = sub.add_parser("state", help="show persisted project state")
     state.add_argument("--project", default=Path.cwd().name)
+    state.add_argument("--per-project", action="store_true")
     sub.add_parser("status", help="compact phase/blockers summary")
     plan = sub.add_parser("plan", help="show ready tasks for a demo graph")
     plan.add_argument("--json", action="store_true")
@@ -28,6 +30,11 @@ def main() -> int:
     run_p.add_argument("--task-id", default="demo")
     run_p.add_argument("--title", default="Demo task")
     run_p.add_argument("--cycles", type=int, default=10)
+    resume = sub.add_parser("resume", help="continue from persisted state with a demo task if needed")
+    resume.add_argument("--cycles", type=int, default=10)
+    mig = sub.add_parser("migrate", help="migrate .uasep runtime state to current version")
+    mig.add_argument("--project", default=Path.cwd().name)
+    mig.add_argument("--per-project", action="store_true")
     args = parser.parse_args()
 
     if args.command == "bootstrap":
@@ -44,7 +51,8 @@ def main() -> int:
             print(f"{'PASS' if result.passed else 'FAIL'} {result.name}")
         return 0 if all(result.passed for result in results) else 1
     if args.command == "state":
-        print(json.dumps(StateStore(".").load(args.project).to_dict(), indent=2, sort_keys=True))
+        store = StateStore(".", per_project=getattr(args, "per_project", False))
+        print(json.dumps(store.load(args.project).to_dict(), indent=2, sort_keys=True))
         return 0
     if args.command == "status":
         st = StateStore(".").load(Path.cwd().name)
@@ -63,9 +71,7 @@ def main() -> int:
             Task("B", "implement", priority=20, dependencies=["A"]),
             Task("C", "verify", priority=30, dependencies=["B"]),
         ]
-        ready = Planner().ready_tasks(demo, set()) if hasattr(Planner(), "ready_tasks") else [
-            t for t in demo if t.is_ready(set())
-        ]
+        ready = Planner().ready_tasks(demo, set())
         if getattr(args, "json", False):
             print(json.dumps([{"id": t.id, "title": t.title, "priority": t.priority} for t in ready], indent=2))
         else:
@@ -87,6 +93,45 @@ def main() -> int:
             "blockers": list(result.blockers),
         }, indent=2, sort_keys=True))
         return 0 if result.status in {"verified", "maintenance"} else 1
+    if args.command == "resume":
+        project = Path.cwd().name
+        store = StateStore(".")
+        st = store.load(project)
+        if not st.completed_tasks:
+            remaining = [Task(id="resume-demo", title="Resume demo")]
+        else:
+            remaining = [Task(id="noop", title="noop")]
+        result = run_project(
+            Path.cwd(),
+            project,
+            remaining,
+            max_cycles=args.cycles,
+            executor=lambda _t: True,
+        )
+        print(json.dumps({
+            "resumed_phase": st.phase,
+            "status": result.status,
+            "completed": list(result.completed),
+            "blockers": list(result.blockers),
+        }, indent=2, sort_keys=True))
+        return 0
+    if args.command == "migrate":
+        store = StateStore(".", per_project=args.per_project)
+        path = store._path_for(args.project)
+        if not path.exists() and store.path.exists():
+            path = store.path
+        if not path.exists():
+            print(json.dumps({"migrated": False, "reason": "no state file"}))
+            return 1
+        data = json.loads(path.read_text(encoding="utf-8"))
+        if not needs_migration(data, RUNTIME_VERSION):
+            print(json.dumps({"migrated": False, "version": RUNTIME_VERSION}))
+            return 0
+        new_data = migrate_runtime_state(data, RUNTIME_VERSION)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(new_data, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        print(json.dumps({"migrated": True, "version": RUNTIME_VERSION, "path": str(path)}))
+        return 0
     return 2
 
 
