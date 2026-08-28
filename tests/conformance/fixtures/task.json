@@ -1,0 +1,15 @@
+{
+  "id": "UASEP-HARDEN-FIXTURE",
+  "objective": "Validate task contract shape.",
+  "owner": "conformance",
+  "branch": "main",
+  "write_set": ["tests/conformance/fixtures/task.json"],
+  "dependencies": [],
+  "conflicts": [],
+  "acceptance": ["Fixture validates against task schema"],
+  "risk": "LOW",
+  "verification": ["JSON Schema validation"],
+  "status": "VERIFIED",
+  "evidence": ["fixture"],
+  "next_action": "none"
+}
