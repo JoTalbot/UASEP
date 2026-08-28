@@ -1,0 +1,19 @@
+{
+  "evidence_id": "EV-UASEP-CI-2026-08-28",
+  "task_id": "UASEP-CI-2026-08-28",
+  "timestamp": "2026-08-28 UTC",
+  "agent": "fresh-agent-session-2026-08-28",
+  "operation": "Canonical CI repair and verification",
+  "scope": "main workflow at commit cc0ee91b901f33da869b195e3b0636f132025db8",
+  "result": "PARTIALLY_VERIFIED",
+  "source": "GitHub Actions workflow and job result",
+  "observed": "The prior canonical run failed in actions/setup-python because cache: pip required requirements.txt or pyproject.toml, neither of which exists. The workflow was minimally changed to remove cache: pip while preserving Python 3.12, explicit validation dependency installation, and the conformance pytest command. A new canonical run 37 for cc0ee91b901f33da869b195e3b0636f132025db8 is in progress; its job has successfully completed checkout and Python setup and is currently installing validation dependencies.",
+  "commit": "cc0ee91b901f33da869b195e3b0636f132025db8",
+  "changed_files": [".github/workflows/conformance.yml", ".uasep/state/TASK_UASEP-CI-2026-08-28.json", ".uasep/state/OWNERSHIP_UASEP-CI-2026-08-28.json", ".uasep/evidence/EV-UASEP-CI-2026-08-28.json"],
+  "verification": "Inspected the failing run 34 job log and observed run 37 job progress; repository workflow content confirms cache: pip was removed.",
+  "limitations": [
+    "Run 37 has not completed; conformance test success is not yet established.",
+    "Repository write success is separate from CI/test success."
+  ],
+  "related": ["UASEP-CI-2026-08-28"]
+}
