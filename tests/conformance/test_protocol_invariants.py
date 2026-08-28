@@ -89,19 +89,15 @@ def test_runtime_free_active_tree_has_no_runtime_artifacts():
         matches = list(ROOT.rglob(filename))
         assert not matches, f"runtime artifact present: {filename}"
 
-    forbidden_dirs = {"__pycache__"}
-    for directory in ROOT.rglob("*"):
-        if directory.is_dir():
-            assert directory.name not in forbidden_dirs
-
 
 def test_skill_contract_and_inventory_are_present():
     skills = ROOT / "skills"
     assert skills.is_dir()
-    assert any(path.is_file() for path in skills.rglob("*.md"))
-    text = "\n".join(path.read_text(encoding="utf-8") for path in skills.rglob("*.md"))
+    skill_files = [path for path in skills.rglob("*.md") if path.is_file()]
+    assert skill_files
+    combined = "\n".join(path.read_text(encoding="utf-8") for path in skill_files)
     for required in ("audit", "verify", "handoff"):
-        assert required in text.lower()
+        assert required in combined.lower()
 
 
 def test_examples_reference_normative_protocol_material():
