@@ -1,7 +1,10 @@
 protocol: UASEP
-protocol_version: 3.1.0
+protocol_version: 3.2.0
 project_instance: protocol-reference
-project_state: initializing
-autonomy_level: L4
+project_state: active
+operating_model: chat-github-connector
+runtime: none
 source_of_truth: protocol/
+agent_contract: AGENTS.md
+skills: skills/
 local_state: .uasep/
