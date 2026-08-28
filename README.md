@@ -2,57 +2,83 @@
 
 **Universal Autonomous Engineering & Self-Maintenance Protocol**
 
-UASEP is a portable protocol for autonomous software engineering across ChatGPT, GitHub-connected agents, local CLIs, sandboxes, IDE agents, and future agent runtimes.
+UASEP is a repository-native operating protocol for AI agents working on software projects through chat and GitHub-connected tools.
 
-## Goals
+UASEP is intentionally **runtime-free**. The agent, chat interface, and GitHub connector provide execution. UASEP provides the rules, durable project memory, planning system, coordination protocol, evidence model, and handoff format.
 
-- Start new projects from zero.
-- Resume existing projects from repository state.
-- Discover real capabilities instead of assuming tools exist.
-- Plan work as a dependency-aware task graph.
-- Implement, test, review, verify, integrate, and document continuously.
-- Preserve state so another agent can resume without chat history.
-- Recover from failures and avoid repeated dead ends.
-- Maintain evidence for important completion claims.
-- Continuously maintain and improve both the project and its engineering process.
+## What UASEP provides
 
-## Protocol layers
+- **Bootstrap** — start or resume work from a short instruction.
+- **Agent instructions** — mandatory behavior for every participating agent.
+- **Skills** — reusable workflows for audit, planning, implementation, review, verification, handoff, and recovery.
+- **Planning** — backlog, priorities, dependencies, parallelizable work, and acceptance criteria.
+- **State** — durable current status independent of chat history.
+- **Knowledge** — architectural decisions, discoveries, failures, and lessons learned.
+- **Evidence** — explicit records for tests, reviews, CI, and other completion claims.
+- **Parallel coordination** — compatible write sets, ownership, conflict avoidance, and integration rules.
+- **Self-maintenance** — agents continuously improve the protocol and project documentation when useful.
 
-1. **Bootstrap**: a short prompt starts the protocol.
-2. **Core**: normative rules shared by all environments.
-3. **Adapter**: maps abstract capabilities to the current environment.
-4. **Project state**: persistent memory, plans, tasks, decisions, failures, and evidence.
-5. **Runtime**: optional executable implementation such as an AIOS2 supervisor.
+## Runtime-free architecture
+
+```text
+┌──────────────────────────────┐
+│ Chat + AI agent              │
+│ reasoning / planning / work  │
+└──────────────┬───────────────┘
+               │ GitHub Connector
+               ▼
+┌──────────────────────────────┐
+│ Git repository               │
+│ source + UASEP protocol      │
+│ state + plans + knowledge    │
+│ evidence + handoffs          │
+└──────────────────────────────┘
+```
+
+There is no UASEP daemon, CLI, Python runtime, scheduler, database, or agent supervisor to install.
 
 ## Repository layout
 
 ```text
+AGENTS.md                  # entry instructions for every agent
+skills/                    # reusable agent workflows
+docs/                      # protocol guides and operational reference
+protocol/                  # normative rules
 .uasep/
-├── manifest.yaml
-├── state.json
-├── capabilities.json
-├── CORE.md
-├── CAPABILITIES.md
-├── EXECUTION.md
-├── SAFETY.md
-├── QUALITY.md
-├── MEMORY.md
-├── AGENTS.md
-├── SELF_MAINTENANCE.md
-├── state/
-├── planning/
-├── knowledge/
-└── evidence/
+├── manifest.yaml          # protocol/project declaration
+├── planning/              # backlog and master plan
+├── state/                 # current state and handoff
+├── knowledge/             # decisions, failures, discoveries
+└── evidence/              # verification records
+bootstrap/                 # minimal bootstrap prompts
+examples/                  # usage examples
+adapters/                  # environment-specific guidance
 ```
 
-The `.uasep/` directory is the project-local instance. This repository is the protocol source of truth and reference specification.
+## Standard agent cycle
 
-## Bootstrap
+**Discover → Restore → Audit → Plan → Execute → Verify → Integrate → Persist → Handoff → Continue**
 
-Use the short universal bootstrap from `bootstrap/UASEP_BOOTSTRAP.md`. It is intentionally small. The full protocol is loaded from the project or this repository when available.
+Agents must inspect the repository before acting, use durable state instead of relying on chat history, make reversible changes where practical, and never claim work that has not been verified.
 
-## Design principle
+## Parallel work
 
-**Discover → Restore → Plan → Execute → Verify → Persist → Replan → Continue.**
+Independent tasks may be analyzed and executed in batches when their dependencies and write sets do not conflict. Every batch must record ownership, acceptance criteria, verification status, and any remaining blockers.
 
-Lack of a specific tool is a constraint to adapt around, not a reason to fabricate results or stop prematurely.
+## Truth model
+
+- `VERIFIED` — directly supported by evidence.
+- `INFERRED` — reasonable conclusion not directly verified.
+- `UNKNOWN` — insufficient evidence.
+- `BLOCKED` — cannot proceed safely or completely.
+
+Unknown is never silently promoted to verified.
+
+## Start here
+
+1. Read `AGENTS.md`.
+2. Read the applicable files in `skills/`.
+3. Read `.uasep/state/HANDOFF.md` and `.uasep/state/PROJECT_STATE.md`.
+4. Read `.uasep/planning/MASTER_PLAN.md` and `.uasep/planning/BACKLOG.md`.
+5. Inspect the actual repository and current Git history.
+6. Continue from the recorded state rather than restarting from chat memory.
