@@ -4,6 +4,7 @@ from collections.abc import Callable, Iterable
 from pathlib import Path
 
 from .graph import TaskGraph
+from .lock import project_lock
 from .models import CycleResult, ProjectState, Task, TaskStatus
 from .retry_policy import RetryPolicy
 from .safety import ApprovalGate, ApprovalRequest
@@ -15,11 +16,12 @@ ChecksFn = Callable[[Task], Iterable[tuple[str, Callable[[], bool]]]]
 
 
 class Supervisor:
-    """Canonical orchestration boundary: one cycle implementation."""
+    """Canonical orchestration boundary: one serialized cycle implementation."""
 
     def __init__(self, root: str | Path, *, execute: ExecuteFn | None = None,
                  checks: ChecksFn | None = None, approval: ApprovalGate | None = None,
                  max_failures: int = 3) -> None:
+        self.root = Path(root)
         self.store = Store(root)
         self.verifier = VerificationEngine()
         self.approval = approval or ApprovalGate()
@@ -31,6 +33,10 @@ class Supervisor:
         )
 
     def run_once(self, project_id: str) -> CycleResult:
+        with project_lock(self.root):
+            return self._run_once(project_id)
+
+    def _run_once(self, project_id: str) -> CycleResult:
         state, graph = self.store.load_bundle(project_id)
         state.project_id = project_id or state.project_id
         try:
@@ -104,15 +110,12 @@ class Supervisor:
                 evidence_id: str | None = None) -> CycleResult:
         eid = evidence_id or self.store.record_evidence(task.id, "execution", "FAILED", detail)
         graph.apply(task.id, TaskStatus.FAILED, eid)
-        decision = self.retry_policy.decide(
-            task.id,
-            task.failure_count,
-            f"{task.retry_strategy}:attempt-{task.failure_count}",
-            task.retry_strategy,
-        )
+        previous = task.retry_strategy
+        next_strategy = f"retry-{task.failure_count + 1}"
+        decision = self.retry_policy.decide(task.id, task.failure_count, next_strategy, previous)
         state.last_error = detail
         if decision.retry:
-            task.retry_strategy = f"retry-{decision.attempt}"
+            task.retry_strategy = next_strategy
             task.status = TaskStatus.RETRYABLE
             state.phase = "active"
             reason = f"retry scheduled: {task.retry_strategy}"
