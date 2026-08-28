@@ -8,6 +8,8 @@
 - Regression coverage expanded for state integrity and execution safety.
 - Added checkpoint recovery regression tests for invalid data and restored state.
 
+- CI validation trigger completed after hardening audit.
+
 ## 3.1.2 — Persist per-task retry state for cold resume
 
 - ProjectState and StateStore now persist `task_failures` so failure counts survive process restart (UASEP-RUNTIME-005).
