@@ -25,6 +25,7 @@
     "Re-read the created evidence and durable-state files after writing them.",
     "Observe GitHub commit result; do not equate repository-write success with test or CI success."
   ],
-  "status": "IN_PROGRESS",
-  "next_action": "Execute and record the acceptance assessment, then release ownership."
+  "status": "DONE",
+  "evidence": ["EV-UASEP-ACCEPT-2026-08-28"],
+  "next_action": "Observe canonical GitHub Actions CI when available."
 }
