@@ -5,12 +5,12 @@
   "autonomy_level": "L4",
   "environment": "Python >=3.10",
   "objective": "Maintain a portable, verifiable autonomous engineering protocol",
-  "active_task": "Persist per-task retry state (done); observe CI for 3.1.2",
-  "last_verified": "Local pytest 104 passed; task_failures cold-resume contract implemented",
+  "active_task": "CI evidence recorded; next FORMAL-003 versioning",
+  "last_verified": "Local 104 + CI 3.10/3.11/3.12 green; PR #1 merged",
   "next_best_actions": [
-    "Observe GitHub Actions on the 3.1.2 commit",
     "Add formal versioning and migration specification",
     "Keep host/AIOS2 adapter coverage current",
-    "Do not claim CI-verified until the workflow run is green"
+    "Document ChatGPT + GitHub workflow",
+    "Agent orchestration (RUNTIME-006)"
   ]
 }

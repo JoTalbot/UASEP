@@ -1,5 +1,6 @@
 # Build Evidence
 
-No executable build exists in the protocol repository yet.
-
-Record reproducible build commands, environment, result, artifact identifier, and commit/ref for future runtime implementations.
+## 3.1.2
+- CI matrix Python 3.10 / 3.11 / 3.12 — all green
+- Workflow: .github/workflows/tests.yml
+- Merged PR #1
