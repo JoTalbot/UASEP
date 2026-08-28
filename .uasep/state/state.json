@@ -4,22 +4,24 @@
   "project_state": "ADOPTED",
   "environment": "chat + GitHub-connected tools",
   "objective": "Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.",
-  "active_task": null,
+  "active_task": "UASEP-CI-2026-08-28",
   "last_verified": "2026-08-28",
   "next_best_actions": [
-    "Observe a canonical automated CI run when GitHub Actions is available.",
+    "Observe canonical GitHub Actions run 37/38 and record its actual conformance result.",
+    "If conformance passes, close UASEP-CI-2026-08-28 and release ownership.",
+    "If conformance fails, inspect the concrete failure before changing additional files.",
     "Perform additional conformance/drift audits when the protocol or project requirements change."
   ],
-  "active_tasks": [],
+  "active_tasks": ["UASEP-CI-2026-08-28"],
   "blockers": [],
   "unknowns": [
-    "Automated CI status is not established until a canonical workflow run is observed.",
+    "Canonical conformance test result after removal of the invalid pip cache is not yet established.",
     "Historical search indexes may retain provenance from retired runtime/AIOS2 architecture."
   ],
   "evidence": [
     "Fresh-agent acceptance assessment recorded as EV-UASEP-ACCEPT-2026-08-28.",
-    "Repository changes confirmed through successful GitHub content operations.",
-    "Machine-readable state is validated by the state schema conformance test in repository history; no new test run is claimed here.",
-    "Automated CI remains UNKNOWN until a canonical workflow run is observed."
+    "Canonical CI failure root cause recorded in EV-UASEP-CI-2026-08-28: setup-python pip caching requires a dependency manifest absent from the runtime-free repository.",
+    "Workflow repair recorded in commit cc0ee91b901f33da869b195e3b0636f132025db8.",
+    "Canonical CI run 37 is in progress after the repair; conformance result remains unverified."
   ]
 }
