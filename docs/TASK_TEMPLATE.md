@@ -38,7 +38,7 @@ Specific checks that will prove the criteria.
 
 ## Status
 
-`PLANNED | IN_PROGRESS | VERIFIED | UNKNOWN | BLOCKED | DONE`
+`PLANNED | IN_PROGRESS | VERIFIED | PARTIALLY_VERIFIED | UNKNOWN | FAILED | BLOCKED | DONE`
 
 ## Evidence
 
