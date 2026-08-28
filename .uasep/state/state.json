@@ -5,22 +5,23 @@
   "project_state": "ADOPTED",
   "environment": "chat + GitHub-connected tools",
   "objective": "Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.",
-  "active_task": "UASEP-PROTO-001",
+  "active_task": null,
   "last_verified": "2026-08-28",
   "next_best_actions": [
-    "Run examples/FRESH_AGENT_ACCEPTANCE.md from a genuinely fresh agent/session.",
-    "Record the result using protocol/EVIDENCE_SCHEMA.md.",
-    "Perform additional conformance/drift audits when the protocol or project requirements change."
+    "Run the complete fresh-agent acceptance pass from an independent session.",
+    "Record acceptance evidence using protocol/EVIDENCE_SCHEMA.md.",
+    "Observe a canonical automated CI run when GitHub Actions is available."
   ],
   "active_tasks": [],
   "blockers": [],
   "unknowns": [
     "Fresh-agent acceptance test has not yet been executed as a complete independent pass.",
-    "Automated CI status is not established for the documentation-first protocol.",
+    "Automated CI status is not established until a canonical workflow run is observed.",
     "Historical search indexes may retain provenance from retired runtime/AIOS2 architecture."
   ],
   "evidence": [
     "Repository changes confirmed through successful GitHub content operations.",
+    "Machine-readable state is validated by the state schema conformance test.",
     "Automated CI remains UNKNOWN until a canonical workflow run is observed.",
     "Fresh-agent acceptance remains NOT_RUN."
   ]
