@@ -25,14 +25,16 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - Canonical conformance main-branch run #72 completed successfully at commit `0716c55d345a6843f09bb4c2fdc28d2113f60aeb`.
 - M11-M20 protocol-invariant conformance coverage is recorded and verified.
 - M21-M23 maintenance verification gate is satisfied by canonical CI runs #94 and #95.
+- M24-M30 maintenance verification gate is satisfied by canonical CI run #101 at commit `8f2998ecabe2a56ad3f2691d6a0cccbcf9d8e2ca`.
+- M31-M40 maintenance verification gate is satisfied by canonical CI run #108 at commit `ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec`.
 
 ## Unknown
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 
 ## Next best actions
-1. Execute M24-M30 from `.uasep/planning/NEXT_20.md` with independent write sets.
-2. Record evidence and run conformance after each consequential maintenance batch.
-3. Continue through M31-M40 after M24-M30 verification.
+1. Perform repository-native periodic conformance/drift audits.
+2. Open a new maintenance batch only when a concrete defect, drift finding, or new acceptance requirement exists.
+3. Keep durable state, evidence, and handoff synchronized after consequential maintenance.
 
 ## Permanent constraint
 Do not reintroduce executable runtime work unless a concrete user requirement demonstrates that chat + GitHub-connected agents cannot provide the needed behavior.
