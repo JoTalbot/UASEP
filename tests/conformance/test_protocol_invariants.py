@@ -19,8 +19,8 @@ def test_readiness_state_is_adopted_and_runtime_free():
     state = json.loads(_read(".uasep/state/state.json"))
     assert state["project_state"] == "ADOPTED"
     assert state["environment"]
-    assert state["active_task"] is None
-    assert state["active_tasks"] == []
+    assert state["active_task"] == "M21-M23"
+    assert state["active_tasks"] == ["M21", "M22", "M23"]
 
 
 def test_durable_state_narratives_do_not_drift():
@@ -30,10 +30,10 @@ def test_durable_state_narratives_do_not_drift():
     handoff = _read(".uasep/state/HANDOFF.md")
 
     assert f"Status: {state['project_state']}" in project_state
-    assert f"protocol {state['protocol_version'].rsplit('.', 1)[0]}" in project_state
+    assert f"protocol {state['protocol_version']}" in project_state
     assert f"Phase: {state['project_state']}" in status
-    assert "- ID: NONE" in status
-    assert "Current task: NONE." in handoff
+    assert f"- ID: {state['active_task']}" in status
+    assert "Current task: M21-M23 maintenance continuation." in handoff
     assert "H20: **UNVERIFIED / EXTERNALLY DEPENDENT**" not in _read(
         ".uasep/planning/NEXT_20.md"
     )
