@@ -2,6 +2,8 @@
 
 Status: ADOPTED
 
+Protocol version: 3.4.0
+
 ## Objective
 Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.
 
@@ -29,9 +31,10 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 
 ## Next best actions
-1. Let the current main-branch conformance run complete and fix any regression it exposes.
-2. Continue M24-M40 only after the M21-M23 verification gate is satisfied.
-3. Keep durable state, evidence, and handoff synchronized after consequential maintenance.
+1. Verify the current main-branch conformance run and record its result.
+2. Close M21-M23 only after the verification gate is satisfied.
+3. Continue M24-M40 with evidence, bootstrap, skill, schema, state, runtime-free, CI, ownership, handoff, and maintenance-runbook audits.
+4. Keep durable state, evidence, and handoff synchronized after consequential maintenance.
 
 ## Permanent constraint
 Do not reintroduce executable runtime work unless a concrete user requirement demonstrates that chat + GitHub-connected agents cannot provide the needed behavior.
