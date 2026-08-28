@@ -16,16 +16,16 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Progress
 
-- Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.3; mandatory agent contract and workflow skills established; canonical task lifecycle and ownership/lease protocol added; session bootstrap and practical conformance scenarios added; multi-machine, conflict/recovery, new-project, existing-project adoption, parallel-batch, and drift-detection guidance added.
+- Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.4; mandatory agent contract and workflow skills established; canonical task lifecycle, ownership/lease, task contract, batch manifest, evidence schema, and readiness protocol added; session bootstrap and practical conformance scenarios added; multi-machine, conflict/recovery, new-project, existing-project adoption, parallel-batch, drift-detection, and fresh-agent acceptance guidance added.
 - Remaining implementation work: NONE in the current documentation-first scope.
-- Unverified: fresh independent-agent execution of every manual conformance scenario; historical search indexes may retain provenance from retired architecture.
+- Unverified: fresh independent-agent execution of the acceptance test; historical search indexes may retain provenance from retired architecture.
 - Blocked: NONE known.
 
 ## Evidence
 
 - Repository changes: confirmed through successful GitHub content operations.
 - Automated CI: UNKNOWN — no canonical automated CI result is established for the documentation-first protocol.
-- Manual conformance execution: NOT_RUN as a complete independent-agent pass.
+- Fresh-agent acceptance: NOT_RUN.
 
 ## Decisions
 
@@ -36,7 +36,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Next action
 
-No required implementation action remains. On the next session, perform a fresh bootstrap from repository state, run the manual conformance scenarios relevant to the requested work, and create a new task if project direction changes.
+Run `examples/FRESH_AGENT_ACCEPTANCE.md` from a genuinely fresh agent/session with no originating chat history. Record the result using `protocol/EVIDENCE_SCHEMA.md`. If it passes, UASEP's documentation-first adoption can be considered acceptance-tested for this scope.
 
 ## Updated
 
