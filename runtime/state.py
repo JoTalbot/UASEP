@@ -18,6 +18,10 @@ class StateStore:
         if not self.path.exists():
             return ProjectState(project_id=project_id)
         data: dict[str, Any] = json.loads(self.path.read_text(encoding="utf-8"))
+        raw_failures = data.get("task_failures") or {}
+        task_failures = {
+            str(k): int(v) for k, v in raw_failures.items() if isinstance(v, (int, float))
+        }
         return ProjectState(
             project_id=data.get("project_id", project_id),
             phase=data.get("phase", "initializing"),
@@ -25,6 +29,7 @@ class StateStore:
             completed_tasks=set(data.get("completed_tasks", [])),
             blockers=list(data.get("blockers", [])),
             iteration=int(data.get("iteration", 0)),
+            task_failures=task_failures,
         )
 
     def save(self, state: ProjectState) -> None:

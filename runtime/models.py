@@ -57,6 +57,8 @@ class ProjectState:
     completed_tasks: set[str] = field(default_factory=set)
     blockers: list[str] = field(default_factory=list)
     iteration: int = 0
+    # Per-task failure counts persisted for cold process resume (UASEP-RUNTIME-005).
+    task_failures: dict[str, int] = field(default_factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -66,4 +68,5 @@ class ProjectState:
             "completed_tasks": sorted(self.completed_tasks),
             "blockers": self.blockers,
             "iteration": self.iteration,
+            "task_failures": dict(sorted(self.task_failures.items())),
         }
