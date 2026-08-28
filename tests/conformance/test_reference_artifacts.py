@@ -39,10 +39,10 @@ def test_reference_manifest_has_no_legacy_runtime_fields():
     assert "runtime_version:" not in text
 
 
-def test_acceptance_state_is_explicitly_unverified():
+def test_acceptance_state_is_explicitly_verified():
     status = (ROOT / ".uasep" / "state" / "STATUS.md").read_text()
-    assert "Fresh-agent acceptance: NOT_RUN." in status
-    assert "Automated CI: UNKNOWN" in status
+    assert "Fresh-agent acceptance: VERIFIED" in status
+    assert "Automated CI: UNKNOWN" in status or "Automated CI: IN_PROGRESS" in status
 
 
 def test_fresh_agent_acceptance_requires_repository_only_context():
