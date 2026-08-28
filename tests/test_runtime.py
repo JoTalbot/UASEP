@@ -42,6 +42,18 @@ def test_state_round_trip(tmp_path: Path):
     assert "A" in restored.completed_tasks
 
 
+def test_task_failures_persist_for_cold_resume(tmp_path: Path):
+    """UASEP-RUNTIME-005: failure counts survive process restart via state.json."""
+    store = StateStore(tmp_path)
+    state = store.load("demo")
+    state.task_failures["T1"] = 2
+    state.phase = "retrying"
+    store.save(state)
+    restored = store.load("demo")
+    assert restored.task_failures["T1"] == 2
+    assert restored.phase == "retrying"
+
+
 def test_stagnation_detector():
     detector = StagnationDetector(window=3)
     detector.record("x")
