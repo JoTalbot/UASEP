@@ -19,16 +19,18 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - `protocol/CONFORMANCE.md` is version 3.4.
 - Task, batch, evidence, readiness, and ownership contracts are defined and represented in `schemas/`.
 - Universal bootstrap is aligned with the v3.4 workflow.
+- Fresh-agent acceptance evidence is recorded in `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
+- Canonical conformance main-branch run #72 completed successfully at commit `0716c55d345a6843f09bb4c2fdc28d2113f60aeb`.
+- M11-M20 protocol-invariant conformance coverage is recorded and verified.
 
 ## Unknown
-- Fresh-agent acceptance test has not yet been executed as a complete independent pass.
-- Automated CI status is not established for the documentation-first protocol.
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
+- The latest handoff-only commit `7d5a028f9b0704096978cc44a034282293f53b64` has no individual commit status attached; the referenced canonical conformance result remains the verified run #72 at its tested commit.
 
 ## Next best actions
-1. Run `examples/FRESH_AGENT_ACCEPTANCE.md` from a genuinely fresh agent/session.
-2. Record the result using `protocol/EVIDENCE_SCHEMA.md`.
-3. Perform additional conformance/drift audits when the protocol or project requirements change.
+1. Continue repository-native maintenance/conformance audits when requirements or normative artifacts change.
+2. Re-score `.uasep/planning/NEXT_20.md` and open the next maintenance batch when a concrete drift or improvement target is identified.
+3. Keep durable state, evidence, and handoff synchronized after consequential maintenance.
 
 ## Permanent constraint
 Do not reintroduce executable runtime work unless a concrete user requirement demonstrates that chat + GitHub-connected agents cannot provide the needed behavior.
