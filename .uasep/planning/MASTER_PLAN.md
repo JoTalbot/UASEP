@@ -1,60 +1,57 @@
 # UASEP Master Plan
 
-UASEP is developed as a runtime-free, repository-native protocol for AI agents working through chat and GitHub-connected tools.
-
-## Phase 1 — Protocol foundation
+## Phase 1 — Core protocol
 - [x] Core protocol
+- [x] Capability discovery
+- [x] Execution and recovery
 - [x] Safety and authority
 - [x] Quality and evidence principles
 - [x] Memory and handoff
 - [x] Agent coordination
 - [x] Self-maintenance
 
-## Phase 2 — Agent operating system
+## Phase 2 — Agent operating system for repositories
 - [x] Root agent contract
-- [x] Canonical workflow skill
-- [x] Structured task contract
+- [x] Task contract
 - [x] Parallel batch protocol
-- [x] Verification/evidence skill
-- [x] Failure recovery skill
-- [x] Handoff skill
-
-## Phase 3 — Durable project memory
-- [ ] Canonical project-state format
-- [ ] Task and backlog format
+- [x] Verification protocol
+- [x] Handoff protocol
+- [x] Failure recovery protocol
+- [x] Chat + GitHub Connector workflow
+- [ ] Durable status format
+- [ ] Durable evidence format
+- [ ] Ownership/lease format
 - [ ] Decision record format
-- [ ] Failure/lesson format
-- [ ] Evidence record format
-- [ ] Versioning rules for documents
 
-## Phase 4 — Chat + GitHub Connector operations
-- [ ] Connector operating guide
-- [ ] Start-new-project workflow
-- [ ] Resume-existing-project workflow
-- [ ] Large-batch workflow
-- [ ] Parallel-agent ownership workflow
-- [ ] Review and integration workflow
-- [ ] Recovery/rollback workflow
+## Phase 3 — Usability and examples
+- [ ] Complete machine-readable task/status schemas where they improve agent interoperability
+- [ ] Reference examples for new and existing repositories
+- [ ] Examples of parallel multi-agent work
+- [ ] Examples of conflict resolution and recovery
+- [ ] Minimal bootstrap guide for a new repository
+- [ ] Agent onboarding checklist
 
-## Phase 5 — Practical adoption
-- [ ] Reference examples for common engineering tasks
-- [ ] Multi-agent handoff examples
-- [ ] Conflict-resolution examples
-- [ ] Evidence and verification examples
-- [ ] Repository health checklist
+## Phase 4 — Conformance
+- [ ] Documentation conformance checklist
+- [ ] Self-audit procedure for agents
+- [ ] Protocol consistency checks
+- [ ] Example-based conformance scenarios
+
+## Phase 5 — Adoption
+- [ ] ChatGPT + GitHub Connector operational guidance
+- [ ] Guidance for other repository-connected agents
+- [ ] Temporary-agent handoff workflow
+- [ ] Multi-machine/multi-agent collaboration guidance
 
 ## Phase 6 — Continuous improvement
-- [ ] Protocol drift review
-- [ ] Skill quality review
-- [ ] Metrics defined from repository evidence
-- [ ] Periodic architecture/process review
+- [ ] Protocol metrics based on repository evidence
+- [ ] Architecture/process drift detection
+- [ ] Failure knowledge base improvement
+- [ ] Self-improvement loop for skills and instructions
 
-## Explicitly out of scope
-- UASEP executable runtime
-- UASEP supervisor/daemon
-- UASEP scheduler
-- UASEP database
-- AIOS2 integration
-- Local UASEP CLI
+## Explicit non-goals
 
-These may only return if a concrete requirement cannot be satisfied by the protocol plus the host agent and connected tools.
+- No UASEP runtime is required.
+- No local daemon or CLI is required.
+- No AIOS2 integration is planned in the reference protocol.
+- Code is added only when a concrete integration or validation need cannot be solved reliably with repository-native instructions and artifacts.
