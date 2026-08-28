@@ -1,41 +1,48 @@
-# Backlog
+# UASEP Backlog
 
-Priority is dynamic, but correctness of shared state and safe multi-agent coordination take precedence over convenience.
+Priority is dynamic. Re-score tasks using user value, dependency readiness, risk, reversibility, and available evidence.
 
-## P0 — foundation
+## P0 — Foundations
 
-- UASEP-PROTO-001: Audit every protocol/document/example for runtime or AIOS2 assumptions.
-- UASEP-PROTO-002: Define canonical project-state template.
-- UASEP-PROTO-003: Define canonical task/batch record template.
-- UASEP-PROTO-004: Define canonical evidence and verification record.
-- UASEP-PROTO-005: Define decision and failure/lesson record formats.
+- UASEP-PROTO-001: Complete repository-wide documentation audit for runtime/AIOS2 assumptions.
+- UASEP-PROTO-002: Define canonical durable project status format.
+- UASEP-PROTO-003: Define canonical evidence record format.
+- UASEP-PROTO-004: Define agent ownership/lease format for parallel work.
+- UASEP-PROTO-005: Define decision record format.
+- UASEP-PROTO-006: Define explicit source-of-truth hierarchy.
 
-## P1 — Chat + GitHub operations
+## P1 — Agent workflow
 
-- UASEP-CONNECT-001: Document ChatGPT + GitHub Connector operating procedure.
-- UASEP-CONNECT-002: Document start-new-project procedure.
-- UASEP-CONNECT-003: Document resume-existing-project procedure.
-- UASEP-CONNECT-004: Document large parallel-batch procedure.
-- UASEP-CONNECT-005: Document branch/ownership/conflict rules.
-- UASEP-CONNECT-006: Document review, verification, commit, and push procedure.
-- UASEP-CONNECT-007: Document rollback and recovery procedure.
+- UASEP-AGENT-001: Document mandatory startup/restore procedure.
+- UASEP-AGENT-002: Document task decomposition and acceptance criteria.
+- UASEP-AGENT-003: Document large-batch parallel analysis and conflict-free execution.
+- UASEP-AGENT-004: Document verification and evidence rules.
+- UASEP-AGENT-005: Document failure recovery and anti-loop strategy.
+- UASEP-AGENT-006: Document session handoff and continuation.
+- UASEP-AGENT-007: Document multi-machine/multi-agent coordination.
 
-## P1 — reusable agent skills
+## P1 — Chat + GitHub Connector
 
-- UASEP-SKILL-001: Audit/research skill.
-- UASEP-SKILL-002: Planning/decomposition skill.
-- UASEP-SKILL-003: Implementation skill.
-- UASEP-SKILL-004: Review/integration skill.
-- UASEP-SKILL-005: Self-maintenance skill.
+- UASEP-CONNECT-001: Define the standard ChatGPT/GitHub operating loop.
+- UASEP-CONNECT-002: Define capability discovery and tool limitations.
+- UASEP-CONNECT-003: Define safe commit/push behavior.
+- UASEP-CONNECT-004: Define how agents report verified vs unknown results.
+- UASEP-CONNECT-005: Define recovery when a connector action fails or is unavailable.
 
-## P2 — examples
+## P2 — Examples and adoption
 
-- UASEP-EXAMPLE-001: New project.
-- UASEP-EXAMPLE-002: Resume after another agent.
-- UASEP-EXAMPLE-003: Twenty-task parallel batch.
-- UASEP-EXAMPLE-004: Failed verification and recovery.
-- UASEP-EXAMPLE-005: Two agents with non-overlapping write sets.
+- UASEP-EXAMPLE-001: New-project example.
+- UASEP-EXAMPLE-002: Existing-project adoption example.
+- UASEP-EXAMPLE-003: Parallel batch example.
+- UASEP-EXAMPLE-004: Conflict/recovery example.
+- UASEP-EXAMPLE-005: Handoff between agents on different machines.
 
-## Permanent exclusions
+## P2 — Quality
 
-No executable UASEP runtime, supervisor, scheduler, database, local CLI, or AIOS2 integration is planned.
+- UASEP-QUALITY-001: Documentation consistency self-audit.
+- UASEP-QUALITY-002: Example-based conformance scenarios.
+- UASEP-QUALITY-003: Protocol drift detection guidance.
+
+## Non-goals
+
+Runtime implementation, local daemon/CLI, executor framework, autonomous process supervisor, and AIOS2 integration are out of scope unless the project direction is explicitly changed.
