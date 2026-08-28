@@ -1,6 +1,6 @@
 # UASEP Conformance Specification
 
-Version: 3.2
+Version: 3.3
 
 ## Purpose
 
@@ -24,6 +24,8 @@ A conformant agent MUST:
 12. Protect destructive or irreversible operations with explicit approval and a recoverable checkpoint where practical.
 13. Leave the repository understandable and continuable by an agent with no previous chat context.
 14. Never claim a tool action, test, CI result, commit, push, review, or external effect without evidence.
+15. Before editing a consequential scope, establish an explicit ownership claim; overlapping active claims MUST be coordinated or serialized.
+16. Treat ownership as a lease: refresh, release, transfer, or reconcile stale claims in durable state rather than silently taking over.
 
 ## Durable artifacts
 
@@ -50,6 +52,10 @@ After interruption, durable artifacts MUST identify the current objective, task,
 ## Parallel-work invariant
 
 Tasks may be analyzed in parallel, but execution may be parallel only when their dependencies and write sets are compatible. Conflicting work requires explicit coordination or serialization.
+
+## Ownership invariant
+
+An active ownership claim MUST identify the task, owner/session, branch, write set, claim time, and expected review/completion point. Stale or overlapping claims require explicit reconciliation before consequential edits.
 
 ## Connector invariant
 
