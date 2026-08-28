@@ -1,42 +1,39 @@
-# Next 20 hardening tasks
+# Next 20 maintenance tasks
 
-Batch: UASEP-HARDEN-2026-08-28
+Batch: UASEP-MAINT-2026-08-28
 Branch: main
 
 | ID | Scope | Files | Dependencies | Risk | Verification | Execution |
 |---|---|---|---|---|---|---|
-| H01 | State projection | `.uasep/state/state.json` | state schema | low | JSON Schema | independent |
-| H02 | Manifest fixture | `tests/conformance/fixtures/manifest.json` | manifest schema | low | schema validation | independent |
-| H03 | State fixture | `tests/conformance/fixtures/state.json` | state schema | low | schema validation | independent |
-| H04 | Capabilities fixture | `tests/conformance/fixtures/capabilities.json` | capabilities schema | low | schema validation | independent |
-| H05 | Readiness fixture | `tests/conformance/fixtures/readiness.json` | readiness schema | low | schema validation | independent |
-| H06 | Ownership fixture | `tests/conformance/fixtures/ownership.json` | ownership schema | low | schema validation | independent |
-| H07 | Batch fixture | `tests/conformance/fixtures/batch.json` | batch schema | low | schema validation | independent |
-| H08 | Task fixture | `tests/conformance/fixtures/task.json` | task schema | low | schema validation | independent |
-| H09 | Evidence fixture | `tests/conformance/fixtures/evidence.json` | evidence schema | low | schema validation | independent |
-| H10 | Fixture runner | `tests/conformance/test_fixtures.py` | H02-H09 | low | pytest | dependent on fixtures |
-| H11 | Cross-artifact invariants | `tests/conformance/test_all_schemas.py` | H01/H10 | low | pytest | dependent |
-| H12 | Runtime-free invariant | `tests/conformance/test_runtime_free.py` | manifest/state/readiness fixtures | low | pytest | independent |
-| H13 | Branch invariant | `tests/conformance/test_main_branch.py` | repository contract | low | pytest | independent |
-| H14 | Documentation index | `protocol/CONFORMANCE.md` | protocol baseline | low | manual review | independent |
-| H15 | Batch execution guide | `docs/BATCH_EXECUTION.md` | batch contract | low | manual review | independent |
-| H16 | Failure knowledge | `.uasep/knowledge/FAILURES.md` | observed CI blocker | low | evidence review | independent |
-| H17 | Decision record | `.uasep/knowledge/DECISIONS.md` | H01/H16 | low | review | dependent |
-| H18 | Durable status sync | `.uasep/state/STATUS.md` | H01/H16 | low | state review | dependent |
-| H19 | Handoff sync | `.uasep/state/HANDOFF.md` | H01/H16 | low | handoff review | dependent |
-| H20 | Fresh-agent acceptance | `examples/FRESH_AGENT_ACCEPTANCE.md` + evidence | repository-only context | medium | independent fresh session | externally dependent |
+| M21 | Durable-state narrative consistency | `tests/conformance/test_protocol_invariants.py` | current state artifacts | low | pytest | independent |
+| M22 | Project-state synchronization | `.uasep/state/PROJECT_STATE.md` | acceptance + CI evidence | low | state review | independent |
+| M23 | Maintenance-plan rescore | `.uasep/planning/NEXT_20.md` | M21-M22 findings | low | plan review | dependent |
+| M24 | Evidence index consistency | `.uasep/evidence/` + conformance checks | evidence schema | low | pytest/review | independent |
+| M25 | Bootstrap artifact index | `bootstrap/` + conformance checks | bootstrap protocol | low | pytest/review | independent |
+| M26 | Skill inventory consistency | `skills/` + documentation | skill contract | low | repository review | independent |
+| M27 | Example-to-protocol references | `examples/` | protocol docs | low | link/reference audit | independent |
+| M28 | Schema-to-fixture coverage | `schemas/` + `tests/conformance/fixtures/` | M24 | low | pytest | independent |
+| M29 | State-to-manifest version guard | conformance tests | manifest/state schema | low | pytest | independent |
+| M30 | Runtime-free active-tree guard | conformance tests | runtime-free contract | low | pytest | independent |
+| M31 | CI trigger/read-only policy audit | `.github/workflows/conformance.yml` | CI contract | low | workflow review | independent |
+| M32 | CI evidence freshness guidance | protocol/docs | M31 | low | documentation review | dependent |
+| M33 | Stale runtime-reference audit | active protocol/docs | runtime-free architecture | low | repository search | independent |
+| M34 | Ownership-lease fixture coverage | `tests/conformance/fixtures/` + tests | ownership schema | low | pytest | independent |
+| M35 | Evidence status vocabulary coverage | evidence schema + tests | evidence contract | low | pytest | independent |
+| M36 | Handoff completeness guard | state/handoff conformance | handoff contract | low | pytest | independent |
+| M37 | Status completeness guard | `.uasep/state/STATUS.md` + tests | durable state | low | pytest/review | independent |
+| M38 | Acceptance evidence linkage | acceptance example + evidence | M24 | low | review | dependent |
+| M39 | Decision/failure cross-reference audit | `.uasep/knowledge/` | evidence records | low | repository review | independent |
+| M40 | Maintenance runbook | `docs/MAINTENANCE.md` | M21-M39 | low | manual review | dependent |
 
 ## Execution policy
 
-Tasks H02-H09, H12-H15, and H16 can be executed without waiting for each other when write sets remain disjoint. H01 must precede state-dependent checks. H10-H11 and H17-H19 depend on earlier artifacts. H20 requires a genuinely fresh agent/session and cannot be honestly simulated by the current session.
+M21, M22, M24-M31, M33-M35, M36-M39 may be analyzed independently when their write sets remain disjoint. M23 depends on the first findings. M32, M38, and M40 depend on earlier artifacts. Do not reopen completed H01-H20 or M11-M20 without a concrete defect, drift finding, or new acceptance requirement.
 
-## Batch result
+## Current result
 
-- H01-H10: **VERIFIED / COMPLETE**. H01 state projection matches `schemas/state.schema.json`; H02-H09 fixtures are present and conform to their declared schemas; H10 fixture runner exists and was included in canonical conformance run #44.
-- H11-H19: **VERIFIED / COMPLETE**. The cross-artifact, runtime-free, branch, documentation, batch-guide, failure-knowledge, decision, status, and handoff artifacts were inspected and synchronized with the current repository state and CI evidence.
-- Canonical conformance: **VERIFIED / SUCCESS**, main-branch run #44.
-- H20: **UNVERIFIED / EXTERNALLY DEPENDENT**. It requires a genuinely fresh agent/session and must not be simulated by the current session.
-- Planned: 20
-- Completed in this batch: H11-H19 (9 tasks)
-- Remaining: H20 only
+- H01-H20: **VERIFIED / COMPLETE** based on repository evidence and recorded acceptance evidence.
+- M11-M20: **VERIFIED / COMPLETE**; protocol-invariant conformance coverage is verified by canonical main-branch run #72.
+- M21-M23: **IN PROGRESS** in the current maintenance continuation.
+- Remaining M24-M40: **PLANNED**.
 - No runtime implementation is introduced.
