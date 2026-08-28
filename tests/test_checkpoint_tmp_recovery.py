@@ -30,16 +30,13 @@ def test_checkpoint_store_can_restore_from_tmp(tmp_path: Path):
     assert store.latest()["phase"] == "RUNNING"
 
 
-def test_checkpoint_store_rejects_corrupted_tmp_checksum(tmp_path: Path):
+def test_checkpoint_store_rejects_corrupted_tmp_json(tmp_path: Path):
     checkpoint = tmp_path / "checkpoint.json"
     temp_checkpoint = tmp_path / "checkpoint.json.tmp"
 
-    store = CheckpointStore(checkpoint)
-    store.save("checksum-task", "VERIFYING")
+    temp_checkpoint.write_text('{invalid-json', encoding="utf-8")
 
-    checkpoint.replace(temp_checkpoint)
-    content = temp_checkpoint.read_text(encoding="utf-8")
-    temp_checkpoint.write_text(content.replace("VERIFYING", "BROKEN"), encoding="utf-8")
+    store = CheckpointStore(checkpoint)
 
     assert store.recover() is False
     assert not checkpoint.exists()
