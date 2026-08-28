@@ -22,6 +22,10 @@ class CheckpointStore:
     """Append-only checkpoint journal with integrity metadata."""
 
     def __init__(self, path: Path) -> None:
+        # Older callers passed the checkpoint directory; keep that API working
+        # while the canonical API accepts the concrete checkpoint file path.
+        if path.exists() and path.is_dir():
+            path = path / "checkpoint.json"
         self.path = path
 
     def save(self, task_id: str | None, phase: str) -> Checkpoint:
@@ -32,6 +36,23 @@ class CheckpointStore:
         entries.append(asdict(checkpoint))
         self._write(entries)
         return checkpoint
+
+    def append(self, checkpoint: dict) -> dict:
+        """Compatibility API for appending a checkpoint-shaped mapping."""
+        if not isinstance(checkpoint, dict):
+            raise ValueError("checkpoint entry must be an object")
+        entries = self.all()
+        entry = dict(checkpoint)
+        entry["sequence"] = len(entries) + 1
+        if not entry.get("phase"):
+            raise ValueError("checkpoint phase must not be empty")
+        entries.append(entry)
+        self._write(entries)
+        return entry
+
+    def load(self) -> list[dict]:
+        """Compatibility alias for the canonical :meth:`all` API."""
+        return self.all()
 
     def _payload(self, entries: list[dict]) -> dict:
         return {"schema_version": SCHEMA_VERSION, "entries": entries}
@@ -55,13 +76,15 @@ class CheckpointStore:
             return False
         try:
             document = json.loads(temporary.read_text(encoding="utf-8"))
-            payload = {"schema_version": document.get("schema_version"), "entries": document.get("entries", [])}
+            if not isinstance(document, dict) or not isinstance(document.get("entries"), list):
+                return False
+            payload = {"schema_version": document.get("schema_version"), "entries": document["entries"]}
             if document.get("checksum") != self._checksum(payload):
                 return False
             self._validate_entries(payload["entries"])
             temporary.replace(self.path)
             return True
-        except (OSError, ValueError, json.JSONDecodeError):
+        except (OSError, TypeError, ValueError, json.JSONDecodeError):
             return False
 
     def all(self) -> list[dict]:
@@ -73,7 +96,9 @@ class CheckpointStore:
         if isinstance(document, list):
             entries = document
         else:
-            payload = {"schema_version": document.get("schema_version"), "entries": document.get("entries", [])}
+            if not isinstance(document, dict) or not isinstance(document.get("entries"), list):
+                raise ValueError("checkpoint journal must contain a list")
+            payload = {"schema_version": document.get("schema_version"), "entries": document["entries"]}
             if document.get("checksum") != self._checksum(payload):
                 raise ValueError("checkpoint checksum mismatch")
             entries = payload["entries"]
