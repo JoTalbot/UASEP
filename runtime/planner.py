@@ -6,6 +6,39 @@ from .models import Task
 class Planner:
     """Deterministic baseline planner with stable priority ordering."""
 
+    def validate_tasks(self, tasks: list[Task]) -> None:
+        """Validate task graph invariants before planning."""
+        ids = [task.id for task in tasks]
+        if len(ids) != len(set(ids)):
+            raise ValueError("task ids must be unique")
+
+        known = set(ids)
+        for task in tasks:
+            missing = [dep for dep in task.dependencies if dep not in known]
+            if missing:
+                raise ValueError(f"unknown task dependencies: {missing}")
+
+        self._assert_acyclic(tasks)
+
+    def _assert_acyclic(self, tasks: list[Task]) -> None:
+        graph = {task.id: task.dependencies for task in tasks}
+        visiting: set[str] = set()
+        visited: set[str] = set()
+
+        def visit(task_id: str) -> None:
+            if task_id in visiting:
+                raise ValueError("task dependency cycle detected")
+            if task_id in visited:
+                return
+            visiting.add(task_id)
+            for dependency in graph.get(task_id, []):
+                visit(dependency)
+            visiting.remove(task_id)
+            visited.add(task_id)
+
+        for task_id in graph:
+            visit(task_id)
+
     def ready_tasks(
         self,
         tasks: list[Task],
@@ -13,6 +46,7 @@ class Planner:
         max_failures: int = 3,
     ) -> list[Task]:
         """Return all currently executable tasks in deterministic order."""
+        self.validate_tasks(tasks)
         ready = [
             task
             for task in tasks
