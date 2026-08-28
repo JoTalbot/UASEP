@@ -32,3 +32,13 @@ def test_next_task_rejects_unknown_dependencies() -> None:
 
     with pytest.raises(ValueError, match="unknown task dependencies"):
         Planner().next_task([task], set())
+
+
+def test_planner_rejects_empty_task_identifier() -> None:
+    with pytest.raises(ValueError, match="task ids must not be empty"):
+        Planner().ready_tasks([Task(id="", title="Invalid")], set())
+
+
+def test_planner_rejects_whitespace_task_identifier() -> None:
+    with pytest.raises(ValueError, match="task ids must not be empty"):
+        Planner().ready_tasks([Task(id="   ", title="Invalid")], set())
