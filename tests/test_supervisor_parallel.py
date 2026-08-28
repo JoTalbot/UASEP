@@ -50,7 +50,7 @@ def test_parallel_runtime_applies_acceptance_verification(tmp_path: Path):
     results = supervisor.run_parallel_once("demo", [task])
     state = supervisor.state_store.load("demo")
 
-    assert results == [("agent-a", "A", True)]
+    assert results == [("agent-a", "A", False)]
     assert task.status == TaskStatus.FAILED
     assert task.id not in state.completed_tasks
     assert state.task_failures[task.id] == 1
