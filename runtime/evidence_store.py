@@ -24,6 +24,7 @@ class EvidenceStore:
     def record(self, evidence: Evidence) -> None:
         if not isinstance(evidence, Evidence):
             raise ValueError("evidence must be an Evidence instance")
+        self._validate_entry(asdict(evidence))
         entries = self.all()
         entries.append(asdict(evidence))
         self._write(entries)
@@ -55,9 +56,26 @@ class EvidenceStore:
         except (OSError, TypeError, ValueError, json.JSONDecodeError):
             return False
 
-    @staticmethod
-    def _read(path: Path) -> list[dict]:
+    @classmethod
+    def _read(cls, path: Path) -> list[dict]:
         data = json.loads(path.read_text(encoding="utf-8"))
         if not isinstance(data, list) or any(not isinstance(entry, dict) for entry in data):
             raise ValueError("evidence journal must contain a list of objects")
+        for entry in data:
+            cls._validate_entry(entry)
         return data
+
+    @staticmethod
+    def _validate_entry(entry: dict) -> None:
+        required = ("kind", "claim", "status", "detail", "timestamp")
+        if any(key not in entry for key in required):
+            raise ValueError("evidence entry is missing required fields")
+        for key in required:
+            if not isinstance(entry[key], str):
+                raise ValueError(f"evidence {key} must be a string")
+        if not entry["kind"].strip() or not entry["claim"].strip():
+            raise ValueError("evidence kind and claim must be non-empty")
+        if not entry["status"].strip():
+            raise ValueError("evidence status must be non-empty")
+        if not entry["timestamp"].strip():
+            raise ValueError("evidence timestamp must be non-empty")
