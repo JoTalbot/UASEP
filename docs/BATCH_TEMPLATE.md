@@ -19,7 +19,7 @@
 
 ## Execution result
 
-Record each task as `DONE`, `UNKNOWN`, or `BLOCKED` with evidence.
+Record each task as `DONE`, `VERIFIED`, `PARTIALLY_VERIFIED`, `UNKNOWN`, `FAILED`, or `BLOCKED` with evidence.
 
 ## Integration
 
