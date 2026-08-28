@@ -1,11 +1,15 @@
 # Test Evidence
 
-## after write-set / CLI / metrics batch
-- Local: **112 pytest passed**
+## 1–6 improvement batch
+- Local: **115 pytest passed**
+- CI main (post-112): success — https://github.com/JoTalbot/UASEP/actions/runs/33143252388
 
-## post-3.1.2 (main)
-- Local: 107 pytest passed (AIOS2 run, multi-agent, CLI run)
+## Features covered
+- migration + per-project state paths
+- supervisor run_parallel_once
+- AIOS2 e2e discover/bootstrap/run
+- CLI migrate/resume
+- checkpoints_v2 alias
 
 ## 3.1.2
-- Local: 104 pytest passed
-- GitHub Actions: 3.10 / 3.11 / 3.12 success on PR #1
+- Local 104+; PR #1 CI 3.10/3.11/3.12 green

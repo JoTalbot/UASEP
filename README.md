@@ -2,57 +2,58 @@
 
 **Universal Autonomous Engineering & Self-Maintenance Protocol**
 
-UASEP is a portable protocol for autonomous software engineering across ChatGPT, GitHub-connected agents, local CLIs, sandboxes, IDE agents, and future agent runtimes.
+[![UASEP conformance](https://github.com/JoTalbot/UASEP/actions/workflows/tests.yml/badge.svg)](https://github.com/JoTalbot/UASEP/actions/workflows/tests.yml)
+
+Version **3.1.2** — portable protocol for autonomous software engineering across ChatGPT, GitHub-connected agents, local CLIs, sandboxes, IDE agents, and future runtimes.
 
 ## Goals
 
-- Start new projects from zero.
-- Resume existing projects from repository state.
+- Start new projects from zero; resume from repository state.
 - Discover real capabilities instead of assuming tools exist.
 - Plan work as a dependency-aware task graph.
-- Implement, test, review, verify, integrate, and document continuously.
-- Preserve state so another agent can resume without chat history.
-- Recover from failures and avoid repeated dead ends.
-- Maintain evidence for important completion claims.
-- Continuously maintain and improve both the project and its engineering process.
+- Implement, test, verify, and persist evidence continuously.
+- Cold-resume retries (`task_failures`), multi-agent write-set safety, host-neutral adapters.
+
+## Quick start
+
+```bash
+python -m pip install pytest
+python -m pytest -q
+python -m runtime.cli bootstrap
+python -m runtime.cli check
+python -m runtime.cli status
+python -m runtime.cli plan
+python -m runtime.cli migrate
+python -m runtime.cli resume
+python -m runtime.cli run --task-id demo
+```
 
 ## Protocol layers
 
-1. **Bootstrap**: a short prompt starts the protocol.
-2. **Core**: normative rules shared by all environments.
-3. **Adapter**: maps abstract capabilities to the current environment.
-4. **Project state**: persistent memory, plans, tasks, decisions, failures, and evidence.
-5. **Runtime**: optional executable implementation such as an AIOS2 supervisor.
-
-## Repository layout
-
-```text
-.uasep/
-├── manifest.yaml
-├── state.json
-├── capabilities.json
-├── CORE.md
-├── CAPABILITIES.md
-├── EXECUTION.md
-├── SAFETY.md
-├── QUALITY.md
-├── MEMORY.md
-├── AGENTS.md
-├── SELF_MAINTENANCE.md
-├── state/
-├── planning/
-├── knowledge/
-└── evidence/
-```
-
-The `.uasep/` directory is the project-local instance. This repository is the protocol source of truth and reference specification.
-
-## Bootstrap
-
-Use the short universal bootstrap from `bootstrap/UASEP_BOOTSTRAP.md`. It is intentionally small. The full protocol is loaded from the project or this repository when available.
+1. **Bootstrap** — short prompt (`bootstrap/UASEP_BOOTSTRAP.md`)
+2. **Core** — normative rules under `protocol/`
+3. **Adapter** — host mapping (`runtime/host_adapter.py`, `runtime/aios2_adapter.py`)
+4. **Project state** — `.uasep/` memory, plans, evidence
+5. **Runtime** — reference supervisor, planner, verification
 
 ## Design principle
 
 **Discover → Restore → Plan → Execute → Verify → Persist → Replan → Continue.**
 
-Lack of a specific tool is a constraint to adapt around, not a reason to fabricate results or stop prematurely.
+Lack of a tool is a constraint to adapt around, not a reason to fabricate results.
+
+## Layout
+
+```text
+.uasep/          # project-local instance
+protocol/        # normative specs
+runtime/         # reference implementation
+schemas/         # JSON schemas
+tests/           # conformance + integration
+bootstrap/       # short prompts
+examples/        # workflows
+```
+
+## License / contributing
+
+See `CONTRIBUTING.md`. Keep VERSION and `pyproject.toml` aligned. Do not invent CI results.

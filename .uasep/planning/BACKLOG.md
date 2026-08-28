@@ -1,9 +1,9 @@
 # Backlog
 
-- Supervisor multi-agent hook (optional coordinator in run loop)
-- Richer AIOS2 e2e acceptance coverage
-- Maintenance automation
-- Full self-improvement automation
-- Consolidate anti_loop / checkpoints dual modules
+- Tag/release v3.1.2 on GitHub Releases
+- Maintenance automation (scheduled drift+pytest)
+- Full self-improvement automation from metrics
+- Unify TaskStatus schema enum vs runtime enum
+- Further dual-module consolidation (replan/approval)
 
-Done recently: write-set conflicts, CLI plan/status, metrics/drift stubs, schemas, handoff docs.
+Done: CI evidence, checkpoints_v2 alias, supervisor multi-agent, migration, per-project state, AIOS2 e2e, CLI migrate/resume, README.
