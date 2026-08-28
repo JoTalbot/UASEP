@@ -29,8 +29,10 @@ class CheckpointStore:
         self.path = path
 
     def save(self, task_id: str | None, phase: str) -> Checkpoint:
-        if not phase:
-            raise ValueError("checkpoint phase must not be empty")
+        if not isinstance(phase, str) or not phase.strip():
+            raise ValueError("checkpoint phase must be a non-empty string")
+        if task_id is not None and (not isinstance(task_id, str) or not task_id.strip()):
+            raise ValueError("checkpoint task_id must be None or a non-empty string")
         entries = self.all()
         checkpoint = Checkpoint(len(entries) + 1, task_id, phase, datetime.now(timezone.utc).isoformat())
         entries.append(asdict(checkpoint))
@@ -44,8 +46,11 @@ class CheckpointStore:
         entries = self.all()
         entry = dict(checkpoint)
         entry["sequence"] = len(entries) + 1
-        if not entry.get("phase"):
-            raise ValueError("checkpoint phase must not be empty")
+        if not isinstance(entry.get("phase"), str) or not entry["phase"].strip():
+            raise ValueError("checkpoint phase must be a non-empty string")
+        task_id = entry.get("task_id")
+        if task_id is not None and (not isinstance(task_id, str) or not task_id.strip()):
+            raise ValueError("checkpoint task_id must be None or a non-empty string")
         entries.append(entry)
         self._write(entries)
         return entry
@@ -114,8 +119,11 @@ class CheckpointStore:
                 raise ValueError("checkpoint entry must be an object")
             if entry.get("sequence") != expected:
                 raise ValueError("checkpoint sequence is invalid")
-            if not entry.get("phase"):
-                raise ValueError("checkpoint phase must not be empty")
+            if not isinstance(entry.get("phase"), str) or not entry["phase"].strip():
+                raise ValueError("checkpoint phase must be a non-empty string")
+            task_id = entry.get("task_id")
+            if task_id is not None and (not isinstance(task_id, str) or not task_id.strip()):
+                raise ValueError("checkpoint task_id must be None or a non-empty string")
             expected += 1
 
     def latest(self) -> dict | None:
