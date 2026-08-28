@@ -30,7 +30,7 @@ def test_durable_state_narratives_do_not_drift():
     handoff = _read(".uasep/state/HANDOFF.md")
 
     assert f"Status: {state['project_state']}" in project_state
-    assert f"protocol {state['protocol_version']}" in project_state
+    assert f"version {state['protocol_version']}" in project_state
     assert f"Phase: {state['project_state']}" in status
     assert f"- ID: {state['active_task']}" in status
     assert "Current task: M21-M23 maintenance continuation." in handoff
