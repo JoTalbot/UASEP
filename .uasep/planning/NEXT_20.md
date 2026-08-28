@@ -34,6 +34,8 @@ M21, M22, M24-M31, M33-M35, M36-M39 may be analyzed independently when their wri
 
 - H01-H20: **VERIFIED / COMPLETE** based on repository evidence and recorded acceptance evidence.
 - M11-M20: **VERIFIED / COMPLETE**; protocol-invariant conformance coverage is verified by canonical main-branch run #72.
-- M21-M23: **IN PROGRESS** in the current maintenance continuation.
-- Remaining M24-M40: **PLANNED**.
+- M21-M23: **VERIFIED / COMPLETE**; verification gate satisfied by canonical runs #94 and #95.
+- M24-M30: **VERIFIED / COMPLETE**; verification gate satisfied by canonical run #101.
+- M31-M40: **VERIFIED / COMPLETE**; verification gate satisfied by canonical run #108.
+- No active maintenance batch.
 - No runtime implementation is introduced.
