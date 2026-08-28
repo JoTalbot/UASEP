@@ -1,0 +1,18 @@
+{
+  "task_id": "UASEP-ACCEPT-2026-08-28",
+  "owner": "fresh-agent-session-2026-08-28",
+  "branch": "main",
+  "write_set": [
+    ".uasep/state/TASK_UASEP-ACCEPT-2026-08-28.json",
+    ".uasep/state/OWNERSHIP_UASEP-ACCEPT-2026-08-28.json",
+    ".uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json",
+    ".uasep/state/state.json",
+    ".uasep/state/STATUS.md",
+    ".uasep/state/HANDOFF.md"
+  ],
+  "claim_time": "2026-08-28 UTC",
+  "expected_completion": "After acceptance evidence is recorded and durable state is synchronized in this session",
+  "status": "ACTIVE",
+  "last_refresh": "2026-08-28 UTC",
+  "transfer_to": null
+}
