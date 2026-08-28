@@ -45,9 +45,22 @@ class CheckpointStore:
         if not self.path.exists():
             return []
         entries = json.loads(self.path.read_text(encoding="utf-8"))
+        self._validate_entries(entries)
+        return entries
+
+    def _validate_entries(self, entries: object) -> None:
         if not isinstance(entries, list):
             raise ValueError("checkpoint journal must contain a list")
-        return entries
+
+        expected = 1
+        for entry in entries:
+            if not isinstance(entry, dict):
+                raise ValueError("checkpoint entry must be an object")
+            if entry.get("sequence") != expected:
+                raise ValueError("checkpoint sequence is invalid")
+            if not entry.get("phase"):
+                raise ValueError("checkpoint phase must not be empty")
+            expected += 1
 
     def latest(self) -> dict | None:
         entries = self.all()
