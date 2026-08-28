@@ -20,7 +20,8 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed hardening H01-H10: machine-readable state synchronization; 8 schema fixtures; fixture validation suite; runtime-free invariant checks; repository-native bootstrap/branch checks; explicit batch execution guide; CI evidence-boundary failure record; next-20-task plan.
 - Completed H11-H19: cross-artifact invariants; runtime-free and branch invariants; conformance documentation; batch execution guide; reconciled failure knowledge; decision record; durable status and handoff synchronization.
 - Completed H20: fresh-agent acceptance evidence recorded in EV-UASEP-ACCEPT-2026-08-28 and reconciled into the master plan.
-- Canonical conformance: VERIFIED / SUCCESS in main-branch run #44.
+- Completed maintenance M11-M20: focused automated conformance assertions for bootstrap, readiness, task/batch contracts, capability honesty, evidence, recovery, failure/ownership handling, and destructive-operation safeguards.
+- Canonical conformance: VERIFIED / SUCCESS — main-branch run #72 at commit 0716c55d345a6843f09bb4c2fdc28d2113f60aeb.
 - Remaining implementation work: NONE in the current documentation-first scope.
 - Unverified: Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 - Blocked: NONE known.
@@ -29,9 +30,10 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 - Fresh-agent acceptance: VERIFIED; see `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
 - Repository writes: confirmed through successful GitHub content operations.
-- Canonical conformance: VERIFIED / SUCCESS — main-branch run #44.
+- Canonical conformance: VERIFIED / SUCCESS — main-branch run #72.
 - CI failure root cause and resolution recorded in `.uasep/knowledge/FAILURES.md` and `EV-UASEP-CI-2026-08-28.json`.
 - H11-H19 verification and synchronization recorded in `EV-UASEP-BATCH-H11-H19-2026-08-28.json`.
+- M11-M20 verification recorded in `EV-UASEP-MAINT-M11-20-2026-08-28.json`.
 
 ## Decisions
 
