@@ -160,12 +160,14 @@ class Supervisor:
                 if verification.status != "VERIFIED":
                     ok = False
                     self._failure(state, task, f"acceptance verification failed after parallel execution via {agent_name}", "verification_failed")
+                    results.append((agent_name, task_id, ok))
+                    continue
             if ok:
                 task.status = TaskStatus.DONE
                 state.completed_tasks.add(task.id)
                 self._evidence("completion", task.id, "VERIFIED", f"parallel via {agent_name}")
                 self._checkpoint(task.id, "verified")
-            elif task.status != TaskStatus.BLOCKED:
+            else:
                 self._failure(state, task, f"parallel executor failed on {agent_name}")
             results.append((agent_name, task_id, ok))
         state.current_task = None
