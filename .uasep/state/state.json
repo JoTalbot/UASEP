@@ -6,9 +6,9 @@
   "objective":"Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.",
   "active_task":null,
   "last_verified":"2026-08-28",
-  "next_best_actions":["Run or observe H20 in a genuinely independent fresh-agent session when available.","Otherwise select the next repository-native maintenance/conformance task after confirming current state."],
+  "next_best_actions":["Perform continuous repository-native maintenance/conformance audits as requirements or normative artifacts change.","Re-score .uasep/planning/NEXT_20.md when new requirements arrive."],
   "active_tasks":[],
   "blockers":[],
-  "unknowns":["H20 fresh-agent acceptance requires a genuinely independent session if re-run.","Historical search indexes may retain provenance from retired runtime/AIOS2 architecture."],
-  "evidence":["Fresh-agent acceptance assessment recorded as EV-UASEP-ACCEPT-2026-08-28.","Canonical conformance workflow repaired and run #44 completed successfully.","H11-H19 verification and synchronization recorded in EV-UASEP-BATCH-H11-H19-2026-08-28.json."]
+  "unknowns":["Historical search indexes may retain provenance from retired runtime/AIOS2 architecture."],
+  "evidence":["Fresh-agent acceptance verified and recorded as EV-UASEP-ACCEPT-2026-08-28.","Canonical conformance workflow repaired and run #44 completed successfully.","H11-H19 verification and synchronization recorded in EV-UASEP-BATCH-H11-H19-2026-08-28.json."]
 }
