@@ -6,7 +6,7 @@ from pathlib import Path
 
 from .checkpoint_store import CheckpointStore
 from .evidence_store import Evidence, EvidenceStore
-from .models import ProjectState, Task
+from .models import ProjectState, Task, TaskStatus
 from .planner import Planner
 from .state import StateStore
 from .verification import VerificationEngine
@@ -26,6 +26,7 @@ class Supervisor:
     acceptance_provider: AcceptanceProvider | None = None
     evidence_store: EvidenceStore | None = None
     checkpoint_store: CheckpointStore | None = None
+    max_failures: int = 3
 
     @classmethod
     def with_project_runtime(
@@ -34,6 +35,7 @@ class Supervisor:
         executor: Callable[[Task], bool],
         planner: Planner | None = None,
         acceptance_provider: AcceptanceProvider | None = None,
+        max_failures: int = 3,
     ) -> "Supervisor":
         base = root / ".uasep"
         return cls(
@@ -44,6 +46,7 @@ class Supervisor:
             acceptance_provider=acceptance_provider,
             evidence_store=EvidenceStore(base / "evidence" / "runtime.json"),
             checkpoint_store=CheckpointStore(base / "checkpoints" / "journal.json"),
+            max_failures=max_failures,
         )
 
     def _checkpoint(self, task_id: str | None, phase: str) -> None:
@@ -54,14 +57,37 @@ class Supervisor:
         if self.evidence_store:
             self.evidence_store.record(Evidence(kind, claim, status, detail))
 
+    def _failure(self, state: ProjectState, task: Task, detail: str, phase: str = "failed") -> None:
+        task.failure_count += 1
+        self._evidence("execution", task.id, "FAILED", detail)
+        self._checkpoint(task.id, phase)
+        state.current_task = None
+        if task.failure_count >= self.max_failures:
+            task.status = TaskStatus.BLOCKED
+            state.phase = "blocked"
+            state.blockers.append(
+                f"{task.id}: exceeded max failures ({self.max_failures}): {detail}"
+            )
+        else:
+            task.status = TaskStatus.FAILED
+            state.phase = "retrying"
+
     def run_once(self, project_id: str, tasks: list[Task]) -> ProjectState:
         state = self.state_store.load(project_id)
         state.iteration += 1
-        task = self.planner.next_task(tasks, state.completed_tasks)
+        task = self.planner.next_task(tasks, state.completed_tasks, self.max_failures)
         if task is None:
             all_task_ids = {item.id for item in tasks}
+            exhausted = [
+                item.id for item in tasks
+                if item.id not in state.completed_tasks
+                and item.failure_count >= self.max_failures
+            ]
             if all_task_ids.issubset(state.completed_tasks):
                 state.phase = "maintenance" if not state.blockers else "blocked"
+            elif exhausted:
+                state.phase = "blocked"
+                state.blockers.append("retry budget exhausted: " + ", ".join(sorted(exhausted)))
             else:
                 state.phase = "blocked"
                 missing = sorted(all_task_ids - state.completed_tasks)
@@ -78,28 +104,22 @@ class Supervisor:
         try:
             success = bool(self.executor(task))
         except Exception as exc:
-            state.phase = "blocked"
-            state.blockers.append(f"{task.id}: {type(exc).__name__}: {exc}")
-            self._evidence("execution", task.id, "FAILED", str(exc))
-            self._checkpoint(task.id, "failed")
+            detail = f"{type(exc).__name__}: {exc}"
+            self._failure(state, task, detail)
             self.state_store.save(state)
-            raise
+            return state
 
         if not success:
-            state.phase = "blocked"
-            state.blockers.append(f"{task.id}: executor reported failure")
-            self._evidence("execution", task.id, "FAILED", "executor reported failure")
-            self._checkpoint(task.id, "failed")
+            self._failure(state, task, "executor reported failure")
         else:
             verification = None
             if self.verifier and self.acceptance_provider:
                 verification = self.verifier.verify(self.acceptance_provider(task))
                 self._evidence("verification", task.id, verification.status, "; ".join(verification.details))
             if verification is not None and verification.status != "VERIFIED":
-                state.phase = "blocked"
-                state.blockers.append(f"{task.id}: acceptance verification failed")
-                self._checkpoint(task.id, "verification_failed")
+                self._failure(state, task, "acceptance verification failed", "verification_failed")
             else:
+                task.status = TaskStatus.DONE
                 state.completed_tasks.add(task.id)
                 state.phase = "verified"
                 state.current_task = None
