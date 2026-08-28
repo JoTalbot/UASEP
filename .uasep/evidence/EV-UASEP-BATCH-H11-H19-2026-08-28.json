@@ -1,10 +1,16 @@
 {
-  "id":"EV-UASEP-BATCH-H11-H19-2026-08-28",
+  "evidence_id":"EV-UASEP-BATCH-H11-H19-2026-08-28",
   "task_id":"UASEP-BATCH-H11-H19-2026-08-28",
+  "timestamp":"2026-08-28 UTC",
+  "agent":"fresh-agent-session-2026-08-28",
+  "operation":"H11-H19 verification batch",
+  "scope":"H11-H19",
   "result":"VERIFIED",
-  "scope":["H11","H12","H13","H14","H15","H16","H17","H18","H19"],
-  "observations":["H11-H13 conformance tests exist and match current runtime-free/repository-native contracts.","H14 protocol/CONFORMANCE.md contains the normative conformance specification.","H15 docs/BATCH_EXECUTION.md contains the batch execution procedure.","H16 failure knowledge now records both the initial unknown CI observation and the concrete setup-python cache failure with its successful resolution.","H17 decisions record exists and documents the runtime-free and evidence-based operating decisions.","H18 STATUS.md and H19 HANDOFF.md were synchronized with current state and verified CI evidence.","Canonical conformance run #44 completed successfully on main."],
-  "verification_source":"Current repository artifacts on main plus canonical GitHub Actions run #44",
-  "limitations":["H20 is not included because it requires a genuinely independent fresh-agent session."],
-  "verified_at":"2026-08-28 UTC"
+  "source":"Repository artifacts and canonical GitHub Actions run #44",
+  "observed":"H11-H13 conformance tests, H14 normative conformance specification, H15 batch execution procedure, H16 failure knowledge, H17 decision record, and H18-H19 durable state synchronization were verified. Canonical conformance run #44 completed successfully on main.",
+  "commit":"7794dcc5eda08eddf1c9578bed5710f4cc651e86",
+  "changed_files":[],
+  "verification":"Repository-native artifact review plus canonical GitHub Actions run #44.",
+  "limitations":["H20 was not included because it required an independent fresh-agent session."],
+  "related":["UASEP-BATCH-H11-H19-2026-08-28"]
 }
