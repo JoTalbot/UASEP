@@ -13,6 +13,7 @@ def test_manifest_schema_is_valid_json():
     schema = json.loads((ROOT / "schemas" / "manifest.schema.json").read_text())
     assert schema["$schema"].endswith("draft/2020-12/schema")
     assert schema["properties"]["protocol"]["const"] == "UASEP"
+    assert schema["properties"]["runtime"]["const"] == "NONE"
 
 
 def test_reference_manifest_is_conformant_when_validator_available():
@@ -21,10 +22,12 @@ def test_reference_manifest_is_conformant_when_validator_available():
     schema = json.loads((ROOT / "schemas" / "manifest.schema.json").read_text())
     manifest = {
         "protocol": "UASEP",
-        "protocol_version": "3.1.0",
+        "protocol_version": "3.4.0",
         "project_instance": "example",
-        "project_state": "active",
-        "autonomy_level": "L4",
+        "project_state": "ADOPTED",
+        "autonomy_level": "L0",
+        "source_of_truth": "repository",
+        "runtime": "NONE",
     }
     jsonschema.Draft202012Validator.check_schema(schema)
     jsonschema.validate(manifest, schema)
