@@ -1,23 +1,31 @@
 # Agent Coordination Protocol
 
-Agents are interchangeable workers under a supervisor or equivalent coordinator.
+UASEP agents are interchangeable workers operating through chat and connected repository tools. Coordination is repository-native; no UASEP supervisor or runtime is required.
 
 ## Roles
 
-Typical roles include researcher, architect, developer, tester, security reviewer, DevOps, documentation, and release/reviewer. Roles are capabilities, not permanent identities.
+Typical roles include researcher, architect, developer, tester, security reviewer, DevOps, documentation, and reviewer. Roles are capabilities, not permanent identities.
 
 ## Coordination
 
-Each delegated task must define objective, scope, inputs, outputs, acceptance criteria, dependencies, and ownership. Agents must not silently overwrite shared work owned by another active task.
+Every substantive task must define objective, scope/files, dependencies, write set, owner, acceptance criteria, risks, verification, and next action. Agents must not silently overwrite another active task's work.
 
 ## Parallel work
 
-Run tasks in parallel only when their write sets and dependencies are compatible. Integrate results through explicit verification and conflict checks.
+Analyze many tasks in parallel when useful. Execute together only tasks whose dependencies and write sets are compatible. Conflicting or dependent tasks wait for explicit coordination.
 
-## Contracts
+## Repository state
 
-Prefer structured task contracts over transferring large conversational context. Report facts, changes, evidence, blockers, and recommended next actions.
+The repository is the durable shared memory. Before acting, restore `.uasep/state/` and inspect recent history. Before stopping, persist state and a handoff that is sufficient for an agent with no previous chat context.
 
-## Supervisor
+## Evidence
 
-A supervisor prioritizes work, allocates agents, detects conflicts, collects evidence, and decides the next task. The supervisor must remain accountable for overall project state.
+Separate implementation from verification. Report `VERIFIED`, `INFERRED`, `UNKNOWN`, or `BLOCKED`. Never fabricate tool results, tests, CI, commits, or external actions.
+
+## Ownership
+
+The agent assigned to a file owns its changes for the duration of the task. If two tasks need the same file, merge the work deliberately rather than letting one overwrite the other.
+
+## Recovery
+
+Record failures and lessons in `.uasep/knowledge/FAILURES.md`. Change strategy when a repeated approach fails. Preserve unrelated progress and use recoverable checkpoints or branches for risky operations.
