@@ -1,119 +1,148 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Callable, Iterable
+from collections.abc import Callable, Iterable
 from pathlib import Path
 
-from .checkpoint_store import CheckpointStore
-from .evidence_store import Evidence, EvidenceStore
-from .models import ProjectState, Task
-from .planner import Planner
-from .state import StateStore
-from .verification import VerificationEngine
+from .graph import TaskGraph
+from .models import CycleResult, ProjectState, Task, TaskStatus
+from .safety import ApprovalGate, ApprovalRequest
+from .store import Store
+from .verify import VerificationEngine
+
+ExecuteFn = Callable[[Task], bool]
+ChecksFn = Callable[[Task], Iterable[tuple[str, Callable[[], bool]]]]
 
 
-AcceptanceProvider = Callable[[Task], Iterable[tuple[str, Callable[[], bool]]]]
-
-
-@dataclass
 class Supervisor:
-    """Canonical persistent orchestration boundary for CLI, sandbox, or tool-connected hosts."""
+    """Canonical orchestration boundary: one cycle implementation."""
 
-    state_store: StateStore
-    planner: Planner
-    executor: Callable[[Task], bool]
-    verifier: VerificationEngine | None = None
-    acceptance_provider: AcceptanceProvider | None = None
-    evidence_store: EvidenceStore | None = None
-    checkpoint_store: CheckpointStore | None = None
+    def __init__(
+        self,
+        root: str | Path,
+        *,
+        execute: ExecuteFn | None = None,
+        checks: ChecksFn | None = None,
+        approval: ApprovalGate | None = None,
+        max_failures: int = 3,
+    ) -> None:
+        self.store = Store(root)
+        self.verifier = VerificationEngine()
+        self.approval = approval or ApprovalGate()
+        self.max_failures = max_failures
+        self._execute = execute or (lambda _task: True)
+        self._checks = checks or (lambda task: [(c, lambda: True) for c in task.acceptance_criteria] or [("noop", lambda: True)])
 
-    @classmethod
-    def with_project_runtime(
-        cls,
-        root: Path,
-        executor: Callable[[Task], bool],
-        planner: Planner | None = None,
-        acceptance_provider: AcceptanceProvider | None = None,
-    ) -> "Supervisor":
-        base = root / ".uasep"
-        return cls(
-            StateStore(root),
-            planner or Planner(),
-            executor,
-            verifier=VerificationEngine(),
-            acceptance_provider=acceptance_provider,
-            evidence_store=EvidenceStore(base / "evidence" / "runtime.json"),
-            checkpoint_store=CheckpointStore(base / "checkpoints" / "journal.json"),
-        )
+    def run_once(self, project_id: str) -> CycleResult:
+        state, graph = self.store.load_bundle(project_id)
+        state.project_id = project_id or state.project_id
 
-    def _checkpoint(self, task_id: str | None, phase: str) -> None:
-        if self.checkpoint_store:
-            self.checkpoint_store.save(task_id, phase)
-
-    def _evidence(self, kind: str, claim: str, status: str, detail: str = "") -> None:
-        if self.evidence_store:
-            self.evidence_store.record(Evidence(kind, claim, status, detail))
-
-    def run_once(self, project_id: str, tasks: list[Task]) -> ProjectState:
-        state = self.state_store.load(project_id)
-        state.iteration += 1
-        task = self.planner.next_task(tasks, state.completed_tasks)
-        if task is None:
-            all_task_ids = {item.id for item in tasks}
-            if all_task_ids.issubset(state.completed_tasks):
-                state.phase = "maintenance" if not state.blockers else "blocked"
-            else:
-                state.phase = "blocked"
-                missing = sorted(all_task_ids - state.completed_tasks)
-                if missing:
-                    state.blockers.append("no runnable task: " + ", ".join(missing))
-            self.state_store.save(state)
-            self._checkpoint(None, state.phase)
-            return state
-
-        state.phase = "executing"
-        state.current_task = task.id
-        self.state_store.save(state)
-        self._checkpoint(task.id, "executing")
         try:
-            success = bool(self.executor(task))
-        except Exception as exc:
+            graph.validate()
+        except ValueError as exc:
             state.phase = "blocked"
-            state.blockers.append(f"{task.id}: {type(exc).__name__}: {exc}")
-            self._evidence("execution", task.id, "FAILED", str(exc))
-            self._checkpoint(task.id, "failed")
-            self.state_store.save(state)
-            raise
+            state.blockers.append(str(exc))
+            self.store.save_state(state)
+            return CycleResult(None, "BLOCKED", state.iteration, str(exc))
 
-        if not success:
-            state.phase = "blocked"
-            state.blockers.append(f"{task.id}: executor reported failure")
-            self._evidence("execution", task.id, "FAILED", "executor reported failure")
-            self._checkpoint(task.id, "failed")
-        else:
-            verification = None
-            if self.verifier and self.acceptance_provider:
-                verification = self.verifier.verify(self.acceptance_provider(task))
-                self._evidence("verification", task.id, verification.status, "; ".join(verification.details))
-            if verification is not None and verification.status != "VERIFIED":
-                state.phase = "blocked"
-                state.blockers.append(f"{task.id}: acceptance verification failed")
-                self._checkpoint(task.id, "verification_failed")
+        ready = graph.ready()
+        if not ready:
+            if not graph.tasks or len(graph.succeeded()) == len(graph.tasks):
+                state.phase = "complete" if graph.tasks else "maintenance"
             else:
-                state.completed_tasks.add(task.id)
-                state.phase = "verified"
-                state.current_task = None
-                self._evidence("completion", task.id, "VERIFIED", "acceptance checks passed")
-                self._checkpoint(task.id, "verified")
+                state.phase = "blocked"
+            state.active_task = None
+            self.store.save_bundle(state, graph)
+            self.store.checkpoint(None, state.phase)
+            return CycleResult(None, state.phase.upper(), state.iteration)
 
-        self.state_store.save(state)
-        return state
+        task = ready[0]
+        state.iteration += 1
+        state.active_task = task.id
+        state.phase = "active"
+        graph.apply(task.id, TaskStatus.RUNNING)
+        self.store.save_bundle(state, graph)
+        self.store.checkpoint(task.id, "running")
 
-    def run_until_blocked(self, project_id: str, tasks: list[Task], max_cycles: int = 100) -> ProjectState:
-        """Continue from persisted state until blocked, maintenance, or the cycle budget is exhausted."""
-        state = self.state_store.load(project_id)
+        request = ApprovalRequest(
+            key=f"execute:{task.id}",
+            summary=task.objective,
+            destructive=task.risk in {"high", "critical"},
+        )
+        if not self.approval.allow(task, request):
+            graph.apply(task.id, TaskStatus.BLOCKED)
+            state.phase = "blocked"
+            state.blockers.append(f"{task.id}: approval required")
+            state.active_task = None
+            self.store.save_bundle(state, graph)
+            self.store.checkpoint(task.id, "blocked")
+            return CycleResult(task.id, "BLOCKED", state.iteration, "approval required")
+
+        try:
+            ok = bool(self._execute(task))
+        except Exception as exc:  # noqa: BLE001
+            ok = False
+            detail = f"{type(exc).__name__}: {exc}"
+            eid = self.store.record_evidence(task.id, "execution", "FAILED", detail)
+            graph.apply(task.id, TaskStatus.FAILED, eid)
+            self._after_failure(state, graph, task)
+            return CycleResult(task.id, "FAILED", state.iteration, detail)
+
+        if not ok:
+            eid = self.store.record_evidence(
+                task.id, "execution", "FAILED", "executor reported failure"
+            )
+            graph.apply(task.id, TaskStatus.FAILED, eid)
+            self._after_failure(state, graph, task)
+            return CycleResult(task.id, "FAILED", state.iteration, "executor reported failure")
+
+        verification = self.verifier.verify(self._checks(task))
+        eid = self.store.record_evidence(
+            task.id,
+            "verification",
+            verification.status,
+            "; ".join(verification.details),
+        )
+        if verification.status != "VERIFIED":
+            graph.apply(task.id, TaskStatus.FAILED, eid)
+            self._after_failure(state, graph, task)
+            return CycleResult(
+                task.id,
+                "FAILED",
+                state.iteration,
+                "; ".join(verification.details),
+            )
+
+        graph.apply(task.id, TaskStatus.VERIFIED, eid)
+        if task.id not in state.completed_tasks:
+            state.completed_tasks.append(task.id)
+        state.active_task = None
+        state.last_verified = task.id
+        state.phase = "complete" if not graph.ready() and len(graph.succeeded()) == len(graph.tasks) else "active"
+        self.store.record_evidence(task.id, "completion", "VERIFIED", "acceptance checks passed")
+        self.store.checkpoint(task.id, "verified")
+        self.store.save_bundle(state, graph)
+        return CycleResult(task.id, "VERIFIED", state.iteration)
+
+    def _after_failure(self, state: ProjectState, graph: TaskGraph, task: Task) -> None:
+        if task.failure_count >= self.max_failures:
+            graph.apply(task.id, TaskStatus.BLOCKED)
+            state.blockers.append(f"{task.id}: exceeded max failures ({self.max_failures})")
+            state.phase = "blocked"
+        else:
+            # Re-queue for a later attempt only if still useful; keep failed visible.
+            task.status = TaskStatus.FAILED
+            state.phase = "active" if graph.ready() else "blocked"
+        state.active_task = None
+        self.store.checkpoint(task.id, task.status.value)
+        self.store.save_bundle(state, graph)
+
+    def run_until_idle(self, project_id: str, max_cycles: int = 100) -> ProjectState:
+        state = self.store.load_state(project_id)
         for _ in range(max_cycles):
-            state = self.run_once(project_id, tasks)
-            if state.phase in {"blocked", "maintenance"}:
+            result = self.run_once(project_id)
+            state = self.store.load_state(project_id)
+            if result.status in {"COMPLETE", "BLOCKED", "MAINTENANCE"}:
+                return state
+            if state.phase in {"complete", "blocked", "maintenance", "handoff"}:
                 return state
         return state
