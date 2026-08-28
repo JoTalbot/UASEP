@@ -1,0 +1,11 @@
+{
+  "task_id": "UASEP-HARDEN-FIXTURE",
+  "owner": "conformance",
+  "branch": "main",
+  "write_set": ["tests/conformance/fixtures/ownership.json"],
+  "claim_time": "2026-08-28",
+  "expected_completion": "fixture",
+  "status": "RELEASED",
+  "last_refresh": null,
+  "transfer_to": null
+}
