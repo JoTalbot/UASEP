@@ -15,6 +15,7 @@ except ImportError:  # pragma: no cover
 
 ROOT = Path(__file__).resolve().parents[2]
 SCHEMA_DIR = ROOT / "schemas"
+EVIDENCE_DIR = ROOT / ".uasep" / "evidence"
 
 EXPECTED_SCHEMAS = (
     "manifest.schema.json",
@@ -56,6 +57,21 @@ def test_manifest_projection_matches_machine_readable_state():
     state = json.loads((ROOT / ".uasep" / "state" / "state.json").read_text())
     for key in ("protocol", "protocol_version", "project_state"):
         assert manifest[key] == state[key]
+
+
+@pytest.mark.skipif(jsonschema is None, reason="jsonschema is not installed")
+def test_all_repository_evidence_records_match_evidence_schema():
+    schema = json.loads((SCHEMA_DIR / "evidence.schema.json").read_text())
+    records = sorted(EVIDENCE_DIR.glob("*.json"))
+    assert records, "no evidence records found"
+
+    evidence_ids = []
+    for path in records:
+        document = json.loads(path.read_text(encoding="utf-8"))
+        jsonschema.Draft202012Validator(schema).validate(document)
+        evidence_ids.append(document["evidence_id"])
+
+    assert len(evidence_ids) == len(set(evidence_ids)), "duplicate evidence_id detected"
 
 
 def test_manifest_is_runtime_free():
