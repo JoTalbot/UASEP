@@ -1,35 +1,31 @@
 # Handoff
 
-Current objective: maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub Connector.
+Current objective: maintain UASEP as a complete repository-native operating protocol for AI agents working through chat and GitHub Connector.
 
-Current step: M11-M20 protocol-invariant conformance coverage completed and verified by canonical main-branch CI; durable state synchronized.
+Current step: continue maintenance batch M21-M40 after correcting durable-state planning drift.
 
 Completed:
-- verified main branch, repository-native instructions, protocol 3.4.0, ADOPTED phase, and no active ownership conflict;
-- completed the canonical CI repair and observed canonical run #44 complete successfully;
-- verified and synchronized H01-H10;
-- verified H11 cross-artifact invariants, H12 runtime-free invariant, and H13 branch/conformance discipline;
-- verified H14 conformance documentation index and H15 batch execution guide;
-- reconciled H16 failure knowledge with the observed CI blocker and its successful resolution;
-- verified H17 decision record and synchronized H18 durable status and H19 handoff;
-- recorded H11-H19 batch evidence and released its ownership;
-- reconciled the repository's recorded H20 fresh-agent acceptance evidence into MASTER_PLAN.md, STATUS.md, and state.json;
-- analyzed and implemented M11-M20 protocol invariant conformance coverage;
-- fixed stale assumptions exposed by canonical CI and verified the corrected suite in main-branch run #72;
-- recorded M11-M20 evidence and synchronized durable task/batch/state artifacts.
+- verified `main`, protocol 3.4.0, ADOPTED phase, and repository write access;
+- verified H01-H20 as complete from durable repository evidence;
+- verified M11-M20 conformance coverage and canonical main-branch run #72 success at its tested commit;
+- corrected stale `.uasep/state/PROJECT_STATE.md` statements about acceptance and CI status;
+- added a conformance assertion for durable-state narrative consistency;
+- replaced the stale H01-H20 `NEXT_20.md` backlog with the M21-M40 maintenance backlog.
 
-Current task: NONE.
+Current task: M21-M23 maintenance continuation.
 
 Unverified:
-- Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
+- The latest maintenance commits have not yet been independently exercised by a new CI result visible through the available GitHub connector actions.
+- Historical search indexes may retain provenance from retired architecture.
 
 Blockers: none known.
 
 Next action:
-1. Perform continuous repository-native maintenance/conformance audits when requirements or normative artifacts change.
-2. Re-score `.uasep/planning/NEXT_20.md` when new requirements arrive.
-3. Do not reopen H01-H20 or M11-M20 without a concrete defect, drift finding, or new acceptance requirement.
+1. Verify the latest `main` state and inspect the CI result when available.
+2. Continue M24-M40 only after M21-M23 verification is recorded.
+3. Keep state, evidence, plan, and handoff synchronized after consequential changes.
+4. Do not reopen completed batches without a concrete defect, drift finding, or new acceptance requirement.
 
-Evidence status: H01-H20 and M11-M20 are represented as complete in durable planning/state based on repository evidence; canonical conformance is VERIFIED / SUCCESS from main-branch run #72.
+Evidence status: H01-H20 and M11-M20 remain VERIFIED / COMPLETE. M21-M23 are implemented/planned as described in `.uasep/planning/NEXT_20.md`; the new test change remains UNKNOWN until independently executed.
 
-Note: an unintended branch `fix/conformance-cache` was previously created during tool interaction; no work was performed on it and `main` remains the working branch.
+Note: `main` is the working branch. The older unintended `fix/conformance-cache` branch contains no work from this maintenance pass.
