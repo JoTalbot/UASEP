@@ -1,0 +1,30 @@
+{
+  "id": "UASEP-ACCEPT-2026-08-28",
+  "objective": "Execute the fresh-agent acceptance procedure from repository state alone and record the observed result.",
+  "owner": "fresh-agent-session-2026-08-28",
+  "branch": "main",
+  "write_set": [
+    ".uasep/state/TASK_UASEP-ACCEPT-2026-08-28.json",
+    ".uasep/state/OWNERSHIP_UASEP-ACCEPT-2026-08-28.json",
+    ".uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json",
+    ".uasep/state/state.json",
+    ".uasep/state/STATUS.md",
+    ".uasep/state/HANDOFF.md"
+  ],
+  "dependencies": ["UASEP-HARDEN-2026-08-28"],
+  "conflicts": [],
+  "acceptance": [
+    "Fresh-agent bootstrap identifies repository JoTalbot/UASEP on main without chat-history dependence.",
+    "Applicable instructions, protocol version, durable state, current phase, task state, ownership, blockers, and capabilities are identified from repository state.",
+    "Fresh-agent acceptance criteria are assessed without treating historical runtime/AIOS2 references as active requirements.",
+    "Observed result and limitations are recorded using the evidence schema."
+  ],
+  "risk": "LOW",
+  "verification": [
+    "Inspect the repository-native acceptance runbook and the observed repository state.",
+    "Re-read the created evidence and durable-state files after writing them.",
+    "Observe GitHub commit result; do not equate repository-write success with test or CI success."
+  ],
+  "status": "IN_PROGRESS",
+  "next_action": "Execute and record the acceptance assessment, then release ownership."
+}
