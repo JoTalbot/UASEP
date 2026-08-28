@@ -2,8 +2,12 @@ from __future__ import annotations
 
 from dataclasses import asdict, dataclass
 from datetime import datetime, timezone
+import hashlib
 import json
 from pathlib import Path
+
+
+SCHEMA_VERSION = 2
 
 
 @dataclass(frozen=True, slots=True)
@@ -15,7 +19,7 @@ class Checkpoint:
 
 
 class CheckpointStore:
-    """Append-only checkpoint journal for interruption-safe development."""
+    """Append-only checkpoint journal with integrity metadata."""
 
     def __init__(self, path: Path) -> None:
         self.path = path
@@ -35,16 +39,43 @@ class CheckpointStore:
         self._write(entries)
         return checkpoint
 
+    def _payload(self, entries: list[dict]) -> dict:
+        return {
+            "schema_version": SCHEMA_VERSION,
+            "entries": entries,
+        }
+
+    def _checksum(self, payload: dict) -> str:
+        raw = json.dumps(payload, sort_keys=True, separators=(",", ":"))
+        return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
     def _write(self, entries: list[dict]) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
+        payload = self._payload(entries)
+        document = {
+            **payload,
+            "checksum": self._checksum(payload),
+        }
         temporary = self.path.with_suffix(self.path.suffix + ".tmp")
-        temporary.write_text(json.dumps(entries, indent=2), encoding="utf-8")
+        temporary.write_text(json.dumps(document, indent=2), encoding="utf-8")
         temporary.replace(self.path)
 
     def all(self) -> list[dict]:
         if not self.path.exists():
             return []
-        entries = json.loads(self.path.read_text(encoding="utf-8"))
+
+        document = json.loads(self.path.read_text(encoding="utf-8"))
+        if isinstance(document, list):
+            entries = document
+        else:
+            payload = {
+                "schema_version": document.get("schema_version"),
+                "entries": document.get("entries", []),
+            }
+            if document.get("checksum") != self._checksum(payload):
+                raise ValueError("checkpoint checksum mismatch")
+            entries = payload["entries"]
+
         self._validate_entries(entries)
         return entries
 
