@@ -30,10 +30,8 @@ def test_durable_state_narratives_do_not_drift():
     handoff = _read(".uasep/state/HANDOFF.md")
 
     protocol_version = state["protocol_version"]
-    protocol_major_minor = ".".join(protocol_version.split(".")[:2])
     assert f"Status: {state['project_state']}" in project_state
-    assert f"version {protocol_version}" in project_state
-    assert f"protocol {protocol_major_minor}" in project_state or f"Version: {protocol_major_minor}" in project_state
+    assert f"Protocol version: {protocol_version}" in project_state
     assert f"Phase: {state['project_state']}" in status
     assert f"- ID: {state['active_task']}" in status
     assert "Current task: M21-M23 maintenance continuation." in handoff
@@ -52,10 +50,10 @@ def test_evidence_artifacts_match_schema_contract():
     schema = json.loads(_read("schemas/evidence.schema.json"))
     required = set(schema["required"])
     allowed_results = set(schema["properties"]["result"]["enum"])
-    evidence_dir = ROOT / ".uasep/evidence"
+    evidence_dir = ROOT / ".uasep" / "evidence"
     ids = set()
 
-    for path in evidence_dir.glob("EV-*.json"):
+    for path in sorted(evidence_dir.glob("*.json")):
         data = json.loads(path.read_text(encoding="utf-8"))
         assert required.issubset(data.keys())
         assert data["result"] in allowed_results
