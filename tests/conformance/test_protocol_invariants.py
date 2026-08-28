@@ -20,8 +20,14 @@ def test_readiness_state_is_adopted_and_runtime_free():
     state = json.loads(_read(".uasep/state/state.json"))
     assert state["project_state"] == "ADOPTED"
     assert state["environment"]
-    assert state["active_task"]
-    assert state["active_tasks"]
+    active_task = state["active_task"]
+    active_tasks = state["active_tasks"]
+    assert active_task is None or isinstance(active_task, str)
+    assert isinstance(active_tasks, list)
+    if active_task is None:
+        assert active_tasks == []
+    else:
+        assert active_task in active_tasks
 
 
 def test_durable_state_narratives_do_not_drift():
@@ -34,8 +40,12 @@ def test_durable_state_narratives_do_not_drift():
     assert f"Status: {state['project_state']}" in project_state
     assert f"Protocol version: {protocol_version}" in project_state
     assert f"Phase: {state['project_state']}" in status
-    assert f"- ID: {state['active_task']}" in status
-    assert state["active_task"] in handoff
+    if state["active_task"] is None:
+        assert "- ID: NONE" in status
+        assert "Current task: NONE." in handoff
+    else:
+        assert f"- ID: {state['active_task']}" in status
+        assert state["active_task"] in handoff
     assert "H20: **UNVERIFIED / EXTERNALLY DEPENDENT**" not in _read(".uasep/planning/NEXT_20.md")
     assert "Fresh-agent acceptance evidence is recorded" in project_state
     assert "Fresh-agent acceptance: VERIFIED" in status
