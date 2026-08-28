@@ -1,0 +1,16 @@
+{
+  "evidence_id": "UASEP-HARDEN-FIXTURE",
+  "task_id": "UASEP-HARDEN-FIXTURE",
+  "timestamp": "2026-08-28",
+  "agent": "conformance",
+  "operation": "fixture validation",
+  "scope": "tests/conformance/fixtures/evidence.json",
+  "result": "VERIFIED",
+  "source": "repository fixture",
+  "observed": "Fixture has all required evidence fields.",
+  "commit": null,
+  "changed_files": [],
+  "verification": "JSON Schema validation",
+  "limitations": ["fixture is not evidence of external CI"],
+  "related": []
+}
