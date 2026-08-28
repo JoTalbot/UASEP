@@ -10,16 +10,20 @@
 - [x] Conformance specification and practical acceptance scenarios
 - [x] Adoption and multi-machine guidance
 - [x] Runtime-free architecture
+- [x] Machine-readable schema fixtures and repository-native conformance checks
+- [x] Batch execution hardening and durable-state synchronization
 
 ## Remaining validation
 - [ ] Run the complete fresh-agent acceptance pass from an independent session
 - [ ] Record acceptance evidence in `.uasep/evidence/`
 - [ ] Resolve any defects discovered by that pass
+- [ ] Observe a canonical automated CI workflow run
 
 ## Continuous maintenance
 - [ ] Re-audit protocol/schema consistency after normative changes
 - [ ] Update skills and examples when recurring failure patterns are discovered
 - [ ] Maintain durable failure and decision knowledge
+- [ ] Re-score `.uasep/planning/NEXT_20.md` when new requirements arrive
 
 ## Explicit non-goals
 
