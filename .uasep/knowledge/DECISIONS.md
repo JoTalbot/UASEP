@@ -23,3 +23,15 @@ Reason: session independence and reliable handoff.
 Decision: completion claims require evidence proportional to risk.
 
 Reason: prevents false confidence and unverifiable status reporting.
+
+## ADR-005 — Runtime-free reference protocol
+
+Decision: UASEP's reference form is repository-native instructions, skills, state, evidence, tasks, decisions, and examples. No runtime, daemon, CLI, executor framework, or AIOS2 integration is required.
+
+Reason: the primary operating environment is chat with a GitHub-connected agent. Adding executable infrastructure would create complexity without improving that workflow.
+
+## ADR-006 — Durable status is mandatory
+
+Decision: `.uasep/state/STATUS.md` is the compact operational handoff for substantive work.
+
+Reason: another agent must be able to continue from repository state without hidden chat history.
