@@ -5,5 +5,6 @@
   "write_set":[".uasep/planning/NEXT_20.md",".uasep/knowledge/FAILURES.md",".uasep/knowledge/DECISIONS.md",".uasep/state/STATUS.md",".uasep/state/HANDOFF.md",".uasep/state/state.json",".uasep/state/TASK_UASEP-BATCH-H11-H19-2026-08-28.json",".uasep/state/OWNERSHIP_UASEP-BATCH-H11-H19-2026-08-28.json",".uasep/evidence/EV-UASEP-BATCH-H11-H19-2026-08-28.json"],
   "claim_time":"2026-08-28 UTC",
   "expected_completion":"After H11-H19 verification and durable-state synchronization",
-  "status":"ACTIVE"
+  "status":"RELEASED",
+  "release_reason":"Batch verified and durable state synchronized"
 }
