@@ -1,0 +1,11 @@
+{
+  "environment": "fixture",
+  "agent": "conformance",
+  "capabilities": {
+    "repository_read": "available",
+    "repository_write": "available",
+    "workflow_dispatch": "unknown"
+  },
+  "limitations": ["fixture environment"],
+  "evidence": ["fixture"]
+}
