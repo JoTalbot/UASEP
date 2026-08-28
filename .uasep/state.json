@@ -1,23 +1,23 @@
 {
-  "protocol": "UASEP",
-  "protocol_version": "3.2.0-new",
-  "project_id": "uasep-reference",
-  "phase": "active",
-  "autonomy_level": "L3",
-  "environment": "github-branch-new",
-  "objective": "Unify UASEP runtime: one Task, one Graph, one Supervisor",
   "active_task": null,
+  "autonomy_level": "L3",
+  "blockers": [],
   "completed_tasks": [
     "UASEP-UNIFY-001",
-    "UASEP-UNIFY-002"
+    "UASEP-UNIFY-002",
+    "UASEP-UNIFY-004"
   ],
-  "blockers": [],
+  "environment": "github-branch-new",
   "iteration": 0,
-  "last_verified": "UASEP-UNIFY-002",
+  "last_verified": "UASEP-UNIFY-004",
   "next_best_actions": [
-    "Align legacy AutonomousLoop callers to Supervisor",
-    "Run full pytest on branch new",
-    "Add local_cli adapter",
-    "Remove duplicate runtime modules after green tests"
-  ]
+    "UASEP-UNIFY-003: delete dead legacy modules",
+    "UASEP-CONF-001: deepen conformance MUST tests",
+    "UASEP-ADAPT-001: local_cli adapter"
+  ],
+  "objective": "UASEP unified runtime on branch new — independent of main",
+  "phase": "active",
+  "project_id": "uasep-reference",
+  "protocol": "UASEP",
+  "protocol_version": "3.2.0-new"
 }

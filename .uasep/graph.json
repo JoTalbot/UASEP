@@ -8,14 +8,11 @@
       "status": "verified",
       "priority": 100,
       "dependencies": [],
-      "acceptance_criteria": [
-        "runtime/models.py defines single Task",
-        "runtime/graph.py persists via store"
-      ],
+      "acceptance_criteria": ["single Task model", "graph persistence"],
       "risk": "medium",
       "owner": null,
       "evidence_ids": [],
-      "notes": "target-design implementation",
+      "notes": "",
       "failure_count": 0
     },
     {
@@ -24,9 +21,7 @@
       "status": "verified",
       "priority": 90,
       "dependencies": ["UASEP-UNIFY-001"],
-      "acceptance_criteria": [
-        "runtime/supervisor.py run_once verifies before complete"
-      ],
+      "acceptance_criteria": ["run_once verifies before complete"],
       "risk": "medium",
       "owner": null,
       "evidence_ids": [],
@@ -34,19 +29,58 @@
       "failure_count": 0
     },
     {
-      "id": "UASEP-UNIFY-003",
-      "objective": "Migrate legacy modules and green CI on branch new",
-      "status": "queued",
-      "priority": 80,
+      "id": "UASEP-UNIFY-004",
+      "objective": "No dual orchestration semantics on branch new",
+      "status": "verified",
+      "priority": 85,
       "dependencies": ["UASEP-UNIFY-002"],
       "acceptance_criteria": [
-        "pytest passes",
-        "legacy dual path removed or thin-wrapped"
+        "AutonomousLoop delegates to Supervisor",
+        "StateStore delegates to Store"
       ],
-      "risk": "high",
+      "risk": "low",
       "owner": null,
       "evidence_ids": [],
-      "notes": "remaining work",
+      "notes": "cutover commit",
+      "failure_count": 0
+    },
+    {
+      "id": "UASEP-UNIFY-003",
+      "objective": "Remove dead legacy modules; keep only necessary surface",
+      "status": "queued",
+      "priority": 80,
+      "dependencies": ["UASEP-UNIFY-004"],
+      "acceptance_criteria": ["unused legacy files deleted or empty redirects only"],
+      "risk": "medium",
+      "owner": null,
+      "evidence_ids": [],
+      "notes": "",
+      "failure_count": 0
+    },
+    {
+      "id": "UASEP-CONF-001",
+      "objective": "Conformance checks cover protocol MUST invariants",
+      "status": "queued",
+      "priority": 70,
+      "dependencies": ["UASEP-UNIFY-003"],
+      "acceptance_criteria": ["check_project validates state+graph"],
+      "risk": "low",
+      "owner": null,
+      "evidence_ids": [],
+      "notes": "",
+      "failure_count": 0
+    },
+    {
+      "id": "UASEP-ADAPT-001",
+      "objective": "local_cli host adapter for execute + acceptance",
+      "status": "queued",
+      "priority": 60,
+      "dependencies": ["UASEP-CONF-001"],
+      "acceptance_criteria": ["adapter discovers capabilities honestly"],
+      "risk": "medium",
+      "owner": null,
+      "evidence_ids": [],
+      "notes": "",
       "failure_count": 0
     }
   ]
