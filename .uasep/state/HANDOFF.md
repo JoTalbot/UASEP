@@ -1,25 +1,29 @@
 # Handoff
 
-Current objective: make UASEP a runtime-free operating protocol for AI agents working through chat and GitHub Connector.
+Current objective: make UASEP a complete runtime-free operating protocol for AI agents working through chat and GitHub Connector.
 
-Current step: baseline converted from executable reference runtime to repository-native protocol.
+Current step: protocol hardening and documentation consistency audit.
 
 Completed:
-- retired the UASEP runtime implementation and runtime packaging/tests;
+- retired executable UASEP runtime, packaging, runtime tests, and runtime CI from the active tree;
 - established root `AGENTS.md` as the mandatory agent contract;
-- added reusable skills for workflow, task contracts, parallel batches, verification, handoff, and failure recovery;
-- updated protocol coordination rules to be runtime-free;
-- updated README and project direction.
+- added reusable workflow skills for task contracts, parallel batches, verification, handoff, recovery, and self-maintenance;
+- established repository-backed state, evidence, decisions, and planning;
+- aligned `protocol/CONFORMANCE.md` with protocol v3.2;
+- removed stale `.uasep/state.json`, which still contained pre-runtime-free and AIOS2-era next actions;
+- confirmed Chat + GitHub Connector operating guidance and task/batch templates exist.
 
 Unverified:
-- full documentation consistency audit is still required;
-- remaining protocol/example files may contain historical runtime wording and should be normalized where appropriate.
+- exhaustive repository-wide wording audit for historical runtime/AIOS2 assumptions;
+- example-based conformance scenarios and final adoption pass.
 
 Blockers: none known.
 
 Next action:
-1. audit all protocol/docs/examples for runtime or AIOS2 assumptions;
-2. normalize the manifest, state, master plan, and backlog;
-3. add explicit GitHub Connector operating guidance;
-4. define durable status/evidence formats suitable for chat-only agents;
-5. keep all future work documentation-first unless a concrete connector limitation requires code.
+1. inspect every protocol, skill, docs, and example for obsolete runtime/AIOS2 assumptions;
+2. normalize inconsistencies without adding executable runtime code;
+3. strengthen multi-agent ownership/lease and handoff guidance;
+4. add practical conformance examples;
+5. keep future work documentation-first unless a concrete connector limitation requires another mechanism.
+
+Evidence status: repository changes above are confirmed by successful GitHub content operations; no CI result is claimed.
