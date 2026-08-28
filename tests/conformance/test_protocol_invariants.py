@@ -23,6 +23,24 @@ def test_readiness_state_is_adopted_and_runtime_free():
     assert state["active_tasks"] == []
 
 
+def test_durable_state_narratives_do_not_drift():
+    state = json.loads(_read(".uasep/state/state.json"))
+    project_state = _read(".uasep/state/PROJECT_STATE.md")
+    status = _read(".uasep/state/STATUS.md")
+    handoff = _read(".uasep/state/HANDOFF.md")
+
+    assert f"Status: {state['project_state']}" in project_state
+    assert f"protocol {state['protocol_version'].rsplit('.', 1)[0]}" in project_state
+    assert f"Phase: {state['project_state']}" in status
+    assert "- ID: NONE" in status
+    assert "Current task: NONE." in handoff
+    assert "H20: **UNVERIFIED / EXTERNALLY DEPENDENT**" not in _read(
+        ".uasep/planning/NEXT_20.md"
+    )
+    assert "Fresh-agent acceptance evidence is recorded" in project_state
+    assert "Fresh-agent acceptance: VERIFIED" in status
+
+
 def test_capability_claims_are_repository_bounded():
     manifest = _read(".uasep/manifest.yaml")
     assert "source_of_truth: repository" in manifest
