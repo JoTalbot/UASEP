@@ -1,9 +1,11 @@
 # Handoff
 
-Completed items 1–6: CI evidence, dual-module consolidate (checkpoints_v2 alias), supervisor multi-agent hook, state migration + per-project paths, AIOS2 e2e + CLI migrate/resume, README polish.
+CI confirmed green on all post-batch main commits (runs 192–195).
 
-Local verification: 115 pytest passed. Latest main CI was green before this push — re-check Actions after merge.
+Added `.github/workflows/maintenance.yml` (weekly drift + pytest + validate).
 
-Next: optional tag v3.1.2 release; deeper maintenance automation.
+Tag/release `v3.1.2` still manual (no create-release API in this host).
+
+Next: optional GitHub Release UI; unify schema vs runtime TaskStatus enums; further module consolidation.
 
 Do not modify branch `new`.

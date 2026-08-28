@@ -1,15 +1,12 @@
 # Test Evidence
 
-## 1–6 improvement batch
+## Items 1–6 + follow-up
 - Local: **115 pytest passed**
-- CI main (post-112): success — https://github.com/JoTalbot/UASEP/actions/runs/33143252388
-
-## Features covered
-- migration + per-project state paths
-- supervisor run_parallel_once
-- AIOS2 e2e discover/bootstrap/run
-- CLI migrate/resume
-- checkpoints_v2 alias
+- CI main success after batch:
+  - https://github.com/JoTalbot/UASEP/actions/runs/33144465691 (cli migrate/resume)
+  - https://github.com/JoTalbot/UASEP/actions/runs/33144432729
+  - https://github.com/JoTalbot/UASEP/actions/runs/33144404629 (multi-agent)
+  - https://github.com/JoTalbot/UASEP/actions/runs/33144348224 (migration)
 
 ## 3.1.2
-- Local 104+; PR #1 CI 3.10/3.11/3.12 green
+- PR #1 + matrix 3.10/3.11/3.12 green

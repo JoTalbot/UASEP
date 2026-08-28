@@ -1,6 +1,5 @@
 # Build Evidence
 
-## 3.1.2
-- CI matrix Python 3.10 / 3.11 / 3.12 — all green
-- Workflow: .github/workflows/tests.yml
-- Merged PR #1
+## Current main
+- Workflow: tests.yml — success on HEAD eef4cd1
+- Maintenance workflow: weekly Monday 06:00 UTC + manual dispatch

@@ -5,11 +5,11 @@
   "autonomy_level": "L4",
   "environment": "Python >=3.10",
   "objective": "Maintain a portable, verifiable autonomous engineering protocol",
-  "active_task": "Items 1-6 landed",
-  "last_verified": "Local 115 pytest; prior main CI green run 33143252388",
+  "active_task": "CI verified; maintenance workflow added",
+  "last_verified": "CI success runs 33144348224–33144465691; local 115 tests",
   "next_best_actions": [
-    "Confirm CI on this commit",
-    "Create GitHub release tag v3.1.2",
-    "Maintenance automation"
+    "Create GitHub Release v3.1.2 manually",
+    "Unify TaskStatus schema vs runtime enums",
+    "Consolidate replan/approval dual modules"
   ]
 }

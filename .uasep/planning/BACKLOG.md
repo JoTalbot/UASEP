@@ -1,9 +1,8 @@
 # Backlog
 
-- Tag/release v3.1.2 on GitHub Releases
-- Maintenance automation (scheduled drift+pytest)
-- Full self-improvement automation from metrics
+- Create GitHub Release tag v3.1.2 (manual UI)
 - Unify TaskStatus schema enum vs runtime enum
 - Further dual-module consolidation (replan/approval)
+- Full self-improvement automation from metrics
 
-Done: CI evidence, checkpoints_v2 alias, supervisor multi-agent, migration, per-project state, AIOS2 e2e, CLI migrate/resume, README.
+Done: CI evidence (runs 192–195), weekly maintenance workflow, items 1–6.
