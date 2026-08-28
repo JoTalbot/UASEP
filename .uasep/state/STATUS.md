@@ -10,24 +10,25 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Current task
 
-- ID: UASEP-HARDEN-2026-08-28
-- Owner: current chat agent
-- Scope: conformance fixtures, batch execution hardening, durable state synchronization
+- ID: NONE
+- Owner: NONE
+- Scope: NONE
 
 ## Progress
 
 - Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.4; mandatory agent contract and workflow skills established; canonical task lifecycle, ownership/lease, task contract, batch manifest, evidence schema, and readiness protocol added; session bootstrap and practical conformance scenarios added; multi-machine, conflict/recovery, new-project, existing-project adoption, parallel-batch, drift-detection, and fresh-agent acceptance guidance added.
 - Completed in current hardening batch: machine-readable state synchronization; 8 schema fixtures; fixture validation suite; runtime-free invariant checks; repository-native bootstrap/branch checks; explicit batch execution guide; CI evidence-boundary failure record; next-20-task plan.
+- Completed after hardening: fresh-agent acceptance assessment from repository state alone; evidence recorded in EV-UASEP-ACCEPT-2026-08-28.
 - Remaining implementation work: NONE in the current documentation-first scope.
-- Unverified: fresh independent-agent execution of the acceptance test; canonical automated CI execution.
+- Unverified: canonical automated CI execution.
 - Blocked: NONE known.
 
 ## Evidence
 
-- Repository changes: confirmed through successful GitHub content operations.
-- Machine-readable state is validated by the state schema and aligned with manifest-level protocol/version/state/runtime values.
+- Fresh-agent acceptance: VERIFIED by independent repository-native bootstrap assessment; see `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
+- Repository writes: confirmed through successful GitHub content operations.
+- Machine-readable state: prior repository evidence records validation by the state schema conformance test; no new test run is claimed here.
 - Automated CI: UNKNOWN — no canonical workflow result has been observed through the available Actions interface.
-- Fresh-agent acceptance: NOT_RUN.
 
 ## Decisions
 
@@ -38,7 +39,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Next action
 
-Run `examples/FRESH_AGENT_ACCEPTANCE.md` from a genuinely fresh agent/session with no originating chat history and record the result using `protocol/EVIDENCE_SCHEMA.md`. Separately, observe a canonical GitHub Actions run when available. If either produces defects, create targeted follow-up tasks rather than reopening completed hardening work.
+Observe a canonical GitHub Actions run when available. If CI or a future conformance/drift audit produces an actual defect, create a targeted follow-up task rather than reopening completed hardening work.
 
 ## Updated
 
