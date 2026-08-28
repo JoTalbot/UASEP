@@ -4,10 +4,10 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 
 ## P0 — Foundations
 
-- [x] UASEP-PROTO-001: Complete repository-wide audit for runtime/AIOS2 assumptions. — protocol migration substantially complete; final historical-index scan remains informational only.
+- [x] UASEP-PROTO-001: Complete repository-wide audit for runtime/AIOS2 assumptions. — active-tree migration complete; historical references are provenance only.
 - [x] UASEP-PROTO-002: Define canonical durable project status format.
 - [x] UASEP-PROTO-003: Define canonical evidence record format.
-- [ ] UASEP-PROTO-004: Define agent ownership/lease format for parallel work.
+- [x] UASEP-PROTO-004: Define agent ownership/lease format for parallel work.
 - [x] UASEP-PROTO-005: Define decision record format.
 - [x] UASEP-PROTO-006: Define explicit source-of-truth hierarchy.
 
@@ -19,7 +19,7 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 - [x] UASEP-AGENT-004: Document verification and evidence rules.
 - [x] UASEP-AGENT-005: Document failure recovery and anti-loop strategy.
 - [x] UASEP-AGENT-006: Document session handoff and continuation.
-- [ ] UASEP-AGENT-007: Document multi-machine/multi-agent coordination.
+- [x] UASEP-AGENT-007: Document multi-machine/multi-agent coordination.
 
 ## P1 — Chat + GitHub Connector
 
@@ -31,17 +31,17 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 
 ## P2 — Examples and adoption
 
-- [ ] UASEP-EXAMPLE-001: New-project example.
-- [ ] UASEP-EXAMPLE-002: Existing-project adoption example.
-- [ ] UASEP-EXAMPLE-003: Parallel batch example.
-- [ ] UASEP-EXAMPLE-004: Conflict/recovery example.
-- [ ] UASEP-EXAMPLE-005: Handoff between agents on different machines.
+- [x] UASEP-EXAMPLE-001: New-project example.
+- [x] UASEP-EXAMPLE-002: Existing-project adoption example.
+- [x] UASEP-EXAMPLE-003: Parallel batch example.
+- [x] UASEP-EXAMPLE-004: Conflict/recovery example.
+- [x] UASEP-EXAMPLE-005: Handoff between agents on different machines.
 
 ## P2 — Quality
 
-- [ ] UASEP-QUALITY-001: Documentation consistency self-audit.
+- [x] UASEP-QUALITY-001: Documentation consistency self-audit — active-tree consistency rules documented; historical index results remain non-authoritative.
 - [x] UASEP-QUALITY-002: Example-based conformance scenarios.
-- [ ] UASEP-QUALITY-003: Protocol drift detection guidance.
+- [x] UASEP-QUALITY-003: Protocol drift detection guidance.
 
 ## Non-goals
 
