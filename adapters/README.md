@@ -1,8 +1,12 @@
 # UASEP Adapters
 
-Adapters translate environment-specific tools into UASEP capabilities.
+UASEP is runtime-free. Adapters are documentation-level capability mappings, not executable runtime components.
 
-An adapter should expose, where supported:
+For the current Chat + GitHub Connector operating model, agents should use only capabilities actually exposed by the connected session.
+
+## Capability contract
+
+Where the environment supports them, an agent may identify capabilities such as:
 
 - `discover_capabilities`
 - `read_project`
@@ -13,11 +17,10 @@ An adapter should expose, where supported:
 - `git`
 - `handoff`
 
-Adapters must report unavailable operations honestly. They must not fabricate side effects.
+Unavailable operations MUST be reported as `UNKNOWN` or `BLOCKED`; agents must never fabricate side effects.
 
-Planned adapters:
+## Current environment
 
-- `chatgpt-github`
-- `local-cli`
-- `sandbox`
-- `aios2`
+The canonical operating environment is **chat + connected GitHub tools**.
+
+A local CLI, sandbox, autonomous executor, or separate runtime is not part of the current UASEP architecture.
