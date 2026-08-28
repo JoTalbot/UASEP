@@ -5,7 +5,7 @@
   "write_set": [".github/workflows/conformance.yml", ".uasep/state/TASK_UASEP-CI-2026-08-28.json", ".uasep/state/OWNERSHIP_UASEP-CI-2026-08-28.json", ".uasep/evidence/EV-UASEP-CI-2026-08-28.json", ".uasep/state/state.json", ".uasep/state/STATUS.md", ".uasep/state/HANDOFF.md", ".uasep/knowledge/FAILURES.md"],
   "claim_time": "2026-08-28 UTC",
   "expected_completion": "After workflow repair and canonical CI result are recorded",
-  "status": "ACTIVE",
+  "status": "RELEASED",
   "last_refresh": "2026-08-28 UTC",
   "transfer_to": null
 }
