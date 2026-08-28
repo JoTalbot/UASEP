@@ -17,6 +17,10 @@ class AcceptanceEngine:
     def evaluate(self, criteria: Iterable[tuple[str, Callable[[], bool]]]) -> list[CriterionResult]:
         results: list[CriterionResult] = []
         for description, check in criteria:
+            if not isinstance(description, str) or not description.strip():
+                raise ValueError("acceptance criterion description must not be empty")
+            if not callable(check):
+                raise TypeError(f"acceptance criterion check must be callable: {description}")
             try:
                 passed = bool(check())
                 results.append(CriterionResult(description, passed, "check returned normally"))
