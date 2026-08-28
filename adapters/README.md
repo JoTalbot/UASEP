@@ -1,23 +1,28 @@
-# UASEP Adapters
+# UASEP Adapters (branch `new`)
 
-Adapters translate environment-specific tools into UASEP capabilities.
+Adapters translate host tools into UASEP capabilities.
 
-An adapter should expose, where supported:
+## local_cli (implemented)
 
-- `discover_capabilities`
-- `read_project`
-- `read_state`
-- `write_artifact`
-- `execute`
-- `test`
-- `git`
-- `handoff`
+`adapters/local_cli.py` — `LocalCliAdapter`
 
-Adapters must report unavailable operations honestly. They must not fabricate side effects.
+- `discover()` — via `runtime.discovery`
+- `execute(task)` — conventions in `task.notes`
+- `checks_for(task)` — conventions in `acceptance_criteria`
 
-Planned adapters:
+Wire into Supervisor:
 
-- `chatgpt-github`
-- `local-cli`
-- `sandbox`
-- `aios2`
+```python
+from adapters.local_cli import LocalCliAdapter
+from runtime.supervisor import Supervisor
+
+host = LocalCliAdapter(".")
+sup = Supervisor(".", execute=host.execute, checks=host.checks_for)
+sup.run_until_idle(project_id)
+```
+
+## Planned (not required for core)
+
+- chatgpt-github
+- sandbox
+- aios2

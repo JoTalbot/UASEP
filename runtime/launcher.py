@@ -3,21 +3,19 @@ from __future__ import annotations
 import argparse
 from pathlib import Path
 
+from .discovery import capabilities_dict
 from .project_bootstrap import bootstrap_project
-from .aios2_adapter import AIOS2Adapter
-from .capabilities import CapabilityRegistry
 
 
 def launch(root: Path) -> dict[str, object]:
-    """Initialize the project-local UASEP boundary without touching project artifacts."""
+    """Bootstrap project-local UASEP without fabricating host capabilities."""
     root = root.resolve()
     created = bootstrap_project(root, root.name)
-    adapter = AIOS2Adapter(root, CapabilityRegistry())
     return {
         "project": root.name,
         "root": str(root),
         "created": [str(path.relative_to(root)) for path in created],
-        "capabilities": adapter.capability_names(),
+        "capabilities": capabilities_dict(root),
     }
 
 
