@@ -14,10 +14,10 @@ def test_checkpoint_rejects_non_list_journal(tmp_path: Path):
         CheckpointStore(path).all()
 
 
-def test_planner_keeps_duplicate_ids_stable_order():
+def test_planner_rejects_duplicate_ids():
     tasks = [
         Task("same", "first", priority=10),
         Task("same", "second", priority=10),
     ]
-    ready = Planner().ready_tasks(tasks, set())
-    assert [task.id for task in ready] == ["same", "same"]
+    with pytest.raises(ValueError, match="task ids must be unique"):
+        Planner().ready_tasks(tasks, set())
