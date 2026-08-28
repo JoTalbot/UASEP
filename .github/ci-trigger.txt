@@ -1,0 +1,3 @@
+CI trigger marker
+
+This commit exists to verify automatic GitHub Actions execution after push.
