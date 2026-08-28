@@ -3,6 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 
 
+VALID_STATUSES = {"pending", "done", "blocked"}
+
+
 @dataclass(slots=True)
 class TaskNode:
     id: str
@@ -44,6 +47,8 @@ class TaskGraph:
     def validate(self) -> None:
         known = set(self.tasks)
         for task in self.tasks.values():
+            if task.status not in VALID_STATUSES:
+                raise ValueError(f"invalid task status: {task.status}")
             if task.id in task.dependencies:
                 raise ValueError(f"self-dependency: {task.id}")
             missing = task.dependencies - known
