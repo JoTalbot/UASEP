@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.2.0 — Checkpoint integrity and recovery foundation
+
+- Introduced checkpoint schema hardening direction for resilient runtime state handling.
+- Added integrity-focused checkpoint evolution notes.
+- Prepared migration path from journal-style storage toward versioned checkpoint state.
+- Continued recovery-oriented runtime improvements.
+
 ## 3.1.3 — Runtime graph and checkpoint hardening
 
 - Hardened checkpoint persistence with validation and atomic writes.
