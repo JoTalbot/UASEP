@@ -1,6 +1,6 @@
 # UASEP Conformance Specification
 
-Version: 3.3
+Version: 3.4
 
 ## Purpose
 
@@ -12,20 +12,21 @@ A conformant agent MUST:
 
 1. Discover the actual repository, assigned branch, available tools, and applicable instructions before consequential work.
 2. Restore context from `.uasep/state/` before acting; chat history is not the source of truth.
-3. Represent meaningful work as tasks with objective, scope, dependencies, acceptance criteria, owner, risk, write set, and verification plan.
-4. Inspect actual files and recent history before proposing or applying changes.
-5. Use only capabilities actually available in the current session; never assume a connector action exists.
-6. Classify candidate tasks as independent, dependent, conflicting, or blocked before batch execution.
-7. Execute tasks in parallel only when dependencies and write sets are compatible and ownership is explicit.
-8. Verify consequential changes with evidence proportional to risk and distinguish implementation from verification.
-9. Persist status, decisions, failures, evidence, and handoff information in repository artifacts.
-10. Detect repeated failures, no-op progress, stale ownership, and conflicting edits; change strategy or stop safely.
-11. Distinguish `VERIFIED`, `PARTIALLY_VERIFIED`, `UNKNOWN`, and `FAILED` claims.
-12. Protect destructive or irreversible operations with explicit approval and a recoverable checkpoint where practical.
-13. Leave the repository understandable and continuable by an agent with no previous chat context.
-14. Never claim a tool action, test, CI result, commit, push, review, or external effect without evidence.
-15. Before editing a consequential scope, establish an explicit ownership claim; overlapping active claims MUST be coordinated or serialized.
-16. Treat ownership as a lease: refresh, release, transfer, or reconcile stale claims in durable state rather than silently taking over.
+3. Establish readiness using `protocol/AGENT_READINESS.md` before consequential work.
+4. Represent meaningful work using `protocol/TASK_CONTRACT.md`, including objective, scope/write set, dependencies, acceptance criteria, owner, risk, and verification plan.
+5. Inspect actual files and recent history before proposing or applying changes.
+6. Use only capabilities actually available in the current session; never assume a connector action exists.
+7. For multi-task work, use `protocol/BATCH_MANIFEST.md` to classify tasks as independent, dependent, conflicting, or blocked and define execution groups.
+8. Execute tasks in parallel only when dependencies and write sets are compatible and ownership is explicit.
+9. Verify consequential changes with evidence proportional to risk and record evidence using `protocol/EVIDENCE_SCHEMA.md`.
+10. Persist status, decisions, failures, evidence, and handoff information in repository artifacts.
+11. Detect repeated failures, no-op progress, stale ownership, and conflicting edits; change strategy or stop safely.
+12. Distinguish `VERIFIED`, `PARTIALLY_VERIFIED`, `UNKNOWN`, and `FAILED` claims.
+13. Protect destructive or irreversible operations with explicit approval and a recoverable checkpoint where practical.
+14. Leave the repository understandable and continuable by an agent with no previous chat context.
+15. Never claim a tool action, test, CI result, commit, push, review, or external effect without evidence.
+16. Before editing a consequential scope, establish an explicit ownership claim; overlapping active claims MUST be coordinated or serialized.
+17. Treat ownership as a lease: refresh, release, transfer, or reconcile stale claims in durable state rather than silently taking over.
 
 ## Durable artifacts
 
@@ -39,7 +40,7 @@ The canonical operational artifacts are:
 - `.uasep/planning/` — backlog and plan.
 - `.uasep/knowledge/` — decisions, discoveries, failures, lessons.
 - `.uasep/evidence/` — verification records.
-- `protocol/` — normative rules.
+- `protocol/` — normative rules, including task, batch, evidence, readiness, lifecycle, ownership, and drift rules.
 
 ## Completion invariant
 
@@ -51,7 +52,7 @@ After interruption, durable artifacts MUST identify the current objective, task,
 
 ## Parallel-work invariant
 
-Tasks may be analyzed in parallel, but execution may be parallel only when their dependencies and write sets are compatible. Conflicting work requires explicit coordination or serialization.
+Tasks may be analyzed in parallel, but execution may be parallel only when their dependencies and write sets are compatible. A batch manifest MUST expose non-success task states. Conflicting work requires explicit coordination or serialization.
 
 ## Ownership invariant
 
@@ -60,6 +61,10 @@ An active ownership claim MUST identify the task, owner/session, branch, write s
 ## Connector invariant
 
 GitHub-connected tools are capabilities of the current agent session, not protocol guarantees. A missing or failed connector action is recorded as `UNKNOWN` or `BLOCKED` as appropriate; it is never silently treated as success.
+
+## Evidence invariant
+
+Evidence MUST identify what was actually observed, its source, scope, and result. Successful repository operations MUST NOT be used as evidence for unrelated tests or external effects.
 
 ## Portability invariant
 
