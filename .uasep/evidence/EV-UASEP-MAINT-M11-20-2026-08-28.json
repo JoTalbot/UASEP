@@ -1,0 +1,16 @@
+{
+  "id": "EV-UASEP-MAINT-M11-20-2026-08-28",
+  "task": "UASEP-MAINT-M11-20-2026-08-28",
+  "result": "VERIFIED",
+  "scope": ["M11","M12","M13","M14","M15","M16","M17","M18","M19","M20"],
+  "observations": [
+    "Implemented focused protocol invariant conformance assertions in tests/conformance/test_protocol_invariants.py.",
+    "Aligned assertions with canonical repository artifacts after CI exposed four stale assumptions and one stale status assertion.",
+    "Canonical GitHub Actions UASEP Main Conformance run #72 checked out main at 0716c55d345a6843f09bb4c2fdc28d2113f60aeb and completed successfully.",
+    "The conformance suite passed in the canonical run after the fixes."
+  ],
+  "source": "GitHub Actions run 33196454786",
+  "verification": "Canonical UASEP Main Conformance workflow run #72: success.",
+  "repository_commit": "0716c55d345a6843f09bb4c2fdc28d2113f60aeb",
+  "verified_at": "2026-08-28T17:49:42Z"
+}
