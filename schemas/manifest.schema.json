@@ -3,15 +3,16 @@
   "$id": "https://github.com/JoTalbot/UASEP/schemas/manifest.schema.json",
   "title": "UASEP Project Manifest",
   "type": "object",
-  "required": ["protocol", "protocol_version", "project_state", "autonomy_level"],
+  "required": ["protocol", "protocol_version", "project_state", "autonomy_level", "source_of_truth", "runtime"],
   "properties": {
     "protocol": {"const": "UASEP"},
     "protocol_version": {"type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"},
     "project_instance": {"type": "string"},
-    "project_state": {"enum": ["initializing", "active", "paused", "blocked", "handoff", "recovering", "complete", "maintenance"]},
+    "project_state": {"enum": ["INITIALIZING", "ACTIVE", "PAUSED", "BLOCKED", "HANDOFF", "RECOVERING", "COMPLETE", "MAINTENANCE", "ADOPTED"]},
     "autonomy_level": {"enum": ["L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7"]},
-    "source_of_truth": {"type": "string"},
-    "local_state": {"type": "string"}
+    "source_of_truth": {"type": "string", "minLength": 1},
+    "local_state": {"type": "string"},
+    "runtime": {"const": "NONE"}
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }
