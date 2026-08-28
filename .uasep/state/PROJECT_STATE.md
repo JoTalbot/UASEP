@@ -1,25 +1,33 @@
 # Project State
 
-Status: INITIALIZING
+Status: ACTIVE
 
 ## Objective
-Maintain the UASEP protocol as a portable, verifiable reference standard.
+Maintain UASEP as a portable, verifiable operating protocol for AI agents using chat and GitHub-connected tools.
+
+## Architecture
+Runtime-free. No UASEP daemon, CLI, scheduler, database, supervisor, or executable package is required.
 
 ## Current phase
-Protocol bootstrap and reference specification.
+Protocol hardening and operationalization.
 
 ## Verified
-- Repository exists and is writable by the configured GitHub integration.
-- UASEP version is 3.1.0.
-- Core protocol documents have been initialized.
+- `main` is based on the pre-AIOS2 baseline.
+- Runtime implementation, runtime packaging, runtime tests, and runtime CI have been retired from the active tree.
+- Repository-wide agent contract exists at `AGENTS.md`.
+- Reusable operational skills exist under `skills/`.
+- README describes the connector-first model.
 
 ## Unknown
-- Runtime implementations and automated conformance tests are not yet present.
-- Cross-environment adapters are not yet implemented.
+- Full documentation consistency audit is not yet complete.
+- Connector-specific limits and best practices need explicit documentation.
 
 ## Next best actions
-1. Add machine-readable schemas.
-2. Add conformance tests and examples.
-3. Define adapter contracts.
-4. Build a reference runtime/supervisor.
-5. Integrate UASEP into AIOS2.
+1. Normalize protocol and example documents for runtime-free operation.
+2. Add ChatGPT + GitHub Connector operating guide.
+3. Define durable task, batch, status, decision, failure, and evidence templates.
+4. Strengthen multi-agent ownership and handoff rules.
+5. Add practical examples for starting, resuming, parallelizing, verifying, and recovering work.
+
+## Permanent constraint
+Do not reintroduce executable runtime work unless a concrete user requirement demonstrates that chat + GitHub-connected agents cannot provide the needed behavior.
