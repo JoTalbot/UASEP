@@ -165,7 +165,7 @@ class Supervisor:
                 state.completed_tasks.add(task.id)
                 self._evidence("completion", task.id, "VERIFIED", f"parallel via {agent_name}")
                 self._checkpoint(task.id, "verified")
-            elif task.status != TaskStatus.BLOCKED and task.failure_count == 0:
+            elif task.status != TaskStatus.BLOCKED:
                 self._failure(state, task, f"parallel executor failed on {agent_name}")
             results.append((agent_name, task_id, ok))
         state.current_task = None
