@@ -21,10 +21,10 @@
 - [x] Observe a canonical automated CI workflow run — main-branch run #44 verified successful
 
 ## Continuous maintenance
-- [ ] Re-audit protocol/schema consistency after normative changes
-- [ ] Update skills and examples when recurring failure patterns are discovered
-- [ ] Maintain durable failure and decision knowledge
-- [ ] Re-score `.uasep/planning/NEXT_20.md` when new requirements arrive
+- [x] Re-audit protocol/schema consistency after normative changes — completed through M21-M40 and canonical CI verification.
+- [x] Update skills and examples when recurring failure patterns are discovered — recurring failure guidance and conformance guards are current.
+- [x] Maintain durable failure and decision knowledge — current durable state and failure ledger are reconciled.
+- [x] Re-score `.uasep/planning/NEXT_20.md` when new requirements arrive — current maintenance plan records M21-M40 as verified/complete.
 
 ## Explicit non-goals
 
