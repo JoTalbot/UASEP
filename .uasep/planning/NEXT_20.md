@@ -32,9 +32,11 @@ Tasks H02-H09, H12-H15, and H16 can be executed without waiting for each other w
 
 ## Batch result
 
-- H01-H10: **VERIFIED / COMPLETE**. H01 state projection matches `schemas/state.schema.json`; H02-H09 fixtures are present and conform to their declared schemas; H10 fixture runner exists and was included in the successful canonical conformance run #44.
-- Repository evidence: current durable state is ADOPTED with no active tasks or blockers; canonical run #44 completed successfully.
+- H01-H10: **VERIFIED / COMPLETE**. H01 state projection matches `schemas/state.schema.json`; H02-H09 fixtures are present and conform to their declared schemas; H10 fixture runner exists and was included in canonical conformance run #44.
+- H11-H19: **VERIFIED / COMPLETE**. The cross-artifact, runtime-free, branch, documentation, batch-guide, failure-knowledge, decision, status, and handoff artifacts were inspected and synchronized with the current repository state and CI evidence.
+- Canonical conformance: **VERIFIED / SUCCESS**, main-branch run #44.
+- H20: **UNVERIFIED / EXTERNALLY DEPENDENT**. It requires a genuinely fresh agent/session and must not be simulated by the current session.
 - Planned: 20
-- Completed in this batch: 10
-- Remaining: H11-H20 (with H20 externally dependent on a genuinely fresh session).
+- Completed in this batch: H11-H19 (9 tasks)
+- Remaining: H20 only
 - No runtime implementation is introduced.
