@@ -1,0 +1,20 @@
+{
+  "batch_id": "UASEP-MAINT-M11-20-2026-08-28",
+  "objective": "Analyze and then implement automated coverage for ten documented conformance invariants.",
+  "tasks": [
+    {"id":"M11","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"bootstrap/context restoration","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M12","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"readiness","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M13","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"task-contract completeness","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M14","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"recent-history inspection","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M15","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"capability honesty","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M16","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"batch classification","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M17","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"parallel write-set compatibility","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M18","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"evidence completeness","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M19","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"failure/no-op/stale ownership handling","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]},
+    {"id":"M20","contract":"UASEP-MAINT-M11-20-2026-08-28","scope":"destructive-operation safeguards","classification":"INDEPENDENT","write_set":["tests/conformance/test_protocol_invariants.py"]}
+  ],
+  "analysis_status":"READY",
+  "execution_groups":["G1: M11 M12 M13 M14 M15 M16 M17 M18 M19 M20"],
+  "verification_plan":["Review assertions against protocol/CONFORMANCE.md and referenced normative files.","Run tests/conformance through canonical GitHub Actions.","Record per-task evidence and synchronize durable state."],
+  "owner":"fresh-agent-session-2026-08-28"
+}
