@@ -4,11 +4,11 @@
   "project_state":"ADOPTED",
   "environment":"chat + GitHub-connected tools",
   "objective":"Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.",
-  "active_task":"M24-M30",
+  "active_task":"M31-M40",
   "last_verified":"2026-08-28",
-  "next_best_actions":["Verify M24-M30 with canonical GitHub Actions conformance.","Continue M31-M40 after the M24-M30 verification gate."],
-  "active_tasks":["M24","M25","M26","M27","M28","M29","M30"],
+  "next_best_actions":["Verify the M24-M30 maintenance batch with canonical CI evidence already achieved.","Execute M31-M40 workflow-policy, evidence freshness, stale-reference, ownership, handoff, and maintenance-runbook audits."],
+  "active_tasks":["M31","M32","M33","M34","M35","M36","M37","M38","M39","M40"],
   "blockers":[],
-  "unknowns":["Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.","M24-M30 changes are unverified until the new canonical conformance run completes."],
-  "evidence":["Fresh-agent acceptance verified and recorded as EV-UASEP-ACCEPT-2026-08-28.","Canonical conformance run #94 succeeded at commit befd8548908df7f9dac2ba1c7bf5c0c668164a9c.","Canonical conformance run #95 succeeded after evidence synchronization.","M21-M23 verification gate satisfied by runs #94 and #95."]
+  "unknowns":["Historical search indexes may retain provenance from retired runtime/AIOS2 architecture."],
+  "evidence":["Fresh-agent acceptance verified and recorded as EV-UASEP-ACCEPT-2026-08-28.","Canonical conformance run #94 succeeded at commit befd8548908df7f9dac2ba1c7bf5c0c668164a9c.","Canonical conformance run #95 succeeded after evidence synchronization.","M21-M23 verification gate satisfied by runs #94 and #95.","M24-M30 verification gate satisfied by CI run #101 on commit 8f2998ecabe2a56ad3f2691d6a0cccbcf9d8e2ca."]
 }
