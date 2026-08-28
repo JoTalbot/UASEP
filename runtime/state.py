@@ -4,20 +4,35 @@ import json
 from pathlib import Path
 from typing import Any
 
+from .migration import migrate_runtime_state, needs_migration
 from .models import ProjectState
+
+RUNTIME_VERSION = "3.1.2"
 
 
 class StateStore:
-    """Small, dependency-free persistent state store for the reference runtime."""
+    """Persistent state store; optional per-project files under .uasep/state/."""
 
-    def __init__(self, root: str | Path):
+    def __init__(self, root: str | Path, *, per_project: bool = False):
         self.root = Path(root)
+        self.per_project = per_project
         self.path = self.root / ".uasep" / "state.json"
 
+    def _path_for(self, project_id: str) -> Path:
+        if self.per_project:
+            return self.root / ".uasep" / "state" / f"{project_id}.json"
+        return self.path
+
     def load(self, project_id: str) -> ProjectState:
-        if not self.path.exists():
+        path = self._path_for(project_id)
+        # Fallback to shared state.json when per-project file missing
+        if not path.exists() and self.per_project and self.path.exists():
+            path = self.path
+        if not path.exists():
             return ProjectState(project_id=project_id)
-        data: dict[str, Any] = json.loads(self.path.read_text(encoding="utf-8"))
+        data: dict[str, Any] = json.loads(path.read_text(encoding="utf-8"))
+        if needs_migration(data, RUNTIME_VERSION):
+            data = migrate_runtime_state(data, RUNTIME_VERSION)
         raw_failures = data.get("task_failures") or {}
         task_failures = {
             str(k): int(v) for k, v in raw_failures.items() if isinstance(v, (int, float))
@@ -33,8 +48,11 @@ class StateStore:
         )
 
     def save(self, state: ProjectState) -> None:
-        self.path.parent.mkdir(parents=True, exist_ok=True)
-        self.path.write_text(
-            json.dumps(state.to_dict(), indent=2, sort_keys=True) + "\n",
+        path = self._path_for(state.project_id)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        payload = state.to_dict()
+        payload["protocol_version"] = RUNTIME_VERSION
+        path.write_text(
+            json.dumps(payload, indent=2, sort_keys=True) + "\n",
             encoding="utf-8",
         )

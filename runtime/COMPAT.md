@@ -1,9 +1,15 @@
 # Runtime compatibility notes
 
-## Dual modules
+## Canonical modules
 
-- `anti_loop.py` — windowed stagnation detector (canonical for tests).
-- `anti_loop_v2.py` — failure-streak API; prefer canonical until consolidated.
-- `checkpoint_store.py` / `checkpoints.py` / `checkpoints_v2.py` — prefer `checkpoint_store` for new code.
+| Concern | Canonical | Compatibility |
+|---------|-----------|---------------|
+| Checkpoints (journal) | `checkpoint_store.py` | `checkpoints_v2` re-exports |
+| Named/atomic checkpoints | `checkpoints.py` | RecoveryManager |
+| Stagnation (window) | `anti_loop.py` | — |
+| Stagnation (failure streak) | `anti_loop_v2.py` | different API on purpose |
+| Approval gate | `approval_gate.py` | `approval.py` older enum API |
+| Executor | `executor.py` | `execution.py` result wrapper |
+| Replan | `replan.py` / `replanning.py` | two TaskGraph styles; both kept |
 
-Consolidation is deferred; do not break import paths used by tests.
+Prefer canonical imports in new code.
