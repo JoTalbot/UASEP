@@ -2,7 +2,6 @@ from pathlib import Path
 
 from runtime.models import Task, TaskStatus
 from runtime.supervisor import Supervisor
-from runtime.planner import Planner
 from runtime.state import StateStore
 
 
@@ -16,7 +15,7 @@ def test_failure_count_survives_cold_resume(tmp_path: Path):
         max_failures=3,
     )
 
-    task = Task(id="recovery-task", description="simulate failure")
+    task = Task(id="recovery-task", title="simulate failure")
     supervisor.run_once("demo", [task])
 
     state = StateStore(tmp_path).load("demo")
@@ -34,7 +33,7 @@ def test_runtime_can_restore_persisted_failure_budget(tmp_path: Path):
         executor=fail_executor,
         max_failures=3,
     )
-    task = Task(id="cold-resume", description="persist failure")
+    task = Task(id="cold-resume", title="persist failure")
     first.run_once("demo", [task])
 
     second = Supervisor.with_project_runtime(
@@ -42,7 +41,7 @@ def test_runtime_can_restore_persisted_failure_budget(tmp_path: Path):
         executor=fail_executor,
         max_failures=3,
     )
-    restored = Task(id="cold-resume", description="persist failure")
+    restored = Task(id="cold-resume", title="persist failure")
     second.run_once("demo", [restored])
 
     state = StateStore(tmp_path).load("demo")
