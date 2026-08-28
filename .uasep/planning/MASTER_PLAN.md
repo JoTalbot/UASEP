@@ -32,16 +32,16 @@
 - [x] recovery engine
 - [x] evidence engine
 - [x] persist per-task retry state for cold resume
-- [ ] agent orchestration
+- [x] agent orchestration (stub + write-set conflicts)
 
 ## Phase 5 — Adoption
-- [ ] AIOS2 integration
-- [ ] Local CLI adapter
-- [ ] ChatGPT/GitHub operational guidance
-- [ ] Temporary-agent handoff workflow
+- [x] AIOS2 integration (run boundary)
+- [x] Local CLI adapter (run/plan/status)
+- [x] ChatGPT/GitHub operational guidance
+- [x] Temporary-agent handoff workflow
 
 ## Phase 6 — Continuous improvement
+- [x] protocol metrics (stub)
+- [x] architecture drift detection (version drift stub)
 - [ ] Maintenance automation
-- [ ] protocol metrics
-- [ ] architecture drift detection
-- [ ] self-improvement loop
+- [ ] self-improvement loop (doc only so far)

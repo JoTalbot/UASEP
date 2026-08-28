@@ -12,7 +12,9 @@ Each delegated task must define objective, scope, inputs, outputs, acceptance cr
 
 ## Parallel work
 
-Run tasks in parallel only when their write sets and dependencies are compatible. Integrate results through explicit verification and conflict checks.
+Run tasks in parallel only when their write sets and dependencies are compatible.
+Use `write_set` on tasks and `MultiAgentCoordinator.filter_compatible` to avoid overlapping writes.
+Integrate results through explicit verification and conflict checks.
 
 ## Contracts
 
