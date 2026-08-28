@@ -17,10 +17,10 @@ def test_planner_deterministic_tie_break():
 
 
 def test_task_retries_are_bounded():
-    task = Task("x", "X", status=TaskStatus.FAILED, max_attempts=2, attempts=1)
-    assert task.is_ready(set())
-    task.attempts += 1
-    assert not task.is_ready(set())
+    task = Task("x", "X", status=TaskStatus.FAILED, failure_count=1)
+    assert task.is_ready(set(), max_failures=2)
+    task.failure_count += 1
+    assert not task.is_ready(set(), max_failures=2)
 
 
 def test_task_graph_rejects_invalid_dependencies():
@@ -42,15 +42,17 @@ def test_supervisor_retry_then_success(tmp_path: Path):
         calls.append(task.id)
         return len(calls) == 2
 
-    supervisor = Supervisor.with_project_runtime(tmp_path, execute)
-    task = Task("x", "X", max_attempts=2)
+    supervisor = Supervisor.with_project_runtime(tmp_path, execute, max_failures=2)
+    task = Task("x", "X")
 
     first = supervisor.run_once("demo", [task])
-    assert first.phase == "blocked"
-    assert first.current_task == "x"
-    assert task.attempts == 1
+    assert first.phase == "retrying"
+    assert first.current_task is None
+    assert task.failure_count == 1
+    assert task.status == TaskStatus.FAILED
 
     second = supervisor.run_once("demo", [task])
     assert second.phase == "verified"
     assert second.completed_tasks == {"x"}
-    assert task.attempts == 2
+    assert task.status == TaskStatus.DONE
+    assert calls == ["x", "x"]

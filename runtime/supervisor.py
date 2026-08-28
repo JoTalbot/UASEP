@@ -134,10 +134,19 @@ class Supervisor:
         if max_cycles < 1:
             raise ValueError("max_cycles must be >= 1")
         state = self.state_store.load(project_id)
+        state.blockers = [
+            blocker for blocker in state.blockers if not blocker.startswith("cycle budget exhausted")
+        ]
+        if state.phase == "blocked" and not state.blockers:
+            state.phase = "active"
+            self.state_store.save(state)
         for _ in range(max_cycles):
             state = self.run_once(project_id, tasks)
             if state.phase in {"blocked", "maintenance"}:
                 return state
+        remaining = [item.id for item in tasks if item.id not in state.completed_tasks]
+        if not remaining:
+            return state
         if state.phase not in {"blocked", "maintenance"}:
             state.phase = "blocked"
             state.current_task = None

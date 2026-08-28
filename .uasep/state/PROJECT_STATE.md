@@ -1,25 +1,27 @@
 # Project State
 
-Status: INITIALIZING
+Status: ACTIVE
 
 ## Objective
 Maintain the UASEP protocol as a portable, verifiable reference standard.
 
 ## Current phase
-Protocol bootstrap and reference specification.
+Runtime hardening and evidence-backed conformance.
 
 ## Verified
 - Repository exists and is writable by the configured GitHub integration.
-- UASEP version is 3.1.0.
+- UASEP version is 3.1.1.
 - Core protocol documents have been initialized.
+- Local executable suite: 103 passed (`python -m pytest -q`).
+- Cycle budget no longer clobbers a verified terminal phase.
 
 ## Unknown
-- Runtime implementations and automated conformance tests are not yet present.
-- Cross-environment adapters are not yet implemented.
+- GitHub Actions conclusion for 3.1.1 is not yet observed.
+- Per-task failure counts are in-memory on the Task objects, not yet restored from `state.json` after a cold process start.
+- Cross-environment adapters beyond the host adapter/AIOS2 stub are incomplete.
 
 ## Next best actions
-1. Add machine-readable schemas.
-2. Add conformance tests and examples.
-3. Define adapter contracts.
-4. Build a reference runtime/supervisor.
-5. Integrate UASEP into AIOS2.
+1. Observe CI on the 3.1.1 commit and record the run as evidence.
+2. Persist task retry/status fields with project state for cold resume.
+3. Keep adapter contracts and AIOS2 integration moving.
+4. Do not treat documentation as a substitute for a green workflow run.

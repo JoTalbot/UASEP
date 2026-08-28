@@ -11,25 +11,27 @@
 - [x] Self-maintenance
 
 ## Phase 2 — Formalization
-- [ ] Machine-readable schemas
-- [ ] State model
-- [ ] Task model
-- [ ] Evidence model
-- [ ] Capability model
+- [x] Machine-readable schemas
+- [x] State model
+- [x] Task model
+- [x] Evidence model
+- [x] Capability model
 - [ ] Versioning and migration specification
 
 ## Phase 3 — Conformance
-- [ ] Conformance test suite
-- [ ] Reference examples
-- [ ] Environment adapter contract
-- [ ] Bootstrap validation
+- [x] Conformance test suite
+- [x] Reference examples
+- [x] Environment adapter contract
+- [x] Bootstrap validation
+- [ ] CI-observed green run for 3.1.1
 
 ## Phase 4 — Runtime
-- [ ] Reference supervisor
-- [ ] Planner/task engine
-- [ ] state manager
-- [ ] recovery engine
-- [ ] evidence engine
+- [x] Reference supervisor
+- [x] Planner/task engine
+- [x] state manager
+- [x] recovery engine
+- [x] evidence engine
+- [ ] persist per-task retry state for cold resume
 - [ ] agent orchestration
 
 ## Phase 5 — Adoption

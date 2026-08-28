@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.1 — Runtime verification and cycle-budget contract
+
+- Supervisor no longer overwrites a verified terminal phase when the cycle budget ends with no remaining work.
+- A new cycle budget may resume past a previous `cycle budget exhausted` block without dropping completed work.
+- Hardening tests now match the established retry contract (`retrying` then `verified` / `blocked`).
+- Local pytest: 103 passed. CI evidence must still be observed on the resulting commit.
+
 ## 3.1.0 — Initial reference specification
 
 - Added universal bootstrap.

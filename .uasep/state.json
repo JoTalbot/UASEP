@@ -1,17 +1,16 @@
 {
   "protocol": "UASEP",
-  "protocol_version": "3.1.0",
+  "protocol_version": "3.1.1",
   "project_state": "active",
   "autonomy_level": "L4",
   "environment": "Python >=3.10",
   "objective": "Maintain a portable, verifiable autonomous engineering protocol",
-  "active_task": "Strengthen runtime conformance and verification coverage",
-  "last_verified": "Planner and Supervisor contracts inspected; VerificationEngine regression tests added",
+  "active_task": "Record CI evidence after cycle-budget contract fix",
+  "last_verified": "Local pytest 103 passed; verified terminal phase survives spent cycle budget",
   "next_best_actions": [
-    "Add executable conformance coverage for core runtime contracts",
-    "Establish reproducible CI execution",
-    "Record verified test evidence",
-    "Validate persistence and recovery invariants",
-    "Integrate UASEP into AIOS2"
+    "Observe GitHub Actions on the 3.1.1 commit",
+    "Persist per-task retry state for cold process resume",
+    "Keep host/AIOS2 adapter coverage current",
+    "Do not claim CI-verified until the workflow run is green"
   ]
 }
