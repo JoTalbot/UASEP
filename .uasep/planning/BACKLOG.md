@@ -4,7 +4,7 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 
 ## P0 — Foundations
 
-- UASEP-PROTO-001: Complete repository-wide documentation audit for runtime/AIOS2 assumptions.
+- UASEP-PROTO-001: Complete repository-wide audit for runtime/AIOS2 assumptions.
 - UASEP-PROTO-002: Define canonical durable project status format.
 - UASEP-PROTO-003: Define canonical evidence record format.
 - UASEP-PROTO-004: Define agent ownership/lease format for parallel work.
@@ -24,8 +24,8 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 ## P1 — Chat + GitHub Connector
 
 - UASEP-CONNECT-001: Define the standard ChatGPT/GitHub operating loop.
-- UASEP-CONNECT-002: Define capability discovery and tool limitations.
-- UASEP-CONNECT-003: Define safe commit/push behavior.
+- UASEP-CONNECT-002: Define capability discovery and connector/tool limitations.
+- UASEP-CONNECT-003: Define safe commit behavior; push is represented by the connector's repository update operation.
 - UASEP-CONNECT-004: Define how agents report verified vs unknown results.
 - UASEP-CONNECT-005: Define recovery when a connector action fails or is unavailable.
 
@@ -46,3 +46,7 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 ## Non-goals
 
 Runtime implementation, local daemon/CLI, executor framework, autonomous process supervisor, and AIOS2 integration are out of scope unless the project direction is explicitly changed.
+
+## Execution rule
+
+Do not mark a task complete from intent alone. Record the changed files, evidence, unresolved risks, and next action in `.uasep/state/STATUS.md` and `.uasep/state/HANDOFF.md`.
