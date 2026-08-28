@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 from typing import Callable
 
@@ -76,13 +77,21 @@ class MultiAgentCoordinator:
         *,
         respect_write_sets: bool = True,
     ) -> list[tuple[str, str, bool]]:
-        results: list[tuple[str, str, bool]] = []
-        for agent, task in self.assign(ready, respect_write_sets=respect_write_sets):
+        """Execute compatible assignments concurrently, preserving input order in results."""
+        assignments = self.assign(ready, respect_write_sets=respect_write_sets)
+        if not assignments:
+            return []
+
+        def run_one(assignment: tuple[AgentSlot, Task]) -> tuple[str, str, bool]:
+            agent, task = assignment
             try:
                 ok = bool(execute(task))
             except Exception:
                 ok = False
             finally:
                 self.release(agent.name)
-            results.append((agent.name, task.id, ok))
-        return results
+            return agent.name, task.id, ok
+
+        with ThreadPoolExecutor(max_workers=len(assignments), thread_name_prefix="uasep-agent") as pool:
+            futures = [pool.submit(run_one, assignment) for assignment in assignments]
+            return [future.result() for future in futures]
