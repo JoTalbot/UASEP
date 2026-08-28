@@ -9,13 +9,15 @@ class Planner:
     def validate_tasks(self, tasks: list[Task]) -> None:
         """Validate task graph invariants before planning."""
         ids = [task.id for task in tasks]
-        if any(not task_id or not task_id.strip() for task_id in ids):
-            raise ValueError("task ids must not be empty")
+        if any(not isinstance(task_id, str) or not task_id.strip() for task_id in ids):
+            raise ValueError("task ids must be non-empty strings")
         if len(ids) != len(set(ids)):
             raise ValueError("task ids must be unique")
 
         known = set(ids)
         for task in tasks:
+            if not isinstance(task.dependencies, list):
+                raise ValueError(f"task dependencies must be a list: {task.id}")
             missing = [dep for dep in task.dependencies if dep not in known]
             if missing:
                 raise ValueError(f"unknown task dependencies: {missing}")
@@ -48,6 +50,10 @@ class Planner:
         max_failures: int = 3,
     ) -> list[Task]:
         """Return all currently executable tasks in deterministic order."""
+        if not isinstance(max_failures, int) or max_failures < 1:
+            raise ValueError("max_failures must be a positive integer")
+        if not isinstance(completed, set):
+            raise ValueError("completed must be a set")
         self.validate_tasks(tasks)
         ready = [
             task
