@@ -14,10 +14,13 @@ Reconstruct enough durable context to work safely without relying on previous ch
 4. Read `.uasep/state/PROJECT_STATE.md` and `.uasep/state/HANDOFF.md` when present.
 5. Read the relevant plan/backlog and applicable protocol/skill.
 6. Inspect recent repository history and the files named by the current task.
-7. Check active ownership/write sets before editing.
-8. Determine which GitHub-connected capabilities are actually available in this session.
-9. Record any missing capability or ambiguous state as `UNKNOWN`/`BLOCKED`.
-10. State the exact next action before consequential edits.
+7. Establish Agent Readiness using `protocol/AGENT_READINESS.md`.
+8. Create or restore the applicable Task Contract using `protocol/TASK_CONTRACT.md`.
+9. If multiple tasks are being handled together, create/restore a Batch Manifest using `protocol/BATCH_MANIFEST.md`.
+10. Check active ownership/write sets before editing.
+11. Determine which GitHub-connected capabilities are actually available in this session.
+12. Record any missing capability or ambiguous state as `UNKNOWN`/`BLOCKED`.
+13. State the exact next action before consequential edits.
 
 ## Required output
 
@@ -27,9 +30,9 @@ Before editing, the agent should be able to identify:
 - current task and owner;
 - branch;
 - relevant files;
-- dependencies;
+- dependencies and conflicts;
 - acceptance criteria;
-- risks;
+- risk;
 - verification plan;
 - blockers or unknowns;
 - next action.
@@ -40,4 +43,4 @@ Do not infer project state solely from chat memory. Do not claim a file was read
 
 ## Completion
 
-After work, update durable state and handoff so another agent can resume from the repository alone.
+After work, update durable state, evidence, and handoff so another agent can resume from the repository alone.
