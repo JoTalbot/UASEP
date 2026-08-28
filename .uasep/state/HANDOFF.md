@@ -2,27 +2,23 @@
 
 Current objective: maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub Connector.
 
-Current step: UASEP-HARDEN-2026-08-28 batch completed for all repository-native independent changes; external acceptance remains pending.
+Current step: fresh-agent acceptance assessment completed from repository state alone; durable evidence and state synchronized.
 
-Completed in this batch:
-- synchronized machine-readable durable state and removed stale active-task value;
-- added one reference fixture for each of the eight machine-readable schemas;
-- added fixture validation, runtime-free, and repository-native bootstrap/branch conformance tests;
-- added an explicit batch execution guide;
-- recorded the CI execution evidence boundary in knowledge;
-- recorded the next 20 hardening tasks and their dependency/ownership classification.
+Completed:
+- bootstrapped from `main` at the pre-assessment HEAD;
+- read mandatory agent contract, session bootstrap, workflow, task, verification, readiness, ownership, evidence, and acceptance materials;
+- verified protocol version 3.4.0, ADOPTED phase, runtime NONE, no known blockers, and no pre-existing active task/ownership conflict;
+- executed the fresh-agent acceptance assessment without relying on originating chat history;
+- recorded `EV-UASEP-ACCEPT-2026-08-28.json` as VERIFIED;
+- completed and released task `UASEP-ACCEPT-2026-08-28` ownership.
 
 Unverified:
-- a fresh independent agent has not executed the complete manual acceptance pass;
-- canonical GitHub Actions execution has not been observed through the available interface.
+- canonical GitHub Actions execution for the current documentation-first state.
 
 Blockers: none known.
 
 Next action:
-1. Start from repository state, not previous chat memory.
-2. Run the fresh-agent acceptance procedure from `examples/FRESH_AGENT_ACCEPTANCE.md`.
-3. Record evidence in `.uasep/evidence/` using the evidence schema.
-4. Observe canonical CI when available; do not infer its result.
-5. Create targeted follow-up work only for actual defects.
+1. Observe a canonical GitHub Actions conformance run when available; do not infer its result from repository writes or pending status.
+2. If CI or a future conformance/drift audit reveals an actual defect, create a targeted task with an explicit write set and ownership claim.
 
-Evidence status: repository writes in this batch were confirmed by successful GitHub content operations. CI remains UNKNOWN and fresh-agent acceptance remains NOT_RUN.
+Evidence status: fresh-agent acceptance VERIFIED by repository-native inspection; repository-write success is separately confirmed by GitHub operation results; tests/CI were not run by this change and CI remains UNKNOWN.
