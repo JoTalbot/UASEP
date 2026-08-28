@@ -131,6 +131,8 @@ class Supervisor:
 
     def run_until_blocked(self, project_id: str, tasks: list[Task], max_cycles: int = 100) -> ProjectState:
         """Continue from persisted state until blocked, maintenance, or the cycle budget is exhausted."""
+        if max_cycles < 1:
+            raise ValueError("max_cycles must be >= 1")
         state = self.state_store.load(project_id)
         for _ in range(max_cycles):
             state = self.run_once(project_id, tasks)
