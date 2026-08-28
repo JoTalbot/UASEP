@@ -10,9 +10,9 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Current task
 
-- ID: M31-M40
-- Owner: current maintenance session
-- Scope: workflow policy, evidence freshness, stale-reference, ownership, handoff, and maintenance-runbook audits
+- ID: NONE
+- Owner: NONE
+- Scope: periodic conformance/drift audits only
 
 ## Progress
 
@@ -20,19 +20,18 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed hardening H01-H10, H11-H19, and H20 from repository evidence.
 - Completed maintenance M11-M20 with focused protocol-invariant conformance assertions.
 - Completed M21-M23: durable-state consistency, project-state synchronization, maintenance-plan rescore, and CI verification. Canonical CI runs #94 and #95 succeeded.
-- Completed M24-M30: canonical bootstrap presence, manifest/state consistency, runtime-free active-tree constraints, skill inventory, examples references, and related conformance guards. CI run #101 succeeded on the verified M24-M30 commit.
-- M31: read-only, main-scoped conformance workflow policy guard added.
-- Latest M31-M40 verification: PENDING; current fixes must pass canonical CI.
+- Completed M24-M30: bootstrap, manifest/state, runtime-free, skill, example, schema/fixture, version, and active-tree conformance guards. CI run #101 succeeded.
+- Completed M31-M40: workflow-policy, evidence freshness, stale-reference, ownership, handoff, status, acceptance linkage, decision/failure, and maintenance-runbook audits. Canonical CI run #108 succeeded.
+- Current maintenance batches: COMPLETE. No active task.
 - Unverified: Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 - Blocked: NONE known.
 
 ## Evidence
 
 - Fresh-agent acceptance: VERIFIED; `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
-- Canonical conformance: VERIFIED / SUCCESS — runs #94 and #95 for M21-M23, and #101 for M24-M30.
 - M21-M23 verification gate: VERIFIED by canonical runs #94 and #95.
 - M24-M30 verification gate: VERIFIED by canonical run #101.
-- M31-M40 current changes: present on `main`; latest verification pending.
+- M31-M40 verification gate: VERIFIED by canonical run #108.
 
 ## Decisions
 
@@ -43,7 +42,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Next action
 
-Verify the current M31-M40 CI run, fix any concrete regression, then continue the remaining M32-M40 audit work.
+Perform repository-native periodic conformance/drift audits. Open a new maintenance batch only when a concrete defect, drift finding, or new acceptance requirement exists.
 
 ## Updated
 
