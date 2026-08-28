@@ -24,17 +24,15 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - Fresh-agent acceptance evidence is recorded in `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
 - Canonical conformance main-branch run #72 completed successfully at commit `0716c55d345a6843f09bb4c2fdc28d2113f60aeb`.
 - M11-M20 protocol-invariant conformance coverage is recorded and verified.
-- M21-M23 maintenance changes are present on `main`; the latest CI verification is pending.
+- M21-M23 maintenance verification gate is satisfied by canonical CI runs #94 and #95.
 
 ## Unknown
-- The latest maintenance commits have not yet completed a successful conformance run.
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 
 ## Next best actions
-1. Verify the current main-branch conformance run and record its result.
-2. Close M21-M23 only after the verification gate is satisfied.
-3. Continue M24-M40 with evidence, bootstrap, skill, schema, state, runtime-free, CI, ownership, handoff, and maintenance-runbook audits.
-4. Keep durable state, evidence, and handoff synchronized after consequential maintenance.
+1. Execute M24-M30 from `.uasep/planning/NEXT_20.md` with independent write sets.
+2. Record evidence and run conformance after each consequential maintenance batch.
+3. Continue through M31-M40 after M24-M30 verification.
 
 ## Permanent constraint
 Do not reintroduce executable runtime work unless a concrete user requirement demonstrates that chat + GitHub-connected agents cannot provide the needed behavior.
