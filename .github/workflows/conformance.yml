@@ -1,23 +1,36 @@
-name: UASEP Conformance
+name: UASEP Main Conformance
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   conformance:
+    name: Validate main
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Checkout main
         uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+          cache: pip
+
       - name: Install validation dependencies
-        run: python -m pip install --disable-pip-version-check jsonschema pytest pyyaml
-      - name: Validate JSON schemas
+        run: python -m pip install --disable-pip-version-check --no-input jsonschema pytest pyyaml
+
+      - name: Run conformance suite
         run: python -m pytest tests/conformance -q
