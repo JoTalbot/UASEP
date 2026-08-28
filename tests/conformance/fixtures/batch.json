@@ -1,0 +1,10 @@
+{
+  "batch_id": "UASEP-HARDEN-FIXTURE",
+  "objective": "Validate batch manifest shape.",
+  "tasks": ["UASEP-HARDEN-FIXTURE"],
+  "analysis_status": "COMPLETE",
+  "execution_groups": [["UASEP-HARDEN-FIXTURE"]],
+  "verification_plan": ["Validate against batch schema"],
+  "owner": "conformance",
+  "summary": "Single-task fixture."
+}
