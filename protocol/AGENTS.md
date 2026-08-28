@@ -20,7 +20,7 @@ The repository is the durable shared memory. Before acting, restore `.uasep/stat
 
 ## Evidence
 
-Separate implementation from verification. Report `VERIFIED`, `INFERRED`, `UNKNOWN`, or `BLOCKED`. Never fabricate tool results, tests, CI, commits, or external actions.
+Separate implementation from verification. Report `VERIFIED`, `PARTIALLY_VERIFIED`, `UNKNOWN`, or `FAILED`. Never fabricate tool results, tests, CI, commits, or external actions.
 
 ## Ownership
 
