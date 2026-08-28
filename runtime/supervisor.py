@@ -10,6 +10,7 @@ from .models import ProjectState, Task, TaskStatus
 from .planner import Planner
 from .state import StateStore
 from .verification import VerificationEngine
+from .multi_agent import MultiAgentCoordinator
 
 
 AcceptanceProvider = Callable[[Task], Iterable[tuple[str, Callable[[], bool]]]]
@@ -26,6 +27,7 @@ class Supervisor:
     acceptance_provider: AcceptanceProvider | None = None
     evidence_store: EvidenceStore | None = None
     checkpoint_store: CheckpointStore | None = None
+    multi_agent: MultiAgentCoordinator | None = None
     max_failures: int = 3
 
     @classmethod
@@ -140,6 +142,36 @@ class Supervisor:
 
         self.state_store.save(state)
         return state
+
+    def run_parallel_once(
+        self,
+        project_id: str,
+        tasks: list[Task],
+        *,
+        respect_write_sets: bool = True,
+    ) -> list[tuple[str, str, bool]]:
+        """Assign ready tasks to free multi-agent slots and execute sequentially per slot."""
+        if self.multi_agent is None:
+            return []
+        state = self.state_store.load(project_id)
+        self._restore_task_failures(state, tasks)
+        ready = self.planner.ready_tasks(tasks, state.completed_tasks, self.max_failures)
+        results = self.multi_agent.run_parallel(
+            ready,
+            self.executor,
+            respect_write_sets=respect_write_sets,
+        )
+        for agent_name, task_id, ok in results:
+            task = next(t for t in tasks if t.id == task_id)
+            if ok:
+                task.status = TaskStatus.DONE
+                state.completed_tasks.add(task.id)
+                state.phase = "verified"
+                self._evidence("completion", task.id, "VERIFIED", f"parallel via {agent_name}")
+            else:
+                self._failure(state, task, f"parallel executor failed on {agent_name}")
+        self.state_store.save(state)
+        return results
 
     def run_until_blocked(self, project_id: str, tasks: list[Task], max_cycles: int = 100) -> ProjectState:
         """Continue from persisted state until blocked, maintenance, or the cycle budget is exhausted."""
