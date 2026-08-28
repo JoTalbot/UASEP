@@ -42,15 +42,11 @@ class Supervisor:
     ) -> "Supervisor":
         base = root / ".uasep"
         return cls(
-            StateStore(root),
-            planner or Planner(),
-            executor,
-            verifier=VerificationEngine(),
-            acceptance_provider=acceptance_provider,
+            StateStore(root), planner or Planner(), executor,
+            verifier=VerificationEngine(), acceptance_provider=acceptance_provider,
             evidence_store=EvidenceStore(base / "evidence" / "runtime.json"),
             checkpoint_store=CheckpointStore(base / "checkpoints" / "journal.json"),
-            multi_agent=multi_agent,
-            max_failures=max_failures,
+            multi_agent=multi_agent, max_failures=max_failures,
         )
 
     def _checkpoint(self, task_id: str | None, phase: str) -> None:
@@ -79,7 +75,8 @@ class Supervisor:
         if task.failure_count >= self.max_failures:
             task.status = TaskStatus.BLOCKED
             state.phase = "blocked"
-            state.blockers.append(f"{task.id}: exceeded max failures ({self.max_failures}): {detail}")
+            if not any(task.id in blocker for blocker in state.blockers):
+                state.blockers.append(f"{task.id}: exceeded max failures ({self.max_failures}): {detail}")
         else:
             task.status = TaskStatus.FAILED
             state.phase = "retrying"
@@ -152,9 +149,10 @@ class Supervisor:
         state.current_task = None
         self.state_store.save(state)
         self._checkpoint(None, "executing_parallel")
-        results = self.multi_agent.run_parallel(ready, self.executor, respect_write_sets=respect_write_sets)
+        raw_results = self.multi_agent.run_parallel(ready, self.executor, respect_write_sets=respect_write_sets)
         task_by_id = {task.id: task for task in tasks}
-        for agent_name, task_id, ok in results:
+        results: list[tuple[str, str, bool]] = []
+        for agent_name, task_id, ok in raw_results:
             task = task_by_id[task_id]
             if ok and self.verifier and self.acceptance_provider:
                 verification = self.verifier.verify(self.acceptance_provider(task))
@@ -169,6 +167,7 @@ class Supervisor:
                 self._checkpoint(task.id, "verified")
             elif task.status != TaskStatus.BLOCKED and task.failure_count == 0:
                 self._failure(state, task, f"parallel executor failed on {agent_name}")
+            results.append((agent_name, task_id, ok))
         state.current_task = None
         if state.phase == "executing_parallel":
             state.phase = "verified" if results else "blocked"
