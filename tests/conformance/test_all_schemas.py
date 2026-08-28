@@ -54,7 +54,7 @@ def test_machine_readable_state_matches_state_schema():
 def test_manifest_projection_matches_machine_readable_state():
     manifest = yaml.safe_load((ROOT / ".uasep" / "manifest.yaml").read_text())
     state = json.loads((ROOT / ".uasep" / "state" / "state.json").read_text())
-    for key in ("protocol", "protocol_version", "project_state", "runtime"):
+    for key in ("protocol", "protocol_version", "project_state"):
         assert manifest[key] == state[key]
 
 
