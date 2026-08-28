@@ -78,6 +78,11 @@ class MultiAgentCoordinator:
         respect_write_sets: bool = True,
     ) -> list[tuple[str, str, bool]]:
         """Execute compatible assignments concurrently, preserving input order in results."""
+        task_ids = [task.id for task in ready]
+        if len(task_ids) != len(set(task_ids)):
+            duplicates = sorted({task_id for task_id in task_ids if task_ids.count(task_id) > 1})
+            raise ValueError(f"duplicate task ids in parallel batch: {', '.join(duplicates)}")
+
         assignments = self.assign(ready, respect_write_sets=respect_write_sets)
         if not assignments:
             return []
