@@ -10,30 +10,27 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Current task
 
-- ID: M21-M23
+- ID: M24-M30
 - Owner: current maintenance session
-- Scope: durable-state consistency, project-state synchronization, and maintenance-plan rescore
+- Scope: evidence, bootstrap, skill, example, schema/state, and runtime-free conformance guards
 
 ## Progress
 
 - Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.4; mandatory agent contract and workflow skills established; canonical task lifecycle, ownership/lease, task contract, batch manifest, evidence schema, and readiness protocol added; session bootstrap and practical conformance scenarios added; multi-machine, conflict/recovery, new-project, existing-project adoption, parallel-batch, drift-detection, and fresh-agent acceptance guidance added.
 - Completed hardening H01-H10, H11-H19, and H20 from repository evidence.
-- Completed maintenance M11-M20: focused automated conformance assertions for bootstrap, readiness, task/batch contracts, capability honesty, evidence, recovery, failure/ownership handling, and destructive-operation safeguards.
-- Corrected durable-state drift in `.uasep/state/PROJECT_STATE.md`.
-- Added a durable-state narrative consistency assertion to `tests/conformance/test_protocol_invariants.py`.
-- Re-scored `.uasep/planning/NEXT_20.md` into maintenance batch M21-M40.
-- Canonical conformance: VERIFIED / SUCCESS — main-branch run #72 at its tested commit `0716c55d345a6843f09bb4c2fdc28d2113f60aeb`.
-- Latest maintenance changes: verification PENDING; no new CI result is currently visible through the available connector actions.
+- Completed maintenance M11-M20 with focused protocol-invariant conformance assertions.
+- Completed M21-M23: durable-state consistency, project-state synchronization, maintenance-plan rescore, and CI verification. Canonical CI runs #94 and #95 succeeded.
+- Added M24-M30 conformance guards for canonical bootstrap presence, manifest/state consistency, runtime-free active-tree constraints, skill inventory, and examples referencing normative protocol material.
+- Latest M24-M30 verification: PENDING; new canonical CI will validate the current main state.
 - Unverified: Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 - Blocked: NONE known.
 
 ## Evidence
 
 - Fresh-agent acceptance: VERIFIED; `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
-- Canonical conformance: VERIFIED / SUCCESS — main-branch run #72.
-- H11-H19 verification: `EV-UASEP-BATCH-H11-H19-2026-08-28.json`.
-- M11-M20 verification: `EV-UASEP-MAINT-M11-20-2026-08-28.json`.
-- M21-M23 repository writes: confirmed by successful GitHub content operations; test execution remains pending.
+- Canonical conformance: VERIFIED / SUCCESS — runs #94 and #95.
+- M21-M23 verification gate: VERIFIED by canonical runs #94 and #95.
+- M24-M30 repository changes: present on `main`; CI verification pending.
 
 ## Decisions
 
@@ -44,7 +41,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Next action
 
-Verify the M21-M23 maintenance changes, then continue M24-M40 from `.uasep/planning/NEXT_20.md`.
+Verify M24-M30 with the canonical GitHub Actions run, then continue M31-M40.
 
 ## Updated
 
