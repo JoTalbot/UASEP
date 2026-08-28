@@ -37,10 +37,15 @@ The canonical operational artifacts are:
 - `.uasep/state/STATUS.md` — compact current status.
 - `.uasep/state/PROJECT_STATE.md` — durable project state and constraints.
 - `.uasep/state/HANDOFF.md` — continuation context.
+- `.uasep/state/state.json` — machine-readable durable-state projection.
 - `.uasep/planning/` — backlog and plan.
 - `.uasep/knowledge/` — decisions, discoveries, failures, lessons.
 - `.uasep/evidence/` — verification records.
 - `protocol/` — normative rules, including task, batch, evidence, readiness, lifecycle, ownership, and drift rules.
+
+## Machine-readable conformance
+
+When a schema has a reference fixture under `tests/conformance/fixtures/`, the fixture MUST validate against that schema. The repository's machine-readable durable state MUST validate against `schemas/state.schema.json` and remain consistent with the manifest's protocol, protocol version, project state, and runtime fields.
 
 ## Completion invariant
 
