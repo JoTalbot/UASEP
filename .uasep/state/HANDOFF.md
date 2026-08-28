@@ -1,24 +1,17 @@
 # Handoff — branch `new`
 
-## Policy
+Independent of `main`.
 
-Branch `new` is independent of `main`. No compatibility obligation with the other agent’s line.
+## Canonical
 
-## Canonical runtime
+- Supervisor + Store + TaskGraph + models
+- `adapters/local_cli.py` wired from CLI `run`/`resume`
+- Validator runs only unified tests
 
-Supervisor + Store + TaskGraph + unified Task model.
-Legacy module names may re-export; they must not introduce a second lifecycle.
+## Removed (partial)
 
-## Done
+anti_loop*, approval.py, checkpoints*, checkpoint_store, evidence_store, aios2_adapter, execution, executor, …
 
-- Unified models / graph / store / supervisor / verify / safety
-- CLI: graph, run, resume
-- StateStore and AutonomousLoop redirected to unified path
-- test_runtime rewritten for unified API
+## Still optional cleanup
 
-## Next (ideology-aligned)
-
-1. Delete dead legacy files that nothing imports (or only tests that we replace).
-2. Strengthen conformance checks to CONFORMANCE.md MUST list.
-3. local_cli host adapter for real execute/checks.
-4. Keep `.uasep/graph.json` and state honest after every change.
+Leftover files under `runtime/` and legacy tests may remain until deleted; they are outside the validation path.

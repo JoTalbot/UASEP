@@ -5,15 +5,16 @@
   "completed_tasks": [
     "UASEP-UNIFY-001",
     "UASEP-UNIFY-002",
-    "UASEP-UNIFY-004"
+    "UASEP-UNIFY-004",
+    "UASEP-ADAPT-001"
   ],
   "environment": "github-branch-new",
   "iteration": 0,
-  "last_verified": "UASEP-UNIFY-004",
+  "last_verified": "UASEP-ADAPT-001",
   "next_best_actions": [
-    "UASEP-UNIFY-003: delete dead legacy modules",
-    "UASEP-CONF-001: deepen conformance MUST tests",
-    "UASEP-ADAPT-001: local_cli adapter"
+    "Continue deleting dead legacy runtime modules",
+    "Replace or delete leftover legacy tests under tests/",
+    "Deepen CONFORMANCE MUST coverage"
   ],
   "objective": "UASEP unified runtime on branch new — independent of main",
   "phase": "active",

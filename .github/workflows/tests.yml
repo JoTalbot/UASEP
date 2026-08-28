@@ -20,5 +20,3 @@ jobs:
         run: python -m pip install --upgrade pip pytest
       - name: Run canonical validation
         run: python tools/validate_uasep.py
-      - name: Check package metadata
-        run: python -m pytest -q

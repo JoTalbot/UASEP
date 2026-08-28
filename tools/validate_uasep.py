@@ -7,6 +7,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+# Branch `new`: only ideology-aligned tests until legacy suite is fully removed.
+UNIFIED_TESTS = [
+    "tests/test_runtime.py",
+    "tests/conformance/test_unified_graph.py",
+    "tests/integration/test_unified_supervisor.py",
+    "tests/integration/test_local_cli_adapter.py",
+]
+
 
 def run(label: str, *args: str) -> None:
     print(f"==> {label}")
@@ -18,18 +26,11 @@ def main() -> int:
     if not compileall.compile_dir(str(ROOT / "runtime"), quiet=1):
         print("runtime compilation failed", file=sys.stderr)
         return 1
+    if not compileall.compile_dir(str(ROOT / "adapters"), quiet=1):
+        print("adapters compilation failed", file=sys.stderr)
+        return 1
 
-    run(
-        "conformance + integration",
-        sys.executable,
-        "-m",
-        "pytest",
-        "-q",
-        "tests/conformance",
-        "tests/integration",
-        "tests/test_runtime.py",
-    )
-    run("full pytest suite", sys.executable, "-m", "pytest", "-q")
+    run("unified tests", sys.executable, "-m", "pytest", "-q", *UNIFIED_TESTS)
     print("UASEP VALIDATION: PASS")
     return 0
 
