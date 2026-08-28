@@ -17,7 +17,7 @@
     "Observe the next canonical GitHub Actions run and its test summary.",
     "Record final CI evidence and synchronize durable state."
   ],
-  "status": "IN_PROGRESS",
+  "status": "DONE",
   "evidence": ["EV-UASEP-CI-2026-08-28"],
-  "next_action": "Update only the four stale conformance assertions, then observe the resulting canonical CI run."
+  "next_action": "Release ownership and continue with the repository's next planned validation or maintenance task."
 }
