@@ -6,12 +6,17 @@ from .models import Task
 class Planner:
     """Deterministic baseline planner; LLM-driven planners can implement the same contract."""
 
-    def next_task(self, tasks: list[Task], completed: set[str]) -> Task | None:
+    def next_task(
+        self,
+        tasks: list[Task],
+        completed: set[str],
+        max_failures: int = 3,
+    ) -> Task | None:
         ready = [
             task
             for task in tasks
-            if task.id not in completed and task.is_ready(completed)
+            if task.id not in completed and task.is_ready(completed, max_failures)
         ]
         if not ready:
             return None
-        return max(ready, key=lambda task: task.priority)
+        return max(ready, key=lambda task: (task.priority, task.id))
