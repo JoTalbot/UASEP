@@ -6,6 +6,7 @@
 - Strengthened task graph validation coverage for safer execution planning.
 - Added runtime consistency improvements for recovery-oriented workflows.
 - Regression coverage expanded for state integrity and execution safety.
+- Added checkpoint recovery regression tests for invalid data and restored state.
 
 ## 3.1.2 — Persist per-task retry state for cold resume
 
