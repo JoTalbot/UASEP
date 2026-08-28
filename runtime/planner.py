@@ -9,6 +9,8 @@ class Planner:
     def validate_tasks(self, tasks: list[Task]) -> None:
         """Validate task graph invariants before planning."""
         ids = [task.id for task in tasks]
+        if any(not task_id or not task_id.strip() for task_id in ids):
+            raise ValueError("task ids must not be empty")
         if len(ids) != len(set(ids)):
             raise ValueError("task ids must be unique")
 
