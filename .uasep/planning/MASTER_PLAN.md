@@ -1,53 +1,25 @@
 # UASEP Master Plan
 
-## Phase 1 — Core protocol
-- [x] Core protocol
-- [x] Capability discovery
-- [x] Execution and recovery
-- [x] Safety and authority
-- [x] Quality and evidence principles
-- [x] Memory and handoff
-- [x] Agent coordination
-- [x] Self-maintenance
-
-## Phase 2 — Agent operating system for repositories
-- [x] Root agent contract
-- [x] Task contract
-- [x] Parallel batch protocol
-- [x] Verification protocol
-- [x] Handoff protocol
-- [x] Failure recovery protocol
+## Current phase — Adopted
+- [x] Core protocol and agent contract
+- [x] Capability discovery and readiness
+- [x] Task, batch, ownership, verification, recovery, and handoff protocols
+- [x] Durable state, evidence, decisions, and planning artifacts
+- [x] Machine-readable schemas
 - [x] Chat + GitHub Connector workflow
-- [ ] Durable status format
-- [ ] Durable evidence format
-- [ ] Ownership/lease format
-- [ ] Decision record format
+- [x] Conformance specification and practical acceptance scenarios
+- [x] Adoption and multi-machine guidance
+- [x] Runtime-free architecture
 
-## Phase 3 — Usability and examples
-- [ ] Complete machine-readable task/status schemas where they improve agent interoperability
-- [ ] Reference examples for new and existing repositories
-- [ ] Examples of parallel multi-agent work
-- [ ] Examples of conflict resolution and recovery
-- [ ] Minimal bootstrap guide for a new repository
-- [ ] Agent onboarding checklist
+## Remaining validation
+- [ ] Run the complete fresh-agent acceptance pass from an independent session
+- [ ] Record acceptance evidence in `.uasep/evidence/`
+- [ ] Resolve any defects discovered by that pass
 
-## Phase 4 — Conformance
-- [ ] Documentation conformance checklist
-- [ ] Self-audit procedure for agents
-- [ ] Protocol consistency checks
-- [ ] Example-based conformance scenarios
-
-## Phase 5 — Adoption
-- [ ] ChatGPT + GitHub Connector operational guidance
-- [ ] Guidance for other repository-connected agents
-- [ ] Temporary-agent handoff workflow
-- [ ] Multi-machine/multi-agent collaboration guidance
-
-## Phase 6 — Continuous improvement
-- [ ] Protocol metrics based on repository evidence
-- [ ] Architecture/process drift detection
-- [ ] Failure knowledge base improvement
-- [ ] Self-improvement loop for skills and instructions
+## Continuous maintenance
+- [ ] Re-audit protocol/schema consistency after normative changes
+- [ ] Update skills and examples when recurring failure patterns are discovered
+- [ ] Maintain durable failure and decision knowledge
 
 ## Explicit non-goals
 
