@@ -17,9 +17,10 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 ## Progress
 
 - Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.4; mandatory agent contract and workflow skills established; canonical task lifecycle, ownership/lease, task contract, batch manifest, evidence schema, and readiness protocol added; session bootstrap and practical conformance scenarios added; multi-machine, conflict/recovery, new-project, existing-project adoption, parallel-batch, drift-detection, and fresh-agent acceptance guidance added.
-- Completed hardening batch: machine-readable state synchronization; 8 schema fixtures; fixture validation suite; runtime-free invariant checks; repository-native bootstrap/branch checks; explicit batch execution guide; CI evidence-boundary failure record; next-20-task plan.
-- Completed CI repair: canonical workflow prerequisite fixed; stale conformance assertions aligned with current repository contracts; canonical run #44 completed successfully.
-- Completed first ten planned hardening tasks H01-H10: state projection verified; all eight reference fixtures verified against their schemas; fixture runner verified by the successful canonical conformance run.
+- Completed hardening H01-H10: machine-readable state synchronization; 8 schema fixtures; fixture validation suite; runtime-free invariant checks; repository-native bootstrap/branch checks; explicit batch execution guide; CI evidence-boundary failure record; next-20-task plan.
+- Completed H11-H19: cross-artifact invariants; runtime-free and branch invariants; conformance documentation; batch execution guide; reconciled failure knowledge; decision record; durable status and handoff synchronization.
+- Completed after hardening: fresh-agent acceptance assessment from repository state alone; evidence recorded in EV-UASEP-ACCEPT-2026-08-28.
+- Canonical conformance: VERIFIED / SUCCESS in main-branch run #44.
 - Remaining implementation work: NONE in the current documentation-first scope.
 - Unverified: H20 fresh-agent acceptance requires a genuinely independent session if re-run; no other known blockers.
 - Blocked: NONE known.
@@ -28,8 +29,9 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 - Fresh-agent acceptance: VERIFIED by repository-native bootstrap assessment; see `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
 - Repository writes: confirmed through successful GitHub content operations.
-- H01-H10: VERIFIED by repository artifacts and canonical conformance run #44.
-- Automated CI: VERIFIED for canonical run #44; conformance suite completed successfully.
+- Canonical conformance: VERIFIED / SUCCESS — main-branch run #44.
+- CI failure root cause and resolution recorded in `.uasep/knowledge/FAILURES.md` and `EV-UASEP-CI-2026-08-28.json`.
+- H11-H19 verification and synchronization recorded in `EV-UASEP-BATCH-H11-H19-2026-08-28.json`.
 
 ## Decisions
 
@@ -40,7 +42,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Next action
 
-Select the next repository-native task from H11-H20 after confirming its current artifact state. Do not reopen H01-H10 unless a future conformance/drift audit produces a concrete defect.
+Run or observe a genuinely fresh-agent acceptance session for H20 when an independent session is available. Otherwise select the next repository-native maintenance/conformance task from planning after confirming current state.
 
 ## Updated
 
