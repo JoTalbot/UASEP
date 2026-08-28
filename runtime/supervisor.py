@@ -57,8 +57,19 @@ class Supervisor:
         if self.evidence_store:
             self.evidence_store.record(Evidence(kind, claim, status, detail))
 
+    def _restore_task_failures(self, state: ProjectState, tasks: list[Task]) -> None:
+        """Apply persisted per-task failure counts after a cold process start."""
+        for task in tasks:
+            if task.id in state.task_failures:
+                task.failure_count = max(task.failure_count, state.task_failures[task.id])
+                if task.failure_count >= self.max_failures and task.status != TaskStatus.DONE:
+                    task.status = TaskStatus.BLOCKED
+                elif task.failure_count > 0 and task.status not in {TaskStatus.DONE, TaskStatus.BLOCKED}:
+                    task.status = TaskStatus.FAILED
+
     def _failure(self, state: ProjectState, task: Task, detail: str, phase: str = "failed") -> None:
         task.failure_count += 1
+        state.task_failures[task.id] = task.failure_count
         self._evidence("execution", task.id, "FAILED", detail)
         self._checkpoint(task.id, phase)
         state.current_task = None
@@ -74,6 +85,7 @@ class Supervisor:
 
     def run_once(self, project_id: str, tasks: list[Task]) -> ProjectState:
         state = self.state_store.load(project_id)
+        self._restore_task_failures(state, tasks)
         state.iteration += 1
         task = self.planner.next_task(tasks, state.completed_tasks, self.max_failures)
         if task is None:
@@ -134,6 +146,7 @@ class Supervisor:
         if max_cycles < 1:
             raise ValueError("max_cycles must be >= 1")
         state = self.state_store.load(project_id)
+        self._restore_task_failures(state, tasks)
         state.blockers = [
             blocker for blocker in state.blockers if not blocker.startswith("cycle budget exhausted")
         ]
