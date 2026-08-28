@@ -9,6 +9,8 @@
   "acceptance": ["Add focused conformance assertions covering the selected protocol invariants without introducing runtime dependencies.", "Canonical conformance passes after the change.", "Record per-task evidence and synchronize durable state."],
   "risk": "LOW",
   "verification": ["Inspect each assertion against protocol/CONFORMANCE.md and related normative files.", "Run the canonical conformance suite through GitHub Actions.", "Verify changed files and durable state after the write."],
-  "status": "READY",
-  "next_action": "Create the batch manifest and execute only the independent test-coverage tasks."
+  "status": "DONE",
+  "completed_commit": "0716c55d345a6843f09bb4c2fdc28d2113f60aeb",
+  "verification_run": "33196454786",
+  "next_action": "Release ownership and continue maintenance only when new drift or requirements appear."
 }
