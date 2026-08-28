@@ -11,7 +11,7 @@ def _read(rel: str) -> str:
 
 def test_bootstrap_material_is_present():
     assert (ROOT / "AGENTS.md").is_file()
-    assert (ROOT / "SESSION_BOOTSTRAP.md").is_file()
+    assert (ROOT / "protocol/AGENT_READINESS.md").is_file()
     assert (ROOT / ".uasep/state/state.json").is_file()
 
 
@@ -25,8 +25,8 @@ def test_readiness_state_is_adopted_and_runtime_free():
 
 def test_capability_claims_are_repository_bounded():
     manifest = _read(".uasep/manifest.yaml")
+    assert "source_of_truth: repository" in manifest
     assert "runtime: NONE" in manifest
-    assert "GitHub" in manifest
 
 
 def test_task_contract_requires_bounded_write_sets():
@@ -57,8 +57,9 @@ def test_conformance_forbids_unknown_to_verified_shortcuts():
 
 def test_destructive_safeguards_are_documented():
     text = _read("protocol/CONFORMANCE.md").lower()
-    for required in ("destructive", "confirmation", "backup"):
-        assert required in text
+    assert "destructive" in text
+    assert "explicit approval" in text
+    assert "recoverable checkpoint" in text
 
 
 def test_recovery_requires_durable_state():
@@ -70,4 +71,4 @@ def test_recovery_requires_durable_state():
 
 def test_no_runtime_dependency_is_introduced_by_protocol_checks():
     text = _read("protocol/CONFORMANCE.md").lower()
-    assert "runtime-free" in text or "runtime free" in text
+    assert "does not require a uasep runtime" in text
