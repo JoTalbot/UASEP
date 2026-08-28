@@ -32,11 +32,12 @@ class Task:
     status: TaskStatus = TaskStatus.BACKLOG
     dependencies: list[str] = field(default_factory=list)
     metadata: dict[str, Any] = field(default_factory=dict)
+    failure_count: int = 0
 
-    def is_ready(self, completed: set[str]) -> bool:
-        return self.status in {TaskStatus.BACKLOG, TaskStatus.READY} and all(
-            dep in completed for dep in self.dependencies
-        )
+    def is_ready(self, completed: set[str], max_failures: int = 3) -> bool:
+        pending = self.status in {TaskStatus.BACKLOG, TaskStatus.READY}
+        retryable = self.status == TaskStatus.FAILED and self.failure_count < max_failures
+        return (pending or retryable) and all(dep in completed for dep in self.dependencies)
 
 
 @dataclass
