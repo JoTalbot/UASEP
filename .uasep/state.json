@@ -1,15 +1,15 @@
 {
   "protocol": "UASEP",
-  "protocol_version": "3.1.1",
+  "protocol_version": "3.1.2",
   "project_state": "active",
   "autonomy_level": "L4",
   "environment": "Python >=3.10",
   "objective": "Maintain a portable, verifiable autonomous engineering protocol",
-  "active_task": "Record CI evidence after cycle-budget contract fix",
-  "last_verified": "Local pytest 103 passed; verified terminal phase survives spent cycle budget",
+  "active_task": "Persist per-task retry state (done); observe CI for 3.1.2",
+  "last_verified": "Local pytest 104 passed; task_failures cold-resume contract implemented",
   "next_best_actions": [
-    "Observe GitHub Actions on the 3.1.1 commit",
-    "Persist per-task retry state for cold process resume",
+    "Observe GitHub Actions on the 3.1.2 commit",
+    "Add formal versioning and migration specification",
     "Keep host/AIOS2 adapter coverage current",
     "Do not claim CI-verified until the workflow run is green"
   ]

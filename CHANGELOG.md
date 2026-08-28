@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.2 — Persist per-task retry state for cold resume
+
+- ProjectState and StateStore now persist `task_failures` so failure counts survive process restart (UASEP-RUNTIME-005).
+- Supervisor restores failure counts on load and writes them on each failure.
+- Integration test adjusted for shared-root state semantics under cold resume.
+- Local pytest: 104 passed.
+
 ## 3.1.1 — Runtime verification and cycle-budget contract
 
 - Supervisor no longer overwrites a verified terminal phase when the cycle budget ends with no remaining work.
