@@ -38,6 +38,7 @@ class Supervisor:
         planner: Planner | None = None,
         acceptance_provider: AcceptanceProvider | None = None,
         max_failures: int = 3,
+        multi_agent: MultiAgentCoordinator | None = None,
     ) -> "Supervisor":
         base = root / ".uasep"
         return cls(
@@ -48,6 +49,7 @@ class Supervisor:
             acceptance_provider=acceptance_provider,
             evidence_store=EvidenceStore(base / "evidence" / "runtime.json"),
             checkpoint_store=CheckpointStore(base / "checkpoints" / "journal.json"),
+            multi_agent=multi_agent,
             max_failures=max_failures,
         )
 
@@ -150,12 +152,23 @@ class Supervisor:
         *,
         respect_write_sets: bool = True,
     ) -> list[tuple[str, str, bool]]:
-        """Assign ready tasks to free multi-agent slots and execute sequentially per slot."""
+        """Execute one deterministic batch of ready tasks through registered agents."""
         if self.multi_agent is None:
             return []
         state = self.state_store.load(project_id)
         self._restore_task_failures(state, tasks)
         ready = self.planner.ready_tasks(tasks, state.completed_tasks, self.max_failures)
+        if not ready:
+            state.phase = "maintenance" if state.completed_tasks == {t.id for t in tasks} else "blocked"
+            state.current_task = None
+            self.state_store.save(state)
+            self._checkpoint(None, state.phase)
+            return []
+
+        state.phase = "executing_parallel"
+        state.current_task = None
+        self.state_store.save(state)
+        self._checkpoint(None, "executing_parallel")
         results = self.multi_agent.run_parallel(
             ready,
             self.executor,
@@ -166,10 +179,13 @@ class Supervisor:
             if ok:
                 task.status = TaskStatus.DONE
                 state.completed_tasks.add(task.id)
-                state.phase = "verified"
                 self._evidence("completion", task.id, "VERIFIED", f"parallel via {agent_name}")
+                self._checkpoint(task.id, "verified")
             else:
                 self._failure(state, task, f"parallel executor failed on {agent_name}")
+        state.current_task = None
+        if state.phase == "executing_parallel":
+            state.phase = "verified" if results else "blocked"
         self.state_store.save(state)
         return results
 
