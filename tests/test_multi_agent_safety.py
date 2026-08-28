@@ -55,3 +55,15 @@ def test_executor_exception_releases_agent_and_reports_failure():
 def test_unknown_agent_release_is_rejected():
     with pytest.raises(ValueError, match="unknown agent"):
         MultiAgentCoordinator().release("missing")
+
+
+def test_duplicate_task_ids_are_rejected_before_assignment():
+    coordinator = MultiAgentCoordinator()
+    coordinator.register("agent-1")
+    tasks = [Task("A", "first"), Task("A", "duplicate")]
+
+    with pytest.raises(ValueError, match="duplicate task ids"):
+        coordinator.run_parallel(tasks, lambda task: True)
+
+    assert coordinator.free_agents()[0].current_task is None
+    assert not coordinator.free_agents()[0].busy
