@@ -16,14 +16,14 @@
 - [x] Task model
 - [x] Evidence model
 - [x] Capability model
-- [ ] Versioning and migration specification
+- [x] Versioning and migration specification
 
 ## Phase 3 — Conformance
 - [x] Conformance test suite
 - [x] Reference examples
 - [x] Environment adapter contract
 - [x] Bootstrap validation
-- [ ] CI-observed green run for 3.1.1
+- [x] CI-observed green run for 3.1.2
 
 ## Phase 4 — Runtime
 - [x] Reference supervisor
@@ -31,7 +31,7 @@
 - [x] state manager
 - [x] recovery engine
 - [x] evidence engine
-- [ ] persist per-task retry state for cold resume
+- [x] persist per-task retry state for cold resume
 - [ ] agent orchestration
 
 ## Phase 5 — Adoption
