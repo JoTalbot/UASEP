@@ -1,5 +1,4 @@
 {
-  "$schema": "https://github.com/JoTalbot/UASEP/schemas/state.schema.json",
   "protocol": "UASEP",
   "protocol_version": "3.4.0",
   "project_state": "ADOPTED",
