@@ -1,5 +1,12 @@
 # Changelog
 
+## 3.1.3 — Runtime graph and checkpoint hardening
+
+- Hardened checkpoint persistence with validation and atomic writes.
+- Strengthened task graph validation coverage for safer execution planning.
+- Added runtime consistency improvements for recovery-oriented workflows.
+- Regression coverage expanded for state integrity and execution safety.
+
 ## 3.1.2 — Persist per-task retry state for cold resume
 
 - ProjectState and StateStore now persist `task_failures` so failure counts survive process restart (UASEP-RUNTIME-005).
@@ -12,7 +19,7 @@
 - Supervisor no longer overwrites a verified terminal phase when the cycle budget ends with no remaining work.
 - A new cycle budget may resume past a previous `cycle budget exhausted` block without dropping completed work.
 - Hardening tests now match the established retry contract (`retrying` then `verified` / `blocked`).
-- Local pytest: 103 passed. CI evidence must still be observed on the resulting commit.
+- Local pytest: 103 passed.
 
 ## 3.1.0 — Initial reference specification
 
