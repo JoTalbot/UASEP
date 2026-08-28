@@ -1,17 +1,23 @@
 {
   "protocol": "UASEP",
-  "protocol_version": "3.1.0",
-  "project_state": "initializing",
-  "autonomy_level": "L4",
-  "environment": "unknown",
-  "objective": "Maintain a portable, verifiable autonomous engineering protocol",
+  "protocol_version": "3.2.0-new",
+  "project_id": "uasep-reference",
+  "phase": "active",
+  "autonomy_level": "L3",
+  "environment": "github-branch-new",
+  "objective": "Unify UASEP runtime: one Task, one Graph, one Supervisor",
   "active_task": null,
-  "last_verified": "Repository and initial specification files created",
+  "completed_tasks": [
+    "UASEP-UNIFY-001",
+    "UASEP-UNIFY-002"
+  ],
+  "blockers": [],
+  "iteration": 0,
+  "last_verified": "UASEP-UNIFY-002",
   "next_best_actions": [
-    "Define machine-readable schemas",
-    "Build conformance tests",
-    "Define adapter contracts",
-    "Implement reference supervisor",
-    "Integrate UASEP into AIOS2"
+    "Align legacy AutonomousLoop callers to Supervisor",
+    "Run full pytest on branch new",
+    "Add local_cli adapter",
+    "Remove duplicate runtime modules after green tests"
   ]
 }

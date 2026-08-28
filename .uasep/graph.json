@@ -1,0 +1,53 @@
+{
+  "protocol": "UASEP",
+  "protocol_version": "3.2.0-new",
+  "tasks": [
+    {
+      "id": "UASEP-UNIFY-001",
+      "objective": "Unify Task model, State, and TaskGraph on branch new",
+      "status": "verified",
+      "priority": 100,
+      "dependencies": [],
+      "acceptance_criteria": [
+        "runtime/models.py defines single Task",
+        "runtime/graph.py persists via store"
+      ],
+      "risk": "medium",
+      "owner": null,
+      "evidence_ids": [],
+      "notes": "target-design implementation",
+      "failure_count": 0
+    },
+    {
+      "id": "UASEP-UNIFY-002",
+      "objective": "Single Supervisor orchestration path",
+      "status": "verified",
+      "priority": 90,
+      "dependencies": ["UASEP-UNIFY-001"],
+      "acceptance_criteria": [
+        "runtime/supervisor.py run_once verifies before complete"
+      ],
+      "risk": "medium",
+      "owner": null,
+      "evidence_ids": [],
+      "notes": "",
+      "failure_count": 0
+    },
+    {
+      "id": "UASEP-UNIFY-003",
+      "objective": "Migrate legacy modules and green CI on branch new",
+      "status": "queued",
+      "priority": 80,
+      "dependencies": ["UASEP-UNIFY-002"],
+      "acceptance_criteria": [
+        "pytest passes",
+        "legacy dual path removed or thin-wrapped"
+      ],
+      "risk": "high",
+      "owner": null,
+      "evidence_ids": [],
+      "notes": "remaining work",
+      "failure_count": 0
+    }
+  ]
+}
