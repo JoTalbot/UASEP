@@ -2,31 +2,27 @@
 
 Current objective: maintain UASEP as a complete repository-native operating protocol for AI agents working through chat and GitHub Connector.
 
-Current step: verify and continue maintenance batch M24-M30.
+Current step: periodic conformance/drift maintenance. No active maintenance batch.
 
 Completed:
 - verified `main`, protocol 3.4.0, ADOPTED phase, and repository write access;
-- verified H01-H20 as complete from durable repository evidence;
-- verified M11-M20 conformance coverage and canonical main-branch run #72 success at its tested commit;
-- corrected durable-state drift and stale project-state wording;
-- added and verified canonical protocol-version consistency checking;
-- M21-M23 verification gate is complete: canonical CI runs #94 and #95 succeeded;
-- activated M24-M30 and added repository-native conformance guards for bootstrap, manifest/state consistency, runtime-free constraints, skills, and examples.
+- verified H01-H20, M11-M20, M21-M23, M24-M30, and M31-M40 from durable repository evidence and canonical CI results;
+- repaired durable-state drift found during the maintenance passes;
+- added repository-native conformance guards for protocol version/state consistency, evidence and ownership schema coverage, runtime-free constraints, workflow policy, skills, examples, and durable-state synchronization;
+- canonical CI run #108 succeeded at commit `ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec`.
 
-Current task: M24-M30 maintenance continuation.
+Current task: NONE.
 
 Unverified:
-- Latest M24-M30 changes require canonical CI verification on the current `main` tip.
-- Historical search indexes may retain provenance from retired architecture.
+- Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 
 Blockers: none known.
 
 Next action:
-1. Verify the current M24-M30 CI run and record evidence.
-2. Fix any concrete regression exposed by CI.
-3. After a green verification gate, continue M31-M40.
-4. Keep state, evidence, plan, and handoff synchronized after consequential changes.
+1. Perform periodic repository-native conformance/drift audits.
+2. Open a new maintenance batch only for a concrete defect, drift finding, or new acceptance requirement.
+3. Keep `state.json`, `STATUS.md`, `PROJECT_STATE.md`, `HANDOFF.md`, and planning evidence synchronized after consequential changes.
 
-Evidence status: H01-H20, M11-M20, and M21-M23 are VERIFIED / COMPLETE. M24-M30 are IN PROGRESS pending CI verification.
+Evidence status: H01-H20, M11-M20, M21-M23, M24-M30, and M31-M40 are VERIFIED / COMPLETE. No active task.
 
-Note: `main` is the working branch. No new feature branch is required for the current maintenance batch.
+Note: `main` is the working branch. Do not create a feature branch for routine maintenance unless the repository contract changes.
