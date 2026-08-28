@@ -12,12 +12,13 @@
 - [x] Runtime-free architecture
 - [x] Machine-readable schema fixtures and repository-native conformance checks
 - [x] Batch execution hardening and durable-state synchronization
+- [x] Fresh-agent acceptance evidence recorded and reconciled as H20 complete
 
 ## Remaining validation
-- [ ] Run the complete fresh-agent acceptance pass from an independent session
-- [ ] Record acceptance evidence in `.uasep/evidence/`
-- [ ] Resolve any defects discovered by that pass
-- [ ] Observe a canonical automated CI workflow run
+- [x] Run the complete fresh-agent acceptance pass from an independent session — evidence recorded in `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`
+- [x] Record acceptance evidence in `.uasep/evidence/`
+- [x] Resolve any defects discovered by that pass
+- [x] Observe a canonical automated CI workflow run — main-branch run #44 verified successful
 
 ## Continuous maintenance
 - [ ] Re-audit protocol/schema consistency after normative changes
