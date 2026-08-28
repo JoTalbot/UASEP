@@ -4,44 +4,44 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 
 ## P0 — Foundations
 
-- UASEP-PROTO-001: Complete repository-wide audit for runtime/AIOS2 assumptions.
-- UASEP-PROTO-002: Define canonical durable project status format.
-- UASEP-PROTO-003: Define canonical evidence record format.
-- UASEP-PROTO-004: Define agent ownership/lease format for parallel work.
-- UASEP-PROTO-005: Define decision record format.
-- UASEP-PROTO-006: Define explicit source-of-truth hierarchy.
+- [x] UASEP-PROTO-001: Complete repository-wide audit for runtime/AIOS2 assumptions. — protocol migration substantially complete; final historical-index scan remains informational only.
+- [x] UASEP-PROTO-002: Define canonical durable project status format.
+- [x] UASEP-PROTO-003: Define canonical evidence record format.
+- [ ] UASEP-PROTO-004: Define agent ownership/lease format for parallel work.
+- [x] UASEP-PROTO-005: Define decision record format.
+- [x] UASEP-PROTO-006: Define explicit source-of-truth hierarchy.
 
 ## P1 — Agent workflow
 
-- UASEP-AGENT-001: Document mandatory startup/restore procedure.
-- UASEP-AGENT-002: Document task decomposition and acceptance criteria.
-- UASEP-AGENT-003: Document large-batch parallel analysis and conflict-free execution.
-- UASEP-AGENT-004: Document verification and evidence rules.
-- UASEP-AGENT-005: Document failure recovery and anti-loop strategy.
-- UASEP-AGENT-006: Document session handoff and continuation.
-- UASEP-AGENT-007: Document multi-machine/multi-agent coordination.
+- [x] UASEP-AGENT-001: Document mandatory startup/restore procedure.
+- [x] UASEP-AGENT-002: Document task decomposition and acceptance criteria.
+- [x] UASEP-AGENT-003: Document large-batch parallel analysis and conflict-free execution.
+- [x] UASEP-AGENT-004: Document verification and evidence rules.
+- [x] UASEP-AGENT-005: Document failure recovery and anti-loop strategy.
+- [x] UASEP-AGENT-006: Document session handoff and continuation.
+- [ ] UASEP-AGENT-007: Document multi-machine/multi-agent coordination.
 
 ## P1 — Chat + GitHub Connector
 
-- UASEP-CONNECT-001: Define the standard ChatGPT/GitHub operating loop.
-- UASEP-CONNECT-002: Define capability discovery and connector/tool limitations.
-- UASEP-CONNECT-003: Define safe commit behavior; push is represented by the connector's repository update operation.
-- UASEP-CONNECT-004: Define how agents report verified vs unknown results.
-- UASEP-CONNECT-005: Define recovery when a connector action fails or is unavailable.
+- [x] UASEP-CONNECT-001: Define the standard Chat + GitHub operating loop.
+- [x] UASEP-CONNECT-002: Define capability discovery and connector/tool limitations.
+- [x] UASEP-CONNECT-003: Define safe repository-update/commit behavior.
+- [x] UASEP-CONNECT-004: Define how agents report verified vs unknown results.
+- [x] UASEP-CONNECT-005: Define recovery when a connector action fails or is unavailable.
 
 ## P2 — Examples and adoption
 
-- UASEP-EXAMPLE-001: New-project example.
-- UASEP-EXAMPLE-002: Existing-project adoption example.
-- UASEP-EXAMPLE-003: Parallel batch example.
-- UASEP-EXAMPLE-004: Conflict/recovery example.
-- UASEP-EXAMPLE-005: Handoff between agents on different machines.
+- [ ] UASEP-EXAMPLE-001: New-project example.
+- [ ] UASEP-EXAMPLE-002: Existing-project adoption example.
+- [ ] UASEP-EXAMPLE-003: Parallel batch example.
+- [ ] UASEP-EXAMPLE-004: Conflict/recovery example.
+- [ ] UASEP-EXAMPLE-005: Handoff between agents on different machines.
 
 ## P2 — Quality
 
-- UASEP-QUALITY-001: Documentation consistency self-audit.
-- UASEP-QUALITY-002: Example-based conformance scenarios.
-- UASEP-QUALITY-003: Protocol drift detection guidance.
+- [ ] UASEP-QUALITY-001: Documentation consistency self-audit.
+- [x] UASEP-QUALITY-002: Example-based conformance scenarios.
+- [ ] UASEP-QUALITY-003: Protocol drift detection guidance.
 
 ## Non-goals
 
@@ -49,4 +49,4 @@ Runtime implementation, local daemon/CLI, executor framework, autonomous process
 
 ## Execution rule
 
-Do not mark a task complete from intent alone. Record the changed files, evidence, unresolved risks, and next action in `.uasep/state/STATUS.md` and `.uasep/state/HANDOFF.md`.
+Do not mark a task complete from intent alone. Record changed files, evidence, unresolved risks, and next action in `.uasep/state/STATUS.md` and `.uasep/state/HANDOFF.md`.
