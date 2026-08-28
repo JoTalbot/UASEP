@@ -1,0 +1,12 @@
+name: UASEP CI smoke
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: CI smoke test
+        run: echo "UASEP CI OK"
