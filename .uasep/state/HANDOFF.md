@@ -2,26 +2,27 @@
 
 Current objective: maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub Connector.
 
-Current step: ADOPTED; no required implementation work remains in the current documentation-first scope.
+Current step: UASEP-HARDEN-2026-08-28 batch completed for all repository-native independent changes; external acceptance remains pending.
 
-Completed:
-- retired executable UASEP runtime, packaging, runtime tests, and runtime CI from the active tree;
-- established root `AGENTS.md` as the mandatory agent contract;
-- established repository-backed state, evidence, decisions, and planning;
-- added bootstrap, task lifecycle, ownership/lease, parallel batch, verification, recovery, handoff, adoption, multi-machine, and drift-detection guidance;
-- added practical conformance scenarios;
-- aligned `protocol/CONFORMANCE.md` to v3.4;
-- removed stale pre-runtime-free/AIOS2 operational state.
+Completed in this batch:
+- synchronized machine-readable durable state and removed stale active-task value;
+- added one reference fixture for each of the eight machine-readable schemas;
+- added fixture validation, runtime-free, and repository-native bootstrap/branch conformance tests;
+- added an explicit batch execution guide;
+- recorded the CI execution evidence boundary in knowledge;
+- recorded the next 20 hardening tasks and their dependency/ownership classification.
 
 Unverified:
-- a fresh independent agent has not executed every manual conformance scenario as one complete acceptance pass;
-- historical search indexes may retain retired runtime/AIOS2 provenance.
+- a fresh independent agent has not executed the complete manual acceptance pass;
+- canonical GitHub Actions execution has not been observed through the available interface.
 
 Blockers: none known.
 
 Next action:
-1. On the next session, bootstrap from repository state rather than chat memory.
-2. Run the conformance scenarios relevant to the requested work.
-3. Create a new task only when project direction or requirements change.
+1. Start from repository state, not previous chat memory.
+2. Run the fresh-agent acceptance procedure from `examples/FRESH_AGENT_ACCEPTANCE.md`.
+3. Record evidence in `.uasep/evidence/` using the evidence schema.
+4. Observe canonical CI when available; do not infer its result.
+5. Create targeted follow-up work only for actual defects.
 
-Evidence status: repository changes above are confirmed by successful GitHub content operations. No automated CI result is claimed.
+Evidence status: repository writes in this batch were confirmed by successful GitHub content operations. CI remains UNKNOWN and fresh-agent acceptance remains NOT_RUN.
