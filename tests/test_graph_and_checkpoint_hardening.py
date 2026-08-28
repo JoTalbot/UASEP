@@ -28,3 +28,23 @@ def test_checkpoint_rejects_non_list_journal(tmp_path: Path):
 
     with pytest.raises(ValueError):
         store.all()
+
+
+def test_checkpoint_rejects_invalid_json(tmp_path: Path):
+    path = tmp_path / "checkpoints.json"
+    path.write_text("{invalid", encoding="utf-8")
+    store = CheckpointStore(path)
+
+    with pytest.raises(ValueError):
+        store.all()
+
+
+def test_checkpoint_latest_after_restore(tmp_path: Path):
+    store = CheckpointStore(tmp_path / "checkpoints.json")
+
+    store.save("task-1", "running")
+    store.save("task-1", "verified")
+
+    restored = CheckpointStore(tmp_path / "checkpoints.json")
+
+    assert restored.latest()["phase"] == "verified"
