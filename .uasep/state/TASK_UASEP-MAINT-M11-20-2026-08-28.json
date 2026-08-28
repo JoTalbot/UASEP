@@ -1,0 +1,14 @@
+{
+  "id": "UASEP-MAINT-M11-20-2026-08-28",
+  "objective": "Add automated conformance coverage for normative agent-behavior invariants that are currently documented but insufficiently exercised.",
+  "owner": "fresh-agent-session-2026-08-28",
+  "branch": "main",
+  "write_set": ["tests/conformance/test_protocol_invariants.py", ".uasep/state/TASK_UASEP-MAINT-M11-20-2026-08-28.json", ".uasep/state/BATCH_UASEP-MAINT-M11-20-2026-08-28.json", ".uasep/evidence/EV-UASEP-MAINT-M11-20-2026-08-28.json", ".uasep/state/state.json", ".uasep/state/HANDOFF.md", ".uasep/state/STATUS.md"],
+  "dependencies": ["UASEP-ACCEPT-2026-08-28", "UASEP-CI-2026-08-28"],
+  "conflicts": ["Other edits to tests/conformance/test_protocol_invariants.py or the listed durable state files"],
+  "acceptance": ["Add focused conformance assertions covering the selected protocol invariants without introducing runtime dependencies.", "Canonical conformance passes after the change.", "Record per-task evidence and synchronize durable state."],
+  "risk": "LOW",
+  "verification": ["Inspect each assertion against protocol/CONFORMANCE.md and related normative files.", "Run the canonical conformance suite through GitHub Actions.", "Verify changed files and durable state after the write."],
+  "status": "READY",
+  "next_action": "Create the batch manifest and execute only the independent test-coverage tasks."
+}
