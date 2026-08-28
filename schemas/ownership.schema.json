@@ -13,7 +13,8 @@
     "expected_completion": {"type": "string", "minLength": 1},
     "status": {"enum": ["ACTIVE", "RELEASED", "TRANSFERRED", "STALE", "CONFLICT"]},
     "last_refresh": {"type": ["string", "null"]},
-    "transfer_to": {"type": ["string", "null"]}
+    "transfer_to": {"type": ["string", "null"]},
+    "release_reason": {"type": ["string", "null"]}
   },
   "additionalProperties": false
 }
