@@ -9,6 +9,7 @@
 - Added checkpoint recovery regression tests for invalid data and restored state.
 
 - CI validation trigger completed after hardening audit.
+- CI verification retriggered after workflow audit.
 
 ## 3.1.2 — Persist per-task retry state for cold resume
 
