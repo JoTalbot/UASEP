@@ -1,13 +1,11 @@
 # Environment Matrix
 
-The same bootstrap adapts to different environments.
+UASEP is currently designed for use inside AI chats with connected GitHub tools. The repository is the durable memory and coordination layer; the chat agent is the execution environment.
 
 | Environment | Typical capabilities | Degraded behavior |
 |---|---|---|
-| ChatGPT + GitHub | repository read/write, GitHub APIs, web when available | no shell execution; use repository inspection and available checks |
-| Local CLI | filesystem, shell, git, build, tests | use local runtime directly |
-| Temporary sandbox | filesystem, shell, isolated compute | persist handoff before expiry |
-| IDE agent | workspace, editor, tests | use IDE-native capabilities |
-| AIOS2 runtime | supervisor, task graph, agents, tools | use runtime orchestration |
+| Chat + GitHub Connector | repository read/write, GitHub APIs, available web/tools | no local shell; use repository inspection and available checks |
 
-The matrix is illustrative. Runtime discovery is authoritative.
+The matrix is intentionally limited to the supported operating model. UASEP does not require a local CLI, sandbox, IDE agent, autonomous executor, or separate runtime.
+
+Capability discovery is authoritative for the current chat session. Unsupported operations MUST be reported as `UNKNOWN` or `BLOCKED`; agents must never fabricate side effects.
