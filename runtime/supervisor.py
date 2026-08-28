@@ -62,7 +62,6 @@ class Supervisor:
             self.evidence_store.record(Evidence(kind, claim, status, detail))
 
     def _restore_task_failures(self, state: ProjectState, tasks: list[Task]) -> None:
-        """Apply persisted per-task failure counts after a cold process start."""
         for task in tasks:
             if task.id in state.task_failures:
                 task.failure_count = max(task.failure_count, state.task_failures[task.id])
@@ -80,9 +79,7 @@ class Supervisor:
         if task.failure_count >= self.max_failures:
             task.status = TaskStatus.BLOCKED
             state.phase = "blocked"
-            state.blockers.append(
-                f"{task.id}: exceeded max failures ({self.max_failures}): {detail}"
-            )
+            state.blockers.append(f"{task.id}: exceeded max failures ({self.max_failures}): {detail}")
         else:
             task.status = TaskStatus.FAILED
             state.phase = "retrying"
@@ -94,11 +91,7 @@ class Supervisor:
         task = self.planner.next_task(tasks, state.completed_tasks, self.max_failures)
         if task is None:
             all_task_ids = {item.id for item in tasks}
-            exhausted = [
-                item.id for item in tasks
-                if item.id not in state.completed_tasks
-                and item.failure_count >= self.max_failures
-            ]
+            exhausted = [item.id for item in tasks if item.id not in state.completed_tasks and item.failure_count >= self.max_failures]
             if all_task_ids.issubset(state.completed_tasks):
                 state.phase = "maintenance" if not state.blockers else "blocked"
             elif exhausted:
@@ -112,7 +105,6 @@ class Supervisor:
             self.state_store.save(state)
             self._checkpoint(None, state.phase)
             return state
-
         state.phase = "executing"
         state.current_task = task.id
         self.state_store.save(state)
@@ -120,11 +112,9 @@ class Supervisor:
         try:
             success = bool(self.executor(task))
         except Exception as exc:
-            detail = f"{type(exc).__name__}: {exc}"
-            self._failure(state, task, detail)
+            self._failure(state, task, f"{type(exc).__name__}: {exc}")
             self.state_store.save(state)
             return state
-
         if not success:
             self._failure(state, task, "executor reported failure")
         else:
@@ -141,22 +131,16 @@ class Supervisor:
                 state.current_task = None
                 self._evidence("completion", task.id, "VERIFIED", "acceptance checks passed")
                 self._checkpoint(task.id, "verified")
-
         self.state_store.save(state)
         return state
 
-    def run_parallel_once(
-        self,
-        project_id: str,
-        tasks: list[Task],
-        *,
-        respect_write_sets: bool = True,
-    ) -> list[tuple[str, str, bool]]:
-        """Execute one deterministic batch of ready tasks through registered agents."""
+    def run_parallel_once(self, project_id: str, tasks: list[Task], *, respect_write_sets: bool = True) -> list[tuple[str, str, bool]]:
+        """Execute one deterministic batch and apply the same acceptance boundary as serial execution."""
         if self.multi_agent is None:
             return []
         state = self.state_store.load(project_id)
         self._restore_task_failures(state, tasks)
+        state.iteration += 1
         ready = self.planner.ready_tasks(tasks, state.completed_tasks, self.max_failures)
         if not ready:
             state.phase = "maintenance" if state.completed_tasks == {t.id for t in tasks} else "blocked"
@@ -164,24 +148,26 @@ class Supervisor:
             self.state_store.save(state)
             self._checkpoint(None, state.phase)
             return []
-
         state.phase = "executing_parallel"
         state.current_task = None
         self.state_store.save(state)
         self._checkpoint(None, "executing_parallel")
-        results = self.multi_agent.run_parallel(
-            ready,
-            self.executor,
-            respect_write_sets=respect_write_sets,
-        )
+        results = self.multi_agent.run_parallel(ready, self.executor, respect_write_sets=respect_write_sets)
+        task_by_id = {task.id: task for task in tasks}
         for agent_name, task_id, ok in results:
-            task = next(t for t in tasks if t.id == task_id)
+            task = task_by_id[task_id]
+            if ok and self.verifier and self.acceptance_provider:
+                verification = self.verifier.verify(self.acceptance_provider(task))
+                self._evidence("verification", task.id, verification.status, "; ".join(verification.details))
+                if verification.status != "VERIFIED":
+                    ok = False
+                    self._failure(state, task, f"acceptance verification failed after parallel execution via {agent_name}", "verification_failed")
             if ok:
                 task.status = TaskStatus.DONE
                 state.completed_tasks.add(task.id)
                 self._evidence("completion", task.id, "VERIFIED", f"parallel via {agent_name}")
                 self._checkpoint(task.id, "verified")
-            else:
+            elif task.status != TaskStatus.BLOCKED and task.failure_count == 0:
                 self._failure(state, task, f"parallel executor failed on {agent_name}")
         state.current_task = None
         if state.phase == "executing_parallel":
@@ -190,14 +176,11 @@ class Supervisor:
         return results
 
     def run_until_blocked(self, project_id: str, tasks: list[Task], max_cycles: int = 100) -> ProjectState:
-        """Continue from persisted state until blocked, maintenance, or the cycle budget is exhausted."""
         if max_cycles < 1:
             raise ValueError("max_cycles must be >= 1")
         state = self.state_store.load(project_id)
         self._restore_task_failures(state, tasks)
-        state.blockers = [
-            blocker for blocker in state.blockers if not blocker.startswith("cycle budget exhausted")
-        ]
+        state.blockers = [b for b in state.blockers if not b.startswith("cycle budget exhausted")]
         if state.phase == "blocked" and not state.blockers:
             state.phase = "active"
             self.state_store.save(state)
