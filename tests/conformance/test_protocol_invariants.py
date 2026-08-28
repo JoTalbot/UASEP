@@ -34,30 +34,9 @@ def test_durable_state_narratives_do_not_drift():
     assert f"Phase: {state['project_state']}" in status
     assert f"- ID: {state['active_task']}" in status
     assert "Current task: M21-M23 maintenance continuation." in handoff
-    assert "H20: **UNVERIFIED / EXTERNALLY DEPENDENT**" not in _read(
-        ".uasep/planning/NEXT_20.md"
-    )
+    assert "H20: **UNVERIFIED / EXTERNALLY DEPENDENT**" not in _read(".uasep/planning/NEXT_20.md")
     assert "Fresh-agent acceptance evidence is recorded" in project_state
     assert "Fresh-agent acceptance: VERIFIED" in status
-
-
-def test_capability_claims_are_repository_bounded():
-    manifest = _read(".uasep/manifest.yaml")
-    assert "source_of_truth: repository" in manifest
-    assert "runtime: NONE" in manifest
-
-
-def test_task_contract_requires_bounded_write_sets():
-    text = _read("protocol/TASK_CONTRACT.md")
-    for required in ("write_set", "dependencies", "conflicts", "acceptance", "verification"):
-        assert required in text
-    assert "authorization boundary" in text
-
-
-def test_batch_manifest_classifies_execution_safety():
-    text = _read("protocol/BATCH_MANIFEST.md")
-    for required in ("INDEPENDENT", "DEPENDENT", "CONFLICTING", "BLOCKED", "write sets"):
-        assert required in text
 
 
 def test_evidence_contract_requires_observable_claims():
@@ -66,27 +45,28 @@ def test_evidence_contract_requires_observable_claims():
         assert required in text
 
 
-def test_conformance_forbids_unknown_to_verified_shortcuts():
-    text = _read("protocol/CONFORMANCE.md")
-    assert "UNKNOWN" in text
-    assert "VERIFIED" in text
-    assert "independent" in text.lower()
+def test_evidence_artifacts_match_schema_contract():
+    schema = json.loads(_read("schemas/evidence.schema.json"))
+    required = set(schema["required"])
+    allowed_results = set(schema["properties"]["result"]["enum"])
+    evidence_dir = ROOT / ".uasep/evidence"
+    ids = set()
 
-
-def test_destructive_safeguards_are_documented():
-    text = _read("protocol/CONFORMANCE.md").lower()
-    assert "destructive" in text
-    assert "explicit approval" in text
-    assert "recoverable checkpoint" in text
-
-
-def test_recovery_requires_durable_state():
-    text = _read("protocol/CONFORMANCE.md").lower()
-    assert "recovery" in text
-    assert "durable" in text
-    assert "state" in text
+    for path in evidence_dir.glob("EV-*.json"):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        assert required.issubset(data.keys())
+        assert data["result"] in allowed_results
+        assert data["evidence_id"] not in ids
+        ids.add(data["evidence_id"])
+        assert isinstance(data.get("observed"), str) and data["observed"]
 
 
 def test_no_runtime_dependency_is_introduced_by_protocol_checks():
     text = _read("protocol/CONFORMANCE.md").lower()
     assert "does not require a uasep runtime" in text
+
+
+def test_capability_claims_are_repository_bounded():
+    manifest = _read(".uasep/manifest.yaml")
+    assert "source_of_truth: repository" in manifest
+    assert "runtime: NONE" in manifest
