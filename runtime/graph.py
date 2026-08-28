@@ -1,12 +1,14 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from typing import Any
 
 from .models import TERMINAL_SUCCESS, Task, TaskStatus
 
 
 class TaskGraph:
-    """Dependency-aware task graph with validation and JSON persistence shape."""
+    """Canonical dependency-aware task graph with persistence and integrity checks."""
 
     def __init__(self, tasks: list[Task] | None = None) -> None:
         self.tasks: dict[str, Task] = {}
@@ -29,26 +31,20 @@ class TaskGraph:
             raise ValueError(f"cycle detected involving task: {task.id}")
 
     def succeeded(self) -> set[str]:
-        return {
-            task.id
-            for task in self.tasks.values()
-            if task.status in TERMINAL_SUCCESS
-        }
+        return {task.id for task in self.tasks.values() if task.status in TERMINAL_SUCCESS}
 
     def ready(self) -> list[Task]:
         done = self.succeeded()
-        return sorted(
-            (t for t in self.tasks.values() if t.is_ready(done)),
-            key=lambda t: (-t.priority, t.id),
-        )
+        return sorted((t for t in self.tasks.values() if t.is_ready(done)), key=lambda t: (-t.priority, t.id))
 
     def apply(self, task_id: str, status: TaskStatus, evidence_id: str | None = None) -> None:
         task = self.tasks[task_id]
         task.status = status
-        if evidence_id:
+        if evidence_id and evidence_id not in task.evidence_ids:
             task.evidence_ids.append(evidence_id)
         if status == TaskStatus.FAILED:
             task.failure_count += 1
+            task.status = TaskStatus.RETRYABLE
 
     def validate(self) -> None:
         known = set(self.tasks)
@@ -79,18 +75,18 @@ class TaskGraph:
 
         return any(color[n] == WHITE and dfs(n) for n in self.tasks)
 
+    def fingerprint(self) -> str:
+        payload = [self.tasks[key].definition_payload() for key in sorted(self.tasks)]
+        encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()
+
     def to_dict(self, protocol_version: str = "3.2.0-new") -> dict[str, Any]:
-        return {
-            "protocol": "UASEP",
-            "protocol_version": protocol_version,
-            "tasks": [t.to_dict() for t in self.tasks.values()],
-        }
+        return {"protocol": "UASEP", "protocol_version": protocol_version, "graph_fingerprint": self.fingerprint(), "tasks": [t.to_dict() for t in self.tasks.values()]}
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "TaskGraph":
         raw_tasks = data.get("tasks") or []
         tasks = [Task.from_dict(item) for item in raw_tasks]
-        # Add without per-node cycle until all present, then validate.
         graph = cls.__new__(cls)
         graph.tasks = {}
         for task in tasks:
@@ -98,4 +94,7 @@ class TaskGraph:
                 raise ValueError(f"duplicate task id: {task.id}")
             graph.tasks[task.id] = task
         graph.validate()
+        stored = data.get("graph_fingerprint")
+        if stored and stored != graph.fingerprint():
+            raise ValueError("task graph fingerprint mismatch")
         return graph
