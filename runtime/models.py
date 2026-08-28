@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from dataclasses import asdict, dataclass, field
 from enum import Enum
 from typing import Any
@@ -11,13 +13,14 @@ class TaskStatus(str, Enum):
     RUNNING = "running"
     BLOCKED = "blocked"
     FAILED = "failed"
+    RETRYABLE = "retryable"
     VERIFIED = "verified"
     COMPLETE = "complete"
     CANCELLED = "cancelled"
 
 
 TERMINAL_SUCCESS = {TaskStatus.VERIFIED, TaskStatus.COMPLETE}
-ACTIVE_PENDING = {TaskStatus.QUEUED, TaskStatus.READY}
+ACTIVE_PENDING = {TaskStatus.QUEUED, TaskStatus.READY, TaskStatus.RETRYABLE}
 
 
 @dataclass
@@ -46,35 +49,50 @@ class Task:
     evidence_ids: list[str] = field(default_factory=list)
     notes: str = ""
     failure_count: int = 0
+    retry_strategy: str = "initial"
+    required_capabilities: list[str] = field(default_factory=list)
 
     def is_ready(self, succeeded: set[str]) -> bool:
         if self.status not in ACTIVE_PENDING:
             return False
         return all(dep in succeeded for dep in self.dependencies)
 
-    def to_dict(self) -> dict[str, Any]:
+    def definition_payload(self) -> dict[str, Any]:
         return {
             "id": self.id,
             "objective": self.objective,
-            "status": self.status.value,
             "priority": self.priority,
-            "dependencies": list(self.dependencies),
+            "dependencies": sorted(self.dependencies),
             "acceptance_criteria": list(self.acceptance_criteria),
             "risk": self.risk,
             "owner": self.owner,
+            "required_capabilities": sorted(self.required_capabilities),
+        }
+
+    def definition_hash(self) -> str:
+        encoded = json.dumps(
+            self.definition_payload(),
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+        return hashlib.sha256(encoded).hexdigest()
+
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            **self.definition_payload(),
+            "status": self.status.value,
             "evidence_ids": list(self.evidence_ids),
             "notes": self.notes,
             "failure_count": self.failure_count,
+            "retry_strategy": self.retry_strategy,
+            "definition_hash": self.definition_hash(),
         }
 
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> "Task":
         status = data.get("status", "queued")
-        if isinstance(status, TaskStatus):
-            st = status
-        else:
-            st = TaskStatus(str(status))
-        return cls(
+        st = status if isinstance(status, TaskStatus) else TaskStatus(str(status))
+        task = cls(
             id=str(data["id"]),
             objective=str(data.get("objective") or data.get("title") or data["id"]),
             status=st,
@@ -86,7 +104,13 @@ class Task:
             evidence_ids=list(data.get("evidence_ids") or []),
             notes=str(data.get("notes") or ""),
             failure_count=int(data.get("failure_count", 0)),
+            retry_strategy=str(data.get("retry_strategy") or "initial"),
+            required_capabilities=list(data.get("required_capabilities") or []),
         )
+        stored_hash = data.get("definition_hash")
+        if stored_hash and stored_hash != task.definition_hash():
+            raise ValueError(f"task definition fingerprint mismatch: {task.id}")
+        return task
 
 
 @dataclass
@@ -117,6 +141,13 @@ class ProjectState:
     iteration: int = 0
     last_verified: str | None = None
     next_best_actions: list[str] = field(default_factory=list)
+    graph_fingerprint: str | None = None
+    revision: int = 0
+    last_error: str | None = None
+
+    def add_blocker(self, message: str) -> None:
+        if message not in self.blockers:
+            self.blockers.append(message)
 
     def to_dict(self) -> dict[str, Any]:
         return {
@@ -133,6 +164,9 @@ class ProjectState:
             "iteration": self.iteration,
             "last_verified": self.last_verified,
             "next_best_actions": list(self.next_best_actions),
+            "graph_fingerprint": self.graph_fingerprint,
+            "revision": self.revision,
+            "last_error": self.last_error,
         }
 
     @classmethod
@@ -151,6 +185,9 @@ class ProjectState:
             iteration=int(data.get("iteration", 0)),
             last_verified=data.get("last_verified"),
             next_best_actions=list(data.get("next_best_actions") or []),
+            graph_fingerprint=data.get("graph_fingerprint"),
+            revision=int(data.get("revision", 0)),
+            last_error=data.get("last_error"),
         )
 
 
