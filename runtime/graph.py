@@ -5,6 +5,7 @@ import json
 from typing import Any
 
 from .models import TERMINAL_SUCCESS, Task, TaskStatus
+from .state_validator import StateTransitionValidator
 
 
 class TaskGraph:
@@ -39,12 +40,10 @@ class TaskGraph:
 
     def apply(self, task_id: str, status: TaskStatus, evidence_id: str | None = None) -> None:
         task = self.tasks[task_id]
+        StateTransitionValidator.validate(task.status, status, "graph apply")
         task.status = status
         if evidence_id and evidence_id not in task.evidence_ids:
             task.evidence_ids.append(evidence_id)
-        if status == TaskStatus.FAILED:
-            task.failure_count += 1
-            task.status = TaskStatus.RETRYABLE
 
     def validate(self) -> None:
         known = set(self.tasks)
