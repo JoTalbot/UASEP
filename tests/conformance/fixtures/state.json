@@ -1,0 +1,14 @@
+{
+  "protocol": "UASEP",
+  "protocol_version": "3.4.0",
+  "project_state": "ADOPTED",
+  "environment": "fixture",
+  "objective": "Validate durable state shape.",
+  "active_task": null,
+  "last_verified": "2026-08-28",
+  "next_best_actions": ["Run conformance"],
+  "active_tasks": [],
+  "blockers": [],
+  "unknowns": [],
+  "evidence": ["fixture"]
+}
