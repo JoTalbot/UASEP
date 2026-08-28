@@ -16,20 +16,21 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - Retired runtime implementation, packaging, runtime tests, and runtime CI are not active requirements.
 - `AGENTS.md` is the mandatory repository-wide agent contract.
 - `skills/` contains reusable operational workflows.
-- `protocol/CONFORMANCE.md` is version 3.4.
+- `protocol/CONFORMANCE.md` is version 3.4.0.
 - Task, batch, evidence, readiness, and ownership contracts are defined and represented in `schemas/`.
 - Universal bootstrap is aligned with the v3.4 workflow.
 - Fresh-agent acceptance evidence is recorded in `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
 - Canonical conformance main-branch run #72 completed successfully at commit `0716c55d345a6843f09bb4c2fdc28d2113f60aeb`.
 - M11-M20 protocol-invariant conformance coverage is recorded and verified.
+- M21-M23 maintenance changes are present on `main`; the latest CI verification is pending.
 
 ## Unknown
+- The latest maintenance commits have not yet completed a successful conformance run.
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
-- The latest handoff-only commit `7d5a028f9b0704096978cc44a034282293f53b64` has no individual commit status attached; the referenced canonical conformance result remains the verified run #72 at its tested commit.
 
 ## Next best actions
-1. Continue repository-native maintenance/conformance audits when requirements or normative artifacts change.
-2. Re-score `.uasep/planning/NEXT_20.md` and open the next maintenance batch when a concrete drift or improvement target is identified.
+1. Let the current main-branch conformance run complete and fix any regression it exposes.
+2. Continue M24-M40 only after the M21-M23 verification gate is satisfied.
 3. Keep durable state, evidence, and handoff synchronized after consequential maintenance.
 
 ## Permanent constraint
