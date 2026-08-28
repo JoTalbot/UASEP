@@ -2,6 +2,8 @@
 
 **Universal Autonomous Engineering & Self-Maintenance Protocol**
 
+> Branch **`new`** (3.2.0-new): unification — one Task model, persistent TaskGraph, single Supervisor. See [TARGET_DESIGN.md](TARGET_DESIGN.md) and [MIGRATION_NEW.md](MIGRATION_NEW.md).
+
 UASEP is a portable protocol for autonomous software engineering across ChatGPT, GitHub-connected agents, local CLIs, sandboxes, IDE agents, and future agent runtimes.
 
 ## Goals
@@ -22,34 +24,23 @@ UASEP is a portable protocol for autonomous software engineering across ChatGPT,
 2. **Core**: normative rules shared by all environments.
 3. **Adapter**: maps abstract capabilities to the current environment.
 4. **Project state**: persistent memory, plans, tasks, decisions, failures, and evidence.
-5. **Runtime**: optional executable implementation such as an AIOS2 supervisor.
+5. **Runtime**: executable implementation (canonical entry: `runtime.supervisor.Supervisor` on branch `new`).
 
-## Repository layout
+## Canonical runtime (branch `new`)
 
 ```text
-.uasep/
-├── manifest.yaml
-├── state.json
-├── capabilities.json
-├── CORE.md
-├── CAPABILITIES.md
-├── EXECUTION.md
-├── SAFETY.md
-├── QUALITY.md
-├── MEMORY.md
-├── AGENTS.md
-├── SELF_MAINTENANCE.md
-├── state/
-├── planning/
-├── knowledge/
-└── evidence/
+runtime/models.py      # Task, ProjectState, Evidence
+runtime/graph.py       # TaskGraph (+ cycle checks)
+runtime/store.py       # state.json + graph.json + evidence + checkpoints
+runtime/supervisor.py  # run_once / run_until_idle
+runtime/cli.py         # bootstrap | capabilities | check | state | graph | run | resume
 ```
 
-The `.uasep/` directory is the project-local instance. This repository is the protocol source of truth and reference specification.
+Machine task source of truth: `.uasep/graph.json`.
 
 ## Bootstrap
 
-Use the short universal bootstrap from `bootstrap/UASEP_BOOTSTRAP.md`. It is intentionally small. The full protocol is loaded from the project or this repository when available.
+Use the short universal bootstrap from `bootstrap/SHORT_PROMPT.md` / `bootstrap/UASEP_BOOTSTRAP.md`.
 
 ## Design principle
 
