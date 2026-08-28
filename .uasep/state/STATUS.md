@@ -29,6 +29,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 ## Evidence
 
 - Fresh-agent acceptance: VERIFIED; `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.
+- Canonical conformance: VERIFIED / SUCCESS — canonical main-branch run #108 at commit `ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec`.
 - M21-M23 verification gate: VERIFIED by canonical runs #94 and #95.
 - M24-M30 verification gate: VERIFIED by canonical run #101.
 - M31-M40 verification gate: VERIFIED by canonical run #108.
