@@ -1,9 +1,11 @@
 # Handoff
 
-Current: 3.1.2 on main. RUNTIME-005, CI evidence, versioning spec done.
+Current: 3.1.2 + adoption stubs on main.
 
-Verified: local 104 tests; CI 3.10/3.11/3.12 green; PR #1 merged.
+Done: RUNTIME-005, CI green, versioning, ChatGPT workflow docs, AIOS2.run(), CLI `run`, MultiAgentCoordinator stub.
 
-Next: AIOS2 integration, multi-agent orchestration, local CLI depth.
+Verified: local 107 pytest.
 
-Do not modify branch `new`. Prefer repo `.uasep` state over chat history.
+Next: deepen AIOS2 e2e, write-set conflict checks for multi-agent, richer CLI planning.
+
+Do not modify branch `new`.
