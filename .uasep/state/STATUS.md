@@ -6,7 +6,7 @@ Make UASEP a complete runtime-free operating protocol for AI agents working thro
 
 ## Phase
 
-- Phase: PERSIST
+- Phase: ADOPT
 
 ## Current task
 
@@ -16,30 +16,31 @@ Make UASEP a complete runtime-free operating protocol for AI agents working thro
 
 ## Progress
 
-- Completed: runtime-free architecture established; stale legacy runtime state removed; conformance specification aligned to v3.2; agent contract and core skills established; Chat + GitHub Connector guide exists.
-- In progress: repository-wide documentation/example consistency audit.
-- Unverified: exhaustive scan for historical runtime/AIOS2 wording; practical conformance scenarios.
+- Completed: runtime-free architecture; legacy runtime state/tests removed; conformance specification aligned to v3.2; mandatory agent contract and workflow skills established; canonical task lifecycle added; session bootstrap skill added; practical conformance scenarios added.
+- In progress: final documentation consistency and adoption audit.
+- Unverified: exhaustive historical wording scan; manual execution of all conformance scenarios by a fresh independent agent.
 - Blocked: NONE
 
 ## Recent changes
 
-- Commits: `c3bafe1f`, `baa4f19d`
-- Files: `.uasep/state.json` removed; `protocol/CONFORMANCE.md` updated.
+- Commits: `0de41cf`, `5d4397b`, `608a9a0`
+- Files: `protocol/TASK_LIFECYCLE.md`, `skills/SESSION_BOOTSTRAP.md`, `examples/CONFORMANCE_SCENARIOS.md`
 
 ## Evidence
 
-- Tests/CI: UNKNOWN — this reference protocol is documentation-first and no canonical CI result has been established for this batch.
-- Review: repository inspection completed for protocol, skills, docs, state, planning, and examples.
+- Tests/CI: UNKNOWN — no canonical automated CI result is established for the documentation-first protocol.
+- Review: protocol, skills, state, and practical scenarios inspected.
 - External effects: GitHub commits to `main` succeeded for the recorded changes.
 
 ## Decisions
 
 - UASEP remains runtime-free. Do not add executable infrastructure unless a concrete connector/chat limitation requires it.
-- `.uasep/state/` is the canonical durable operational state; the stale root `.uasep/state.json` is retired.
+- `.uasep/state/` is the canonical durable operational state.
+- Practical conformance is validated through repository-backed scenarios and evidence, not through a UASEP executable.
 
 ## Next action
 
-Complete the remaining documentation/example audit and normalize any historical runtime or AIOS2 assumptions.
+Complete the final documentation consistency/adoption audit and reconcile any remaining stale references or state inconsistencies.
 
 ## Updated
 
