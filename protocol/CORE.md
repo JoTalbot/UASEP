@@ -29,11 +29,11 @@ This lifecycle repeats until the current objective is complete or a genuine bloc
 Every material project claim has one of these states:
 
 - `VERIFIED`: supported by direct evidence.
-- `INFERRED`: logically derived but not directly verified.
+- `PARTIALLY_VERIFIED`: supported by evidence for only part of the claim or acceptance criteria.
 - `UNKNOWN`: evidence is insufficient.
-- `BLOCKED`: verification or implementation cannot proceed.
+- `FAILED`: verification produced evidence that the claim or acceptance criteria is not satisfied.
 
-Unknown must never be silently converted into verified.
+Unknown must never be silently converted into verified. Failed must not be represented as verified.
 
 ## 5. Completion
 
