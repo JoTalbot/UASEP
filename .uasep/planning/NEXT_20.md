@@ -32,8 +32,9 @@ Tasks H02-H09, H12-H15, and H16 can be executed without waiting for each other w
 
 ## Batch result
 
+- H01-H10: **VERIFIED / COMPLETE**. H01 state projection matches `schemas/state.schema.json`; H02-H09 fixtures are present and conform to their declared schemas; H10 fixture runner exists and was included in the successful canonical conformance run #44.
+- Repository evidence: current durable state is ADOPTED with no active tasks or blockers; canonical run #44 completed successfully.
 - Planned: 20
-- Independently executable now: 13
-- Dependent but executable after prerequisites: 6
-- Externally dependent: 1 (H20)
+- Completed in this batch: 10
+- Remaining: H11-H20 (with H20 externally dependent on a genuinely fresh session).
 - No runtime implementation is introduced.
