@@ -138,4 +138,10 @@ class Supervisor:
             state = self.run_once(project_id, tasks)
             if state.phase in {"blocked", "maintenance"}:
                 return state
+        if state.phase not in {"blocked", "maintenance"}:
+            state.phase = "blocked"
+            state.current_task = None
+            state.blockers.append(f"cycle budget exhausted ({max_cycles})")
+            self.state_store.save(state)
+            self._checkpoint(None, "blocked")
         return state
