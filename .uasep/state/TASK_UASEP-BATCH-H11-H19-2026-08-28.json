@@ -1,0 +1,12 @@
+{
+  "id":"UASEP-BATCH-H11-H19-2026-08-28",
+  "objective":"Verify and synchronize the next repository-native hardening tasks H11-H19 without duplicating already implemented artifacts.",
+  "owner":"fresh-agent-session-2026-08-28",
+  "branch":"main",
+  "write_set":[".uasep/planning/NEXT_20.md",".uasep/knowledge/FAILURES.md",".uasep/knowledge/DECISIONS.md",".uasep/state/STATUS.md",".uasep/state/HANDOFF.md",".uasep/state/state.json",".uasep/state/TASK_UASEP-BATCH-H11-H19-2026-08-28.json",".uasep/state/OWNERSHIP_UASEP-BATCH-H11-H19-2026-08-28.json",".uasep/evidence/EV-UASEP-BATCH-H11-H19-2026-08-28.json"],
+  "dependencies":["UASEP-CI-2026-08-28"],
+  "acceptance":["H11-H19 artifacts exist and match the current protocol/state/CI evidence","No implementation artifact is rewritten unnecessarily","H20 remains explicitly unverified because it requires a genuinely fresh session"],
+  "risk":"LOW",
+  "verification":["Read each H11-H19 target artifact","Cross-check against current state and successful canonical run #44","Re-read changed durable artifacts after writes"],
+  "status":"IN_PROGRESS"
+}
