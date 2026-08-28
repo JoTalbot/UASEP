@@ -24,3 +24,7 @@ def test_checkpoint_store_can_restore_from_tmp(tmp_path: Path):
 
     assert not checkpoint.exists()
     assert temp_checkpoint.exists()
+
+    assert store.recover() is True
+    assert checkpoint.exists()
+    assert store.latest()["phase"] == "RUNNING"
