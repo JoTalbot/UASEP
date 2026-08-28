@@ -5,11 +5,11 @@
   "type": "object",
   "required": ["environment", "capabilities"],
   "properties": {
-    "environment": {"type": "string"},
+    "environment": {"type": "string", "minLength": 1},
     "agent": {"type": "string"},
-    "capabilities": {"type": "object", "additionalProperties": {"type": "string", "enum": ["available", "unavailable", "restricted", "unknown"]}},
+    "capabilities": {"type": "object", "additionalProperties": {"enum": ["available", "unavailable", "restricted", "unknown"]}},
     "limitations": {"type": "array", "items": {"type": "string"}},
     "evidence": {"type": "array", "items": {"type": "string"}}
   },
-  "additionalProperties": true
+  "additionalProperties": false
 }
