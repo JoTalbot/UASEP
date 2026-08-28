@@ -36,6 +36,13 @@ class Task:
     write_set: list[str] = field(default_factory=list)
 
     def is_ready(self, completed: set[str], max_failures: int = 3) -> bool:
+        """Return whether the task may execute without consuming an exhausted retry budget."""
+        if not isinstance(self.id, str) or not self.id.strip():
+            raise ValueError("task id must be a non-empty string")
+        if not isinstance(self.failure_count, int) or self.failure_count < 0:
+            raise ValueError("failure_count must be a non-negative integer")
+        if not isinstance(max_failures, int) or max_failures < 1:
+            raise ValueError("max_failures must be a positive integer")
         pending = self.status in {TaskStatus.BACKLOG, TaskStatus.READY}
         retryable = self.status == TaskStatus.FAILED and self.failure_count < max_failures
         return (pending or retryable) and all(dep in completed for dep in self.dependencies)
