@@ -12,7 +12,7 @@
   ],
   "claim_time": "2026-08-28 UTC",
   "expected_completion": "After acceptance evidence is recorded and durable state is synchronized in this session",
-  "status": "ACTIVE",
+  "status": "RELEASED",
   "last_refresh": "2026-08-28 UTC",
   "transfer_to": null
 }
