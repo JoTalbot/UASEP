@@ -10,11 +10,11 @@ Completed:
 - established repository-backed state, evidence, decisions, and planning;
 - added bootstrap, task lifecycle, ownership/lease, parallel batch, verification, recovery, handoff, adoption, multi-machine, and drift-detection guidance;
 - added practical conformance scenarios;
-- aligned `protocol/CONFORMANCE.md` to v3.3;
+- aligned `protocol/CONFORMANCE.md` to v3.4;
 - removed stale pre-runtime-free/AIOS2 operational state.
 
 Unverified:
-- a fresh independent-agent has not executed every manual conformance scenario as one complete acceptance pass;
+- a fresh independent agent has not executed every manual conformance scenario as one complete acceptance pass;
 - historical search indexes may retain retired runtime/AIOS2 provenance.
 
 Blockers: none known.
