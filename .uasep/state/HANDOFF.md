@@ -1,27 +1,24 @@
-# Handoff (branch `new`)
+# Handoff — branch `new`
 
-## Current state
+## Policy
 
-Target-design 3.2 unified path landed on branch `new`:
+Branch `new` is independent of `main`. No compatibility obligation with the other agent’s line.
 
-- `runtime/models.py` — single Task / ProjectState / Evidence / CycleResult
-- `runtime/graph.py` — TaskGraph with cycle/self-dep/unknown-dep validation
-- `runtime/store.py` — state + graph + evidence log + checkpoints
-- `runtime/supervisor.py` — single orchestration (`run_once` / `run_until_idle`)
-- `runtime/verify.py`, `runtime/safety.py`
-- schemas aligned: task, state, graph
-- `.uasep/graph.json` is machine source of truth for tasks
+## Canonical runtime
 
-## Completed
+Supervisor + Store + TaskGraph + unified Task model.
+Legacy module names may re-export; they must not introduce a second lifecycle.
 
-- UASEP-UNIFY-001, UASEP-UNIFY-002 (design + core modules pushed)
+## Done
 
-## Next
+- Unified models / graph / store / supervisor / verify / safety
+- CLI: graph, run, resume
+- StateStore and AutonomousLoop redirected to unified path
+- test_runtime rewritten for unified API
 
-- UASEP-UNIFY-003: wire CLI, thin-wrap or delete legacy dual path, full CI green
-- local_cli adapter
-- schema validation in `tools/validate_uasep.py`
+## Next (ideology-aligned)
 
-## Important
-
-Legacy files from `main` (AutonomousLoop, TaskNode, old StateStore shape) may still exist for compatibility. **Canonical API on this branch is Supervisor + Store + TaskGraph.**
+1. Delete dead legacy files that nothing imports (or only tests that we replace).
+2. Strengthen conformance checks to CONFORMANCE.md MUST list.
+3. local_cli host adapter for real execute/checks.
+4. Keep `.uasep/graph.json` and state honest after every change.

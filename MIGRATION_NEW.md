@@ -1,35 +1,35 @@
-# Migration status on branch `new`
+# Branch `new` — independent cutover
 
-## Done
+This branch is **not** required to track `main`. Another agent owns `main`.
+Ideology on `new`: simplicity, unification, necessity (UASEP CORE + CONFORMANCE).
 
-- [x] Branch `new` from `main`
-- [x] TARGET_DESIGN.md
-- [x] Unified `runtime/models.py` (Task, ProjectState, …)
-- [x] `runtime/graph.py` with validation
-- [x] `runtime/store.py`
-- [x] `runtime/verify.py`, `runtime/safety.py`
-- [x] Canonical `runtime/supervisor.py`
-- [x] Schemas: task, state, graph
-- [x] `.uasep/graph.json`, updated state/manifest/handoff
-- [x] CLI: state, graph, run, resume
-- [x] New tests: `test_unified_graph.py`, `test_unified_supervisor.py`
+## Canonical surface
 
-## Remaining (UASEP-UNIFY-003)
+| Module | Role |
+|--------|------|
+| `runtime/models.py` | Task, ProjectState, Evidence, Capability, CycleResult |
+| `runtime/graph.py` | TaskGraph (deps, cycles, ready) |
+| `runtime/store.py` | state.json + graph.json + evidence + checkpoints |
+| `runtime/supervisor.py` | only orchestration (`run_once`, `run_until_idle`) |
+| `runtime/verify.py` | acceptance checks |
+| `runtime/safety.py` | ApprovalGate |
+| `runtime/discovery.py` | capabilities |
+| `runtime/bootstrap.py` | `.uasep` scaffold |
+| `runtime/cli.py` | bootstrap, capabilities, check, state, graph, run, resume |
 
-- [ ] Make legacy tests import-compatible or delete obsolete tests
-- [ ] Thin-wrap or remove `autonomous_loop.py` / `task_graph.TaskNode` dual path
-- [ ] Point `StateStore` callers to `Store` or keep adapter shim
-- [ ] Full `pytest` green on CI for branch `new`
-- [ ] `adapters/local_cli.py`
-- [ ] jsonschema validation in `tools/validate_uasep.py`
+## Redirects (temporary, do not extend)
 
-## Compatibility warning
+- `state.StateStore` → `Store`
+- `verification` → `verify`
+- `approval_gate` → `safety`
+- `task_graph.TaskNode` → adapter over `Task`
+- `autonomous_loop.AutonomousLoop` → wraps `Supervisor`
+- `supervisor_engine.Supervisor` → same class as `supervisor.Supervisor`
+- `compatibility.LegacyRuntime` → `Supervisor`
 
-On this branch, **canonical** APIs are:
+## Policy
 
-- `runtime.models.Task` / `TaskStatus`
-- `runtime.graph.TaskGraph`
-- `runtime.store.Store`
-- `runtime.supervisor.Supervisor`
-
-Files still present from `main` may break if they expect the old `Task` fields (`title`, `BACKLOG`, …) or old `StateStore.to_dict()` shape. Prefer new modules for all new work.
+- Do not restore dual orchestration semantics.
+- Do not add features that are not needed for: discover → plan → execute → verify → persist → resume.
+- Prefer deleting dead modules over maintaining parallel APIs.
+- Machine truth for tasks: `.uasep/graph.json`.

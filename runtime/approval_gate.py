@@ -1,22 +1,5 @@
-from __future__ import annotations
+"""Re-export: use runtime.safety."""
 
-from dataclasses import dataclass
+from .safety import ApprovalGate, ApprovalRequest
 
-
-@dataclass(frozen=True, slots=True)
-class ApprovalRequest:
-    operation: str
-    reason: str
-    destructive: bool = False
-
-
-class ApprovalGate:
-    """Policy boundary. Destructive operations require an explicit decision."""
-
-    def __init__(self, approved: set[str] | None = None) -> None:
-        self.approved = approved or set()
-
-    def check(self, request: ApprovalRequest) -> bool:
-        if not request.destructive:
-            return True
-        return request.operation in self.approved
+__all__ = ["ApprovalGate", "ApprovalRequest"]

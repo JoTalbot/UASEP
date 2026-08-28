@@ -4,7 +4,7 @@ from .models import Task
 
 
 class Planner:
-    """Deterministic baseline planner; LLM-driven planners can implement the same contract."""
+    """Select highest-priority ready task. Prefer TaskGraph.ready() in new code."""
 
     def next_task(self, tasks: list[Task], completed: set[str]) -> Task | None:
         ready = [

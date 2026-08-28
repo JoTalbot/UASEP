@@ -1,13 +1,20 @@
+"""LegacyRuntime explicitly points at Supervisor, not a second loop."""
+
 from __future__ import annotations
 
-from .autonomous_loop import AutonomousLoop
+from pathlib import Path
+
+from .supervisor import Supervisor
 
 
 class LegacyRuntime:
-    """Explicit compatibility boundary for the pre-canonical AutonomousLoop API."""
+    """Name retained for tests; implementation is Supervisor."""
 
-    def __init__(self, loop: AutonomousLoop) -> None:
-        self.loop = loop
+    def __init__(self, root: str | Path, **kwargs) -> None:
+        self.supervisor = Supervisor(root, **kwargs)
 
-    def run_once(self, *args, **kwargs):
-        return self.loop.run_once(*args, **kwargs)
+    def run_once(self, project_id: str):
+        return self.supervisor.run_once(project_id)
+
+    def run_until_idle(self, project_id: str, max_cycles: int = 100):
+        return self.supervisor.run_until_idle(project_id, max_cycles=max_cycles)
