@@ -1,5 +1,6 @@
 from runtime.models import Task, TaskStatus
 from runtime.planner import Planner
+import pytest
 
 
 def test_ready_tasks_are_sorted_by_priority_then_id() -> None:
@@ -17,16 +18,17 @@ def test_ready_tasks_are_sorted_by_priority_then_id() -> None:
 def test_ready_tasks_respect_dependencies_and_completed() -> None:
     tasks = [
         Task(id="base", title="Base", status=TaskStatus.DONE),
-        Task(id="blocked", title="Blocked", dependencies=["missing"]),
+        Task(id="blocked", title="Blocked", dependencies=["base"]),
         Task(id="ready", title="Ready", dependencies=["base"]),
     ]
 
     ready = Planner().ready_tasks(tasks, {"base"})
 
-    assert [task.id for task in ready] == ["ready"]
+    assert [task.id for task in ready] == ["blocked", "ready"]
 
 
-def test_next_task_returns_none_when_nothing_is_ready() -> None:
+def test_next_task_rejects_unknown_dependencies() -> None:
     task = Task(id="blocked", title="Blocked", dependencies=["missing"])
 
-    assert Planner().next_task([task], set()) is None
+    with pytest.raises(ValueError, match="unknown task dependencies"):
+        Planner().next_task([task], set())
