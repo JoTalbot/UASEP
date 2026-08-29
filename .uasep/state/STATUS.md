@@ -22,6 +22,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed M21-M23: durable-state consistency, project-state synchronization, maintenance-plan rescore, and CI verification. Canonical CI runs #94 and #95 succeeded.
 - Completed M24-M30: bootstrap, manifest/state, runtime-free, skill, example, schema/fixture, version, and active-tree conformance guards. CI run #101 succeeded.
 - Completed M31-M40: workflow-policy, evidence freshness, stale-reference, ownership, handoff, status, acceptance linkage, decision/failure, and maintenance-runbook audits. Canonical CI run #108 succeeded.
+- Completed M41: VERSION-to-state consistency and canonical CI read-only/main-bounded policy guards. Canonical UASEP Main Conformance run #120 succeeded.
 - Current maintenance batches: COMPLETE. No active task.
 - Unverified: Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 - Blocked: NONE known.
@@ -33,6 +34,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - M21-M23 verification gate: VERIFIED by canonical runs #94 and #95.
 - M24-M30 verification gate: VERIFIED by canonical run #101.
 - M31-M40 verification gate: VERIFIED by canonical run #108.
+- M41 verification gate: VERIFIED by canonical run #120 at commit `bfb852e6d734b81256f930603c30cac68708c4a5`.
 
 ## Decisions
 
@@ -47,4 +49,4 @@ Perform repository-native periodic conformance/drift audits. Open a new maintena
 
 ## Updated
 
-- 2026-08-28 UTC
+- 2026-08-29 UTC
