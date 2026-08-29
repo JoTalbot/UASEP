@@ -1,41 +1,46 @@
 # Next 20 maintenance tasks
 
-Batch: UASEP-MAINT-2026-08-28
+Batch: UASEP-MAINT-2026-08-29
 Branch: main
 
 | ID | Scope | Files | Dependencies | Risk | Verification | Execution |
 |---|---|---|---|---|---|---|
-| M21 | Durable-state narrative consistency | `tests/conformance/test_protocol_invariants.py` | current state artifacts | low | pytest | independent |
-| M22 | Project-state synchronization | `.uasep/state/PROJECT_STATE.md` | acceptance + CI evidence | low | state review | independent |
-| M23 | Maintenance-plan rescore | `.uasep/planning/NEXT_20.md` | M21-M22 findings | low | plan review | dependent |
-| M24 | Evidence index consistency | `.uasep/evidence/` + conformance checks | evidence schema | low | pytest/review | independent |
-| M25 | Bootstrap artifact index | `bootstrap/` + conformance checks | bootstrap protocol | low | pytest/review | independent |
-| M26 | Skill inventory consistency | `skills/` + documentation | skill contract | low | repository review | independent |
-| M27 | Example-to-protocol references | `examples/` | protocol docs | low | link/reference audit | independent |
-| M28 | Schema-to-fixture coverage | `schemas/` + `tests/conformance/fixtures/` | M24 | low | pytest | independent |
-| M29 | State-to-manifest version guard | conformance tests | manifest/state schema | low | pytest | independent |
-| M30 | Runtime-free active-tree guard | conformance tests | runtime-free contract | low | pytest | independent |
-| M31 | CI trigger/read-only policy audit | `.github/workflows/conformance.yml` | CI contract | low | workflow review | independent |
-| M32 | CI evidence freshness guidance | protocol/docs | M31 | low | documentation review | dependent |
-| M33 | Stale runtime-reference audit | active protocol/docs | runtime-free architecture | low | repository search | independent |
-| M34 | Ownership-lease fixture coverage | `tests/conformance/fixtures/` + tests | ownership schema | low | pytest | independent |
-| M35 | Evidence status vocabulary coverage | evidence schema + tests | evidence contract | low | pytest | independent |
-| M36 | Handoff completeness guard | state/handoff conformance | handoff contract | low | pytest | independent |
-| M37 | Status completeness guard | `.uasep/state/STATUS.md` + tests | durable state | low | pytest/review | independent |
-| M38 | Acceptance evidence linkage | acceptance example + evidence | M24 | low | review | dependent |
-| M39 | Decision/failure cross-reference audit | `.uasep/knowledge/` | evidence records | low | repository review | independent |
-| M40 | Maintenance runbook | `docs/MAINTENANCE.md` | M21-M39 | low | manual review | dependent |
+| M42 | Fresh-agent bootstrap drift audit | `bootstrap/`, `AGENTS.md`, readiness protocol | M41 | low | conformance/review | independent |
+| M43 | Durable-state schema/narrative cross-check | `.uasep/state/`, `schemas/`, conformance checks | M41 | low | pytest/review | independent |
+| M44 | Evidence freshness and uniqueness audit | `.uasep/evidence/`, evidence schema/tests | M41 | low | pytest/review | independent |
+| M45 | Ownership fixture lifecycle audit | `.uasep/state/`, ownership schema/fixtures | M41 | M43 | low | pytest/review | dependent |
+| M46 | Task-contract lifecycle audit | task contracts + protocol/tests | M41 | M43 | low | pytest/review | dependent |
+| M47 | Batch-manifest recovery audit | batch manifests + protocol/tests | M41 | M43 | low | pytest/review | dependent |
+| M48 | Skill-to-contract reference audit | `skills/`, `protocol/` | M41 | low | reference audit | independent |
+| M49 | Example acceptance-criteria audit | `examples/` | M41 | low | reference audit | independent |
+| M50 | Schema fixture completeness audit | `schemas/`, `tests/conformance/fixtures/` | M43 | low | pytest | dependent |
+| M51 | Runtime-free active-tree search guard expansion | conformance tests | M42 | low | pytest/search | dependent |
+| M52 | Historical-reference boundary documentation audit | docs/knowledge/state | M41 | low | repository search | independent |
+| M53 | CI trigger and checkout invariants audit | `.github/workflows/` | M41 | low | workflow review | independent |
+| M54 | CI dependency reproducibility audit | `.github/workflows/conformance.yml` | M53 | low | workflow review | dependent |
+| M55 | Version-source hierarchy audit | `VERSION`, manifest, protocol/state | M41 | low | pytest/review | independent |
+| M56 | Decision/failure evidence linkage audit | `.uasep/knowledge/`, evidence | M44 | low | repository review | dependent |
+| M57 | Handoff resumability audit | `.uasep/state/HANDOFF.md`, protocol | M43 | low | review | dependent |
+| M58 | Maintenance runbook operational audit | `docs/MAINTENANCE.md` | M42-M57 | low | manual review | dependent |
+| M59 | Conformance suite coverage-gap review | `tests/conformance/` | M42-M58 | low | pytest/review | dependent |
+| M60 | Fresh canonical CI acceptance pass | `.github/workflows/`, evidence/state | M42-M59 | low | canonical CI | dependent |
+| M61 | Durable-state reconciliation after M42-M60 | `.uasep/state/`, planning, evidence | M60 | low | state review + CI | dependent |
 
 ## Execution policy
 
-M21, M22, M24-M31, M33-M35, M36-M39 may be analyzed independently when their write sets remain disjoint. M23 depends on the first findings. M32, M38, and M40 depend on earlier artifacts. Do not reopen completed H01-H20 or M11-M20 without a concrete defect, drift finding, or new acceptance requirement.
+M42-M44, M48-M49, M52-M53, and M55 may be analyzed independently when write sets remain disjoint. Dependent tasks move to later groups. Do not execute overlapping writes in parallel without explicit coordination and updated ownership records.
 
 ## Current result
 
-- H01-H20: **VERIFIED / COMPLETE** based on repository evidence and recorded acceptance evidence.
-- M11-M20: **VERIFIED / COMPLETE**; protocol-invariant conformance coverage is verified by canonical main-branch run #72.
-- M21-M23: **VERIFIED / COMPLETE**; verification gate satisfied by canonical runs #94 and #95.
-- M24-M30: **VERIFIED / COMPLETE**; verification gate satisfied by canonical run #101.
-- M31-M40: **VERIFIED / COMPLETE**; verification gate satisfied by canonical run #108.
-- No active maintenance batch.
+- H01-H20: **VERIFIED / COMPLETE**.
+- M11-M20: **VERIFIED / COMPLETE**.
+- M21-M23: **VERIFIED / COMPLETE**; canonical runs #94 and #95.
+- M24-M30: **VERIFIED / COMPLETE**; canonical run #101.
+- M31-M40: **VERIFIED / COMPLETE**; canonical run #108.
+- M41: **VERIFIED / COMPLETE**; canonical run #120 at commit `bfb852e6d734b81256f930603c30cac68708c4a5`.
+- M42-M61: **PLANNED / NOT STARTED**.
 - No runtime implementation is introduced.
+
+## Re-scoring rule
+
+Re-score this plan when a concrete defect, drift finding, new acceptance requirement, or materially changed connector capability is discovered. Do not manufacture work merely to keep the maintenance queue busy; humanity has enough paperwork already.
