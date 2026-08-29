@@ -82,6 +82,21 @@ def test_manifest_and_state_are_version_consistent():
     assert "runtime: NONE" in manifest
 
 
+def test_version_file_matches_durable_protocol_version():
+    state = json.loads(_read(".uasep/state/state.json"))
+    version = _read("VERSION").strip()
+    assert version == state["protocol_version"]
+
+
+def test_canonical_workflow_is_read_only_and_main_bounded():
+    workflow = _read(".github/workflows/conformance.yml")
+    assert "permissions:\n  contents: read" in workflow
+    assert "uses: actions/checkout@v4" in workflow
+    assert "ref: main" in workflow
+    assert "fetch-depth: 1" in workflow
+    assert "contents: write" not in workflow
+
+
 def test_bootstrap_is_repository_bounded():
     text = _read("bootstrap/UASEP_BOOTSTRAP.md").lower()
     assert "repository" in text
