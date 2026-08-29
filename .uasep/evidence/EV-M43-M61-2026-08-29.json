@@ -1,29 +1,21 @@
 {
   "evidence_id": "EV-M43-M61-2026-08-29",
-  "date": "2026-08-29",
+  "task_id": "M43-M61",
+  "timestamp": "2026-08-29T21:00:00Z",
+  "agent": "UASEP-Maintenance-Agent",
+  "operation": "repository_conformance_review",
   "scope": "M43-M61 maintenance plan review",
-  "branch": "main",
   "result": "PARTIALLY_VERIFIED",
-  "observed": [
-    "protocol/CONFORMANCE.md defines durable-state, schema, ownership, evidence, recovery, parallel-work, connector, and portability invariants",
-    "AGENTS.md requires task contracts, batch manifests, ownership claims, evidence, and durable handoff",
-    ".uasep/state/state.json reports ADOPTED state, no active task, no blockers, and protocol version 3.4.0",
-    ".uasep/state/STATUS.md and HANDOFF.md report M41 complete and periodic conformance/drift audits as the next action",
-    ".uasep/planning/NEXT_20.md defines M43-M61 as the next maintenance batch",
-    "VERSION and durable state both identify protocol version 3.4.0",
-    "C81-C90 supplemental documentation is outside the canonical runtime-free roadmap and does not authorize runtime implementation"
+  "source": "repository state, protocol documentation, and maintenance planning files",
+  "observed": "Reviewed durable state, protocol invariants, ownership requirements, evidence rules, maintenance planning, and C81-C90 supplemental scope boundaries.",
+  "commit": "e3c0b1803a5737fbc1e57c0acfabb46d10cb92e0",
+  "changed_files": [".uasep/evidence/EV-M43-M61-2026-08-29.json"],
+  "verification": "Canonical evidence schema fields added after conformance failure analysis.",
+  "limitations": [
+    "A fresh canonical CI run for M43-M61 was not available before this correction.",
+    "Individual pytest coverage for every M43-M61 item was not independently rerun."
   ],
-  "verified": [
-    "Durable-state narrative is aligned with the runtime-free objective",
-    "Canonical branch is main",
-    "Protocol version source is consistent with state",
-    "No active task or blocker is recorded in durable state",
-    "Maintenance plan explicitly forbids manufactured work"
-  ],
-  "unverified": [
-    "A fresh canonical CI run for M43-M61 was not executed in this session",
-    "Individual pytest coverage for every M43-M61 item was not independently rerun"
-  ],
-  "decision": "Do not mark M43-M61 VERIFIED solely from repository inspection. Keep the maintenance queue planned until a concrete drift finding or an available canonical CI acceptance pass provides evidence.",
-  "next_action": "Use the existing canonical conformance workflow for the next scheduled drift audit; open individual maintenance tasks only when a concrete defect or acceptance requirement is found."
+  "related": ["EV-M42-C81-C90-SCOPE-AUDIT-2026-08-29"],
+  "decision": "Keep M43-M61 status PARTIALLY_VERIFIED until canonical CI acceptance passes.",
+  "next_action": "Run canonical conformance workflow and reconcile durable state after successful validation."
 }
