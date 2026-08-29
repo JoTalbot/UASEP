@@ -1,35 +1,23 @@
 {
-  "id": "EV-M42-C81-C90-SCOPE-AUDIT-2026-08-29",
-  "maintenance_batch": "M42",
-  "date": "2026-08-29",
+  "evidence_id": "EV-M42-C81-C90-SCOPE-AUDIT-2026-08-29",
+  "task_id": "M42",
+  "timestamp": "2026-08-29T00:00:00Z",
+  "agent": "UASEP maintenance audit",
+  "operation": "C81-C90 scope drift audit",
   "scope": "C81-C90 supplemental architecture documents",
-  "truth_status": "VERIFIED",
-  "findings": [
-    {
-      "area": "canonical_scope",
-      "status": "VERIFIED",
-      "finding": "MASTER_PLAN, BACKLOG, STATUS, and PROJECT_STATE define UASEP as runtime-free and show no active mandatory implementation batch."
-    },
-    {
-      "area": "supplemental_layers",
-      "status": "VERIFIED",
-      "finding": "C81-C90 documents are documentation artifacts under uasep/c81 through uasep/c90; they do not introduce executable runtime, daemon, scheduler, database, supervisor, or executor code."
-    },
-    {
-      "area": "scope_drift",
-      "status": "PARTIALLY_VERIFIED",
-      "finding": "The C81-C90 naming can imply an adopted roadmap even though the canonical plan does not define those stages. This is documentation-scope ambiguity, not executable architecture drift."
-    },
-    {
-      "area": "version",
-      "status": "VERIFIED",
-      "finding": "VERSION remains 3.4.0 and durable project state identifies protocol version 3.4.0."
-    },
-    {
-      "area": "branch_and_permissions",
-      "status": "VERIFIED",
-      "finding": "Repository default branch is main and current connector permissions include push and admin."
-    }
+  "result": "PARTIALLY_VERIFIED",
+  "source": "MASTER_PLAN, BACKLOG, STATUS, PROJECT_STATE, repository inspection",
+  "observed": "C81-C90 documents exist as supplemental documentation artifacts and do not introduce executable runtime infrastructure. Naming may create roadmap ambiguity because canonical planning does not define these stages.",
+  "commit": "4e84187a9fa5d6a7567580ba6dc36f8c877f55a7",
+  "changed_files": [
+    "uasep/c81 through uasep/c90 documentation artifacts"
   ],
-  "decision": "Keep C81-C90 as explicitly supplemental documentation unless a concrete requirement adopts them into the normative roadmap. Do not add executable infrastructure."
+  "verification": "GitHub Actions conformance run #565 identified schema mismatch in this evidence artifact; record was converted to the canonical evidence schema.",
+  "limitations": [
+    "Scope audit verifies repository artifacts and does not adopt C81-C90 into the normative roadmap."
+  ],
+  "related": [
+    "M42",
+    "C81-C90 scope audit"
+  ]
 }
