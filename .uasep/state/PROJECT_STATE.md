@@ -27,6 +27,7 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - M21-M23 maintenance verification gate is satisfied by canonical CI runs #94 and #95.
 - M24-M30 maintenance verification gate is satisfied by canonical CI run #101 at commit `8f2998ecabe2a56ad3f2691d6a0cccbcf9d8e2ca`.
 - M31-M40 maintenance verification gate is satisfied by canonical CI run #108 at commit `ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec`.
+- M41 added conformance guards that bind `VERSION` to durable protocol version and protect the canonical workflow's read-only, main-bounded checkout policy; run #120 succeeded at commit `bfb852e6d734b81256f930603c30cac68708c4a5`.
 
 ## Unknown
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
