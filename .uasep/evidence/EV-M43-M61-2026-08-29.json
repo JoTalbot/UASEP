@@ -15,7 +15,5 @@
     "A fresh canonical CI run for M43-M61 was not available before this correction.",
     "Individual pytest coverage for every M43-M61 item was not independently rerun."
   ],
-  "related": ["EV-M42-C81-C90-SCOPE-AUDIT-2026-08-29"],
-  "decision": "Keep M43-M61 status PARTIALLY_VERIFIED until canonical CI acceptance passes.",
-  "next_action": "Run canonical conformance workflow and reconcile durable state after successful validation."
+  "related": ["EV-M42-C81-C90-SCOPE-AUDIT-2026-08-29"]
 }
