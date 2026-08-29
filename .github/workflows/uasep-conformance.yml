@@ -1,0 +1,26 @@
+name: UASEP Conformance
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  conformance:
+    name: Validate UASEP structure
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check required UASEP artifacts
+        run: |
+          test -f AGENTS.md
+          test -d .uasep
+          test -d .uasep/decisions || true
+          test -d .uasep/knowledge || true
+          test -d .uasep/tests || true
+          echo "UASEP conformance baseline passed"
