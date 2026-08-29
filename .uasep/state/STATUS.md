@@ -23,6 +23,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed M24-M30: bootstrap, manifest/state, runtime-free, skill, example, schema/fixture, version, and active-tree conformance guards. CI run #101 succeeded.
 - Completed M31-M40: workflow-policy, evidence freshness, stale-reference, ownership, handoff, status, acceptance linkage, decision/failure, and maintenance-runbook audits. Canonical CI run #108 succeeded.
 - Completed M41: VERSION-to-state consistency and canonical CI read-only/main-bounded policy guards. Canonical UASEP Main Conformance run #120 succeeded.
+- Completed M42: audited C81-C90 supplemental documentation against canonical runtime-free scope; no executable architecture drift found; scope ambiguity recorded in evidence.
 - Current maintenance batches: COMPLETE. No active task.
 - Unverified: Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
 - Blocked: NONE known.
@@ -35,6 +36,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - M24-M30 verification gate: VERIFIED by canonical run #101.
 - M31-M40 verification gate: VERIFIED by canonical run #108.
 - M41 verification gate: VERIFIED by canonical run #120 at commit `bfb852e6d734b81256f930603c30cac68708c4a5`.
+- M42 scope audit: VERIFIED / PARTIALLY_VERIFIED for documentation ambiguity; `.uasep/evidence/EV-M42-C81-C90-SCOPE-AUDIT-2026-08-29.json`.
 
 ## Decisions
 
@@ -42,6 +44,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - `.uasep/state/` is the canonical durable operational state.
 - `protocol/` is normative; `AGENTS.md` is the mandatory project contract; `skills/` are reusable procedures; examples illustrate compliant behavior.
 - Historical references to retired runtime/AIOS2 architecture are provenance and are not treated as active-tree requirements.
+- C81-C90 are supplemental architecture documentation, not adopted normative roadmap stages, unless a concrete future requirement explicitly promotes them.
 
 ## Next action
 
