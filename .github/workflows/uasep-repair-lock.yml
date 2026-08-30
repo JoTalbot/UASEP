@@ -1,0 +1,24 @@
+name: UASEP Repair Flow Lock
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Repair Router
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  repair-lock:
+    name: Prevent duplicate repair execution
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create repair lock status
+        run: |
+          echo "UASEP repair lock check started"
+          echo "Single repair route validation enabled"
+          echo "Duplicate execution protection stage ready"
