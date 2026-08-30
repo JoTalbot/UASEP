@@ -28,7 +28,7 @@ Record whether the fresh agent can independently identify:
 The agent must determine from repository state alone that:
 
 - UASEP is runtime-free;
-- the protocol version is 3.4.0;
+- the protocol version matches `VERSION` (3.5.0);
 - the project is in the adopted/documentation-first phase;
 - no unrequested runtime implementation should be introduced;
 - unverified CI/fresh-agent checks remain unverified until actually observed;

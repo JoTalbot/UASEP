@@ -1,0 +1,39 @@
+{
+  "evidence_id": "EV-UASEP-MAINT-M63-2026-08-30",
+  "task_id": "UASEP-MAINT-M63-2026-08-30",
+  "timestamp": "2026-08-30T09:00:00Z",
+  "agent": "arena-ai-coding-agent",
+  "operation": "M63: fold AIOS2 adoption findings into protocol v3.5.0",
+  "scope": "schemas/, tests/conformance/, kit/, examples/ADOPTION.md, skills/LEGACY_MIGRATION.md, protocol/OWNERSHIP.md, protocol/CONFORMANCE.md, VERSION, .uasep/, CHANGELOG.md, README.md",
+  "result": "PARTIALLY_VERIFIED",
+  "source": "local pytest runs (conformance suite + conformance kit), jsonschema validation",
+  "observed": "Schema: manifest runtime -> uasep_runtime (const NONE) with new optional project_runtime and project extension object; readiness runtime -> uasep_runtime. Guidance: ADOPTION.md reference-vs-copy and rebuild-state-from-git-facts. New skill LEGACY_MIGRATION.md. Branch lifecycle rules appended to OWNERSHIP.md (patch-equivalence over ancestry under rebase merges). Portable conformance kit at kit/ (schema snapshots + 7 tests); first run against UASEP itself found two legacy task contracts violating task.schema.json (missing 'conflicts'; unexpected 'completed_commit'/'verification_run') — both normalized with content preserved. Version 3.5.0 set across VERSION, manifest, state.json, CONFORMANCE.md; tests read the version dynamically. Local: 64 tests passed (57 conformance + 7 kit). Canonical CI acceptance pending observation at recording time.",
+  "commit": null,
+  "changed_files": [
+    "schemas/manifest.schema.json",
+    "schemas/readiness.schema.json",
+    "tests/conformance/fixtures/",
+    "tests/conformance/test_all_schemas.py",
+    "tests/conformance/test_manifest_schema.py",
+    "tests/conformance/test_protocol_invariants.py",
+    "tests/conformance/test_reference_artifacts.py",
+    "tests/conformance/test_runtime_free.py",
+    "kit/",
+    "examples/ADOPTION.md",
+    "skills/LEGACY_MIGRATION.md",
+    "protocol/OWNERSHIP.md",
+    "protocol/CONFORMANCE.md",
+    "VERSION",
+    ".uasep/",
+    "CHANGELOG.md",
+    "README.md"
+  ],
+  "verification": "Local: python -m pytest tests/conformance kit/uasep -q -> 64 passed. Canonical GitHub Actions run: pending at recording time.",
+  "limitations": [
+    "Canonical CI acceptance of the pushed batch is pending observation at recording time"
+  ],
+  "related": [
+    "EV-UASEP-MAINT-M62-2026-08-30.json",
+    "EV-UASEP-RELEASE-V3.4.0-2026-08-30.json"
+  ]
+}

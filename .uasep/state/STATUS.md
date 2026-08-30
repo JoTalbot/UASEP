@@ -6,13 +6,13 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Phase
 
-- Phase: ADOPTED
+- Phase: MAINTENANCE (M63, v3.5.0)
 
 ## Current task
 
-- ID: NONE
-- Owner: NONE
-- Scope: periodic conformance/drift audits only
+- ID: UASEP-MAINT-M63-2026-08-30
+- Owner: arena-ai-coding-agent
+- Scope: v3.5.0 adoption hardening (fold AIOS2 dogfooding findings into the protocol)
 
 ## Progress
 
@@ -27,7 +27,8 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed M60-M61: canonical CI acceptance pass (run 33275234855) and durable-state reconciliation.
 - Completed M62 (2026-08-30): repaired the broken canonical conformance workflow, replaced echo-only workflows with real policy tests, minimized the workflow set to four, archived 456 non-normative documents to docs/archive/, reconciled README and root state files, added LICENSE and CODEOWNERS, and codified documentation restraint.
 - Released v3.4.0 (2026-08-30) through the deliberate release flow; merged Dependabot PR #66 (actions/checkout v7.0.1).
-- Current maintenance batches: COMPLETE. No active task.
+- Completed M63 (2026-08-30): protocol v3.5.0 — uasep_runtime schema semantics, project_runtime/project extension, reference-vs-copy adoption guidance, LEGACY_MIGRATION skill, branch lifecycle rules, portable conformance kit.
+- Current maintenance batches: M63 in progress.
 
 ## Evidence
 

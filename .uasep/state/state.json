@@ -1,16 +1,18 @@
 {
   "protocol": "UASEP",
-  "protocol_version": "3.4.0",
+  "protocol_version": "3.5.0",
   "project_state": "ADOPTED",
   "environment": "chat + GitHub-connected tools",
   "objective": "Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.",
-  "active_task": null,
+  "active_task": "UASEP-MAINT-M63-2026-08-30",
   "last_verified": "2026-08-30",
   "next_best_actions": [
     "Perform repository-native periodic conformance/drift audits.",
     "Open a new maintenance batch only when a concrete defect, drift finding, or new acceptance requirement exists."
   ],
-  "active_tasks": [],
+  "active_tasks": [
+    "UASEP-MAINT-M63-2026-08-30"
+  ],
   "blockers": [],
   "unknowns": [
     "Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.",
@@ -21,6 +23,7 @@
     "Canonical conformance run #108 succeeded at commit ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec.",
     "M41 verification: canonical UASEP Main Conformance run #120 succeeded on commit bfb852e6d734b81256f930603c30cac68708c4a5.",
     "M62 (2026-08-30): canonical CI repaired after checkout removal in 0926002; VERIFIED — local suite 54 passed and canonical UASEP Main Conformance run 33298430803 succeeded on commit 52a8911; evidence EV-UASEP-MAINT-M62-2026-08-30.json.",
-    "Release v3.4.0 published through the deliberate release flow: gate run 33299034737 and automated-release run 33299048999 succeeded; tag v3.4.0 -> df12ee3 verified. Evidence: EV-UASEP-RELEASE-V3.4.0-2026-08-30.json."
+    "Release v3.4.0 published through the deliberate release flow: gate run 33299034737 and automated-release run 33299048999 succeeded; tag v3.4.0 -> df12ee3 verified. Evidence: EV-UASEP-RELEASE-V3.4.0-2026-08-30.json.",
+    "M63 (2026-08-30): v3.5.0 adoption hardening in progress — local 64/64 tests; canonical CI pending. Evidence: EV-UASEP-MAINT-M63-2026-08-30.json."
   ]
 }

@@ -21,21 +21,21 @@ def test_reference_manifest_matches_schema():
     schema = load_schema("manifest.schema.json")
     manifest = {
         "protocol": "UASEP",
-        "protocol_version": "3.4.0",
+        "protocol_version": (ROOT / "VERSION").read_text().strip(),
         "project_instance": "UASEP",
         "project_state": "ADOPTED",
         "autonomy_level": "L0",
         "source_of_truth": "repository",
-        "runtime": "NONE",
+        "uasep_runtime": "NONE",
     }
     jsonschema.validate(manifest, schema)
 
 
 def test_reference_manifest_has_no_legacy_runtime_fields():
     text = (ROOT / ".uasep" / "manifest.yaml").read_text()
-    assert "protocol_version: 3.4.0" in text
+    assert f"protocol_version: {(ROOT / 'VERSION').read_text().strip()}" in text
     assert "project_state: ADOPTED" in text
-    assert "runtime: NONE" in text
+    assert "uasep_runtime: NONE" in text
     assert "runtime_version:" not in text
 
 

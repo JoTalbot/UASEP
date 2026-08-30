@@ -2,7 +2,7 @@
   "repository": "JoTalbot/UASEP",
   "branch": "main",
   "protocol": "UASEP",
-  "protocol_version": "3.4.0",
+  "protocol_version": "3.5.0",
   "state": "ADOPTED",
   "active_tasks": 0,
   "ownership_conflicts": 0,
@@ -12,5 +12,5 @@
     "repository_write": "available",
     "workflow_dispatch": "unknown"
   },
-  "runtime": "NONE"
+  "uasep_runtime": "NONE"
 }

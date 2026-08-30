@@ -2,7 +2,7 @@
 
 Status: ADOPTED
 
-Protocol version: 3.4.0
+Protocol version: 3.5.0
 
 ## Objective
 Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.
@@ -11,14 +11,15 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 Runtime-free. No UASEP daemon, CLI, scheduler, database, supervisor, or executable package is required.
 
 ## Current phase
-Adopted; documentation-first protocol hardening is complete for the current scope. Repository hygiene pass M62 (2026-08-30) repaired the canonical CI and minimized the workflow set.
+Protocol v3.5.0 in progress (M63): folding the seven findings from the first real-world adoption (AIOS2) into the protocol. Previous: documentation-first hardening complete; M62 repaired the canonical CI and minimized the workflow set.
 
 ## Verified
+- Protocol version is consistently 3.5.0 across VERSION, manifest, state.json, and CONFORMANCE.md (M63).
 - `main` uses the pre-AIOS2 baseline.
 - Retired runtime implementation, packaging, runtime tests, and runtime CI are not active requirements.
 - `AGENTS.md` is the mandatory repository-wide agent contract.
 - `skills/` contains reusable operational workflows.
-- `protocol/CONFORMANCE.md` is version 3.4.0.
+- `protocol/CONFORMANCE.md` is version 3.5.
 - Task, batch, evidence, readiness, and ownership contracts are defined and represented in `schemas/`.
 - Universal bootstrap is aligned with the v3.4 workflow.
 - Fresh-agent acceptance evidence is recorded in `.uasep/evidence/EV-UASEP-ACCEPT-2026-08-28.json`.

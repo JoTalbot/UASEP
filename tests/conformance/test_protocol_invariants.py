@@ -86,7 +86,7 @@ def test_manifest_and_state_are_version_consistent():
     assert f"protocol: {state['protocol']}" in manifest
     assert f"protocol_version: {state['protocol_version']}" in manifest
     assert f"project_state: {state['project_state']}" in manifest
-    assert "runtime: NONE" in manifest
+    assert "uasep_runtime: NONE" in manifest
 
 
 def test_version_file_matches_durable_protocol_version():
@@ -164,4 +164,4 @@ def test_no_runtime_dependency_is_introduced_by_protocol_checks():
 def test_capability_claims_are_repository_bounded():
     manifest = _read(".uasep/manifest.yaml")
     assert "source_of_truth: repository" in manifest
-    assert "runtime: NONE" in manifest
+    assert "uasep_runtime: NONE" in manifest

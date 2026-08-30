@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.5.0 — Adoption hardening (M63)
+
+Protocol improvements driven by the first real-world adoption (AIOS2, PR #93). Findings record: `.uasep/knowledge/UASEP_ADOPTION_FINDINGS.md` in the adopter repository.
+
+- **Schema:** renamed the manifest field `runtime` to `uasep_runtime` (const `NONE`) — the protocol layer requires no runtime; the old name was semantically false for projects whose product *is* a runtime (adoption finding F1).
+- **Schema:** added optional `project_runtime` (free-form description of the project's own runtime nature) and `project` (project-specific extension object for validation requirements, execution focus, rules — F4).
+- **Schema:** renamed the readiness record field `runtime` to `uasep_runtime` for the same clarity.
+- **Adoption guidance:** `examples/ADOPTION.md` now distinguishes *referencing* the canonical protocol (recommended) from *copying* it (forking hazard, F2), and mandates rebuilding durable state from git facts rather than trusting legacy status files (F6).
+- **New skill:** `skills/LEGACY_MIGRATION.md` — how to migrate a homegrown agent system (status files, roles, skills, memory) onto UASEP without losing knowledge (F3).
+- **Ownership protocol:** added branch lifecycle rules — delete merged branches, patch-equivalence (`git cherry`) instead of ancestry checks under rebase merges, deliberate preservation of unique histories (F5).
+- **Conformance kit:** `kit/` — a portable pytest suite (schema snapshots included) that adopters drop into their test suite to continuously validate their UASEP artifacts (F7). First run against UASEP itself found and fixed two legacy task contracts violating the task schema.
+- Version references in tests are now read from `VERSION` instead of being hardcoded.
+
 ## Maintenance 2026-08-30 — CI repair and repository hygiene (M62)
 
 - Repaired the canonical conformance workflow: restored the full-SHA-pinned checkout (`ref: main`, `fetch-depth: 1`) and setup-python steps that commit `0926002` had removed, dropped the debug diagnostics step, and replaced the every-5-minute cron with a daily drift check.

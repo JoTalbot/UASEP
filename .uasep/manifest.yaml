@@ -1,7 +1,7 @@
 protocol: UASEP
-protocol_version: 3.4.0
+protocol_version: 3.5.0
 project_instance: UASEP
 project_state: ADOPTED
 autonomy_level: L0
 source_of_truth: repository
-runtime: NONE
+uasep_runtime: NONE

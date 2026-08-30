@@ -48,6 +48,7 @@ templates/github-actions/  CI/security/release workflow templates
 bootstrap/UASEP_BOOTSTRAP.md  universal session bootstrap
 release-readiness/         release checklist and status
 tests/conformance/         repository-native pytest conformance suite
+kit/                      portable conformance kit for adopting repositories
 .uasep/
   manifest.yaml            project manifest (protocol version, autonomy level)
   state/                   durable status, task contracts, ownership, handoff

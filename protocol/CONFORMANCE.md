@@ -1,6 +1,6 @@
 # UASEP Conformance Specification
 
-Version: 3.4
+Version: 3.5
 
 ## Purpose
 
@@ -45,7 +45,7 @@ The canonical operational artifacts are:
 
 ## Machine-readable conformance
 
-When a schema has a reference fixture under `tests/conformance/fixtures/`, the fixture MUST validate against that schema. The repository's machine-readable durable state MUST validate against `schemas/state.schema.json` and remain consistent with the manifest's protocol, protocol version, project state, and runtime fields.
+When a schema has a reference fixture under `tests/conformance/fixtures/`, the fixture MUST validate against that schema. The repository's machine-readable durable state MUST validate against `schemas/state.schema.json` and remain consistent with the manifest's protocol, protocol version, project state, and uasep_runtime fields.
 
 ## Completion invariant
 

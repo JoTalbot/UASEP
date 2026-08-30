@@ -3,14 +3,37 @@
   "objective": "Add automated conformance coverage for normative agent-behavior invariants that are currently documented but insufficiently exercised.",
   "owner": "fresh-agent-session-2026-08-28",
   "branch": "main",
-  "write_set": ["tests/conformance/test_protocol_invariants.py", ".uasep/state/TASK_UASEP-MAINT-M11-20-2026-08-28.json", ".uasep/state/BATCH_UASEP-MAINT-M11-20-2026-08-28.json", ".uasep/evidence/EV-UASEP-MAINT-M11-20-2026-08-28.json", ".uasep/state/state.json", ".uasep/state/HANDOFF.md", ".uasep/state/STATUS.md"],
-  "dependencies": ["UASEP-ACCEPT-2026-08-28", "UASEP-CI-2026-08-28"],
-  "conflicts": ["Other edits to tests/conformance/test_protocol_invariants.py or the listed durable state files"],
-  "acceptance": ["Add focused conformance assertions covering the selected protocol invariants without introducing runtime dependencies.", "Canonical conformance passes after the change.", "Record per-task evidence and synchronize durable state."],
+  "write_set": [
+    "tests/conformance/test_protocol_invariants.py",
+    ".uasep/state/TASK_UASEP-MAINT-M11-20-2026-08-28.json",
+    ".uasep/state/BATCH_UASEP-MAINT-M11-20-2026-08-28.json",
+    ".uasep/evidence/EV-UASEP-MAINT-M11-20-2026-08-28.json",
+    ".uasep/state/state.json",
+    ".uasep/state/HANDOFF.md",
+    ".uasep/state/STATUS.md"
+  ],
+  "dependencies": [
+    "UASEP-ACCEPT-2026-08-28",
+    "UASEP-CI-2026-08-28"
+  ],
+  "conflicts": [
+    "Other edits to tests/conformance/test_protocol_invariants.py or the listed durable state files"
+  ],
+  "acceptance": [
+    "Add focused conformance assertions covering the selected protocol invariants without introducing runtime dependencies.",
+    "Canonical conformance passes after the change.",
+    "Record per-task evidence and synchronize durable state."
+  ],
   "risk": "LOW",
-  "verification": ["Inspect each assertion against protocol/CONFORMANCE.md and related normative files.", "Run the canonical conformance suite through GitHub Actions.", "Verify changed files and durable state after the write."],
+  "verification": [
+    "Inspect each assertion against protocol/CONFORMANCE.md and related normative files.",
+    "Run the canonical conformance suite through GitHub Actions.",
+    "Verify changed files and durable state after the write.",
+    "verification_run: 33196454786"
+  ],
   "status": "DONE",
-  "completed_commit": "0716c55d345a6843f09bb4c2fdc28d2113f60aeb",
-  "verification_run": "33196454786",
-  "next_action": "Release ownership and continue maintenance only when new drift or requirements appear."
+  "next_action": "Release ownership and continue maintenance only when new drift or requirements appear.",
+  "evidence": [
+    "completed_commit: 0716c55d345a6843f09bb4c2fdc28d2113f60aeb"
+  ]
 }

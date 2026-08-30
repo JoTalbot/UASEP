@@ -47,3 +47,28 @@ If two agents discover overlapping active claims:
 5. record the decision before resuming.
 
 If coordination is unavailable, the safer default is to remain `BLOCKED` rather than overwrite another agent's work.
+
+## Branch lifecycle
+
+Branches are part of the shared coordination state and accumulate debt when
+left behind.
+
+1. **One task lineage, one branch.** Short-lived work branches (for example
+   `batch/<n>-<slug>`) must be deleted after their work lands.
+2. **Never force-push or rewrite shared branches.** Integration conflicts are
+   resolved against the current target branch.
+3. **Merged does not mean ancestry.** Rebase and squash merges break
+   `merge-base --is-ancestor` checks: a merged branch is often *not* an
+   ancestor of the target. Verify inclusion by patch equivalence
+   (`git cherry <target> <branch>`) or content inspection before judging a
+   branch stale.
+4. **Delete provably-merged branches.** A branch whose commits are all
+   patch-equivalent to the target can be deleted; git history preserves the
+   content.
+5. **Preserve unique histories deliberately.** For branches with work not in
+   the target that must be kept, create an explicit `archive/<name>` tag (or
+   close them with a recorded decision) instead of leaving the branch ref
+   dangling forever.
+6. **Record bulk cleanup as a task.** Mass branch deletion is a consequential
+   operation: claim ownership, verify each branch, record evidence, and
+   summarize what was deleted and what was preserved.

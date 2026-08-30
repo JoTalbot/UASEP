@@ -47,7 +47,7 @@ def test_machine_readable_state_matches_state_schema():
     state = json.loads((ROOT / ".uasep" / "state" / "state.json").read_text())
     jsonschema.Draft202012Validator(schema).validate(state)
     assert state["protocol"] == "UASEP"
-    assert state["protocol_version"] == "3.4.0"
+    assert state["protocol_version"] == (ROOT / "VERSION").read_text().strip()
     assert state["project_state"] == "ADOPTED"
 
 
@@ -76,8 +76,8 @@ def test_all_repository_evidence_records_match_evidence_schema():
 
 def test_manifest_is_runtime_free():
     manifest = (ROOT / ".uasep" / "manifest.yaml").read_text()
-    assert "runtime: NONE" in manifest
-    assert "protocol_version: 3.4.0" in manifest
+    assert "uasep_runtime: NONE" in manifest
+    assert f"protocol_version: {(ROOT / 'VERSION').read_text().strip()}" in manifest
 
 
 def test_canonical_truth_statuses_are_present():

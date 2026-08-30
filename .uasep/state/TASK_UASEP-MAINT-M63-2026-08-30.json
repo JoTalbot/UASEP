@@ -1,0 +1,43 @@
+{
+  "id": "UASEP-MAINT-M63-2026-08-30",
+  "objective": "Fold the seven adoption findings from the AIOS2 dogfooding run into the protocol as version 3.5.0.",
+  "owner": "arena-ai-coding-agent",
+  "branch": "main",
+  "write_set": [
+    "schemas/",
+    "tests/conformance/",
+    "kit/",
+    "examples/ADOPTION.md",
+    "skills/LEGACY_MIGRATION.md",
+    "protocol/OWNERSHIP.md",
+    "protocol/CONFORMANCE.md",
+    "VERSION",
+    ".uasep/",
+    "CHANGELOG.md",
+    "README.md"
+  ],
+  "dependencies": [
+    "AIOS2-UASEP-ADOPT-2026-08-30"
+  ],
+  "conflicts": [],
+  "acceptance": [
+    "Manifest and readiness schemas express the UASEP runtime unambiguously (uasep_runtime) and support runtime projects (project_runtime, project extension)",
+    "Adoption guidance distinguishes referencing from copying the protocol and mandates rebuilding state from git facts",
+    "A legacy-migration skill exists",
+    "Branch lifecycle rules exist in the ownership protocol",
+    "A portable conformance kit exists and validates at least one adopter",
+    "Version references are dynamic (read from VERSION)",
+    "Protocol version is consistently 3.5.0 across VERSION, manifest, state, and CONFORMANCE",
+    "Full conformance suite and kit pass locally, then CI is green on main"
+  ],
+  "risk": "MEDIUM",
+  "verification": [
+    "python -m pytest tests/conformance kit/uasep -q (64 tests) green locally",
+    "Canonical UASEP Main Conformance run green on main after push"
+  ],
+  "status": "IN_PROGRESS",
+  "evidence": [
+    ".uasep/evidence/EV-UASEP-MAINT-M63-2026-08-30.json"
+  ],
+  "next_action": "Push, observe canonical CI, release v3.5.0 through the manual release gate, then finalize evidence."
+}
