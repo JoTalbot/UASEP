@@ -22,8 +22,16 @@ jobs:
     name: Validate main
     runs-on: ubuntu-latest
     steps:
+      - name: Show environment diagnostics
+        run: |
+          python --version || true
+          python -m pip --version || true
+          pwd
+          ls -la
+          find tests -maxdepth 3 -type f | sort || true
+
       - name: Install validation dependencies
         run: python -m pip install --disable-pip-version-check --no-input jsonschema pytest pyyaml
 
       - name: Run conformance suite
-        run: python -m pytest tests/conformance -q
+        run: python -m pytest tests/conformance -q -vv
