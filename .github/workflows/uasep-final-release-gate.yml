@@ -18,15 +18,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+        uses: actions/checkout@v5
 
       - name: Validate release readiness
+        shell: bash
         run: |
+          set -euo pipefail
           echo "UASEP Release Gate"
           echo "Checking final readiness state"
           echo "Status: evaluation complete"
 
       - name: Summary
+        shell: bash
         run: |
           {
             echo "## UASEP Release Gate"
