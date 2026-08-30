@@ -1,28 +1,22 @@
 name: UASEP Auto PR Cycle
 
 on:
-  workflow_run:
-    workflows:
-      - UASEP CI Analyzer
-    types:
-      - completed
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: Manual compatibility execution reason
+        required: false
+        default: manual-recovery
 
 permissions:
-  contents: write
-  pull-requests: write
+  contents: read
+  pull-requests: read
 
 jobs:
-  prepare-repair:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  compatibility:
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare repair cycle
+      - name: Report legacy compatibility mode
         run: |
-          echo "Repair cycle initialized"
-          echo "Source run: ${{ github.event.workflow_run.id }}"
-          echo "Commit: ${{ github.event.workflow_run.head_sha }}"
-
-      - name: Create repair marker
-        run: |
-          mkdir -p repair
-          echo "Automated repair candidate" > repair/status.txt
+          echo "Legacy auto-pr-cycle is manual-only compatibility mode."
+          echo "Reason: ${{ inputs.reason }}"
