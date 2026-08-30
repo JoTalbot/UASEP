@@ -40,6 +40,20 @@ jobs:
             echo "Release state file not present in repository snapshot"
           fi
 
+      - name: Validate artifact integrity manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          manifest = json.loads(Path('uasep-artifact-manifest.json').read_text())
+          assert manifest['schema'] == 'uasep.artifact.v1'
+          assert manifest['integrity_gate'] == 'enabled'
+          assert len(manifest['artifacts']) > 0
+          print('artifact_manifest=validated')
+          PY
+
           echo "Status: evaluation complete"
 
       - name: Summary
@@ -49,4 +63,5 @@ jobs:
             echo "## UASEP Release Gate"
             echo ""
             echo "Final release validation completed."
+            echo "Artifact integrity validation completed."
           } >> "$GITHUB_STEP_SUMMARY"
