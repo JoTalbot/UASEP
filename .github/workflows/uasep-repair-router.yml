@@ -1,0 +1,31 @@
+name: UASEP Repair Router
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Repair source
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  actions: read
+  pull-requests: write
+
+jobs:
+  route-repair:
+    name: Route repair flow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build repair context
+        run: |
+          echo "UASEP Repair Router started"
+          echo "Source: ${{ inputs.source || 'manual' }}"
+          echo "Single repair path enforced"
+
+      - name: Select repair stages
+        run: |
+          echo "Patch generation stage"
+          echo "PR automation stage"
+          echo "Validation stage"
