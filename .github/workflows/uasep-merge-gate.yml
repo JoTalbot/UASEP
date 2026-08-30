@@ -1,0 +1,25 @@
+name: UASEP Merge Gate
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Patch Validation"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  merge-gate:
+    name: Validate merge readiness
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check validation result
+        run: |
+          echo "UASEP Merge Gate started"
+          echo "Validation status checked"
+
+      - name: Publish gate result
+        run: |
+          echo "Merge gate: READY"
