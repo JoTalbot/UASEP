@@ -6,6 +6,10 @@ on:
     workflows: ["UASEP Main Conformance"]
     types: [completed]
 
+permissions:
+  contents: read
+  actions: read
+
 jobs:
   orchestrate:
     if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure' }}
