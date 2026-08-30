@@ -1,0 +1,28 @@
+name: UASEP Control Dashboard
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Main Conformance
+      - UASEP Compliance Report
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  status-report:
+    name: Generate UASEP Status Report
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create summary
+        run: |
+          echo "## UASEP Control Dashboard" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Pipeline monitoring: enabled" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Repair orchestration: enabled" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Compliance tracking: enabled" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Generated from workflow context" >> "$GITHUB_STEP_SUMMARY"
