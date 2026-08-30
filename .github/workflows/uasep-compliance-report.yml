@@ -1,0 +1,24 @@
+name: UASEP Compliance Report
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP SHA Pinning Check
+      - UASEP Permissions Audit
+      - UASEP Security Scanner
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  compliance-report:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate compliance summary
+        run: |
+          echo "# UASEP Compliance Report" >> $GITHUB_STEP_SUMMARY
+          echo "Security, permissions and workflow checks completed." >> $GITHUB_STEP_SUMMARY
