@@ -25,7 +25,7 @@ jobs:
           echo "sha=${{ github.event.workflow_run.head_sha || github.sha }}" >> repair-state/state.txt
 
       - name: Upload repair state
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: uasep-repair-state
           path: repair-state/state.txt
