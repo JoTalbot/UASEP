@@ -1,0 +1,46 @@
+name: UASEP Production Hardening
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  hardening:
+    name: Production hardening
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 1
+
+      - name: Validate workflow permissions
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in .github/workflows/*.yml .github/workflows/*.yaml; do
+            [ -f "$file" ] || continue
+            grep -q '^permissions:' "$file" || { echo "Missing permissions block: $file"; exit 1; }
+          done
+
+      - name: Check for obvious credential leakage
+        shell: bash
+        run: |
+          set -euo pipefail
+          if grep -RInE 'ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|sk-[A-Za-z0-9]{20,}' --exclude-dir=.git .; then
+            echo 'Potential credential-like token found in repository files.'
+            exit 1
+          fi
+
+      - name: Verify repository metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -d .github/workflows
+          echo 'Production hardening checks passed.'
