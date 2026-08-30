@@ -1,14 +1,15 @@
 name: UASEP Auto Repair
 
-# Autonomous CI failure analysis helper.
-# Captures failed conformance runs and creates diagnostics for repair cycles.
+# Legacy diagnostics compatibility workflow.
+# Automatic failure routing is owned by UASEP Auto Repair Orchestrator.
 
 on:
-  workflow_run:
-    workflows:
-      - UASEP Main Conformance
-    types:
-      - completed
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: Manual diagnostics reason
+        required: false
+        default: manual-recovery
 
 permissions:
   actions: read
@@ -16,35 +17,10 @@ permissions:
   issues: write
 
 jobs:
-  analyze-failure:
-    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+  diagnostics:
     runs-on: ubuntu-latest
     steps:
-      - name: Collect failure metadata
+      - name: Report legacy diagnostics mode
         run: |
-          echo "Workflow: ${{ github.event.workflow_run.name }}" > ci-failure-report.txt
-          echo "Run ID: ${{ github.event.workflow_run.id }}" >> ci-failure-report.txt
-          echo "Commit: ${{ github.event.workflow_run.head_sha }}" >> ci-failure-report.txt
-
-      - name: Collect failure logs
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh run view ${{ github.event.workflow_run.id }} --log > ci-failure-log.txt || true
-          echo "Failure log captured" >> ci-failure-report.txt
-
-      - name: Upload diagnostics artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: uasep-ci-failure-diagnostics
-          path: |
-            ci-failure-report.txt
-            ci-failure-log.txt
-
-      - name: Create repair report issue
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          gh issue create \
-            --title "UASEP CI failure requires repair" \
-            --body "Automated CI failure detected.\n\nWorkflow: ${{ github.event.workflow_run.name }}\nRun ID: ${{ github.event.workflow_run.id }}\nCommit: ${{ github.event.workflow_run.head_sha }}\n\nFailure diagnostics artifact uploaded automatically."
+          echo "Legacy auto-repair diagnostics is manual-only compatibility mode."
+          echo "Reason: ${{ inputs.reason }}"
