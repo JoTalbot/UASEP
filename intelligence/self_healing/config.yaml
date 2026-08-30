@@ -1,0 +1,9 @@
+self_healing:
+  enabled: true
+  modes:
+    - analyze
+    - plan
+    - verify
+  safeguards:
+    require_validation: true
+    preserve_evidence: true
