@@ -1,0 +1,29 @@
+name: UASEP Action Executor
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Decision Engine"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  execute:
+    name: Execute decision action
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare action execution state
+        run: |
+          echo "UASEP Action Executor ready"
+          echo "Supported actions: repair retry stop release"
+
+      - name: Write summary
+        run: |
+          {
+            echo "## UASEP Action Executor"
+            echo "Status: ready"
+            echo "Next: execute selected action"
+          } >> "$GITHUB_STEP_SUMMARY"
