@@ -1,0 +1,55 @@
+name: UASEP Release Gate
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: uasep-release-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-gate:
+    name: Release gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout verified commit
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Verify release checklist exists
+        run: test -f release-readiness/UASEP_RELEASE_CHECKLIST.md
+
+      - name: Verify workflow permissions are explicit
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in .github/workflows/*.yml .github/workflows/*.yaml; do
+            [ -f "$file" ] || continue
+            grep -q '^permissions:' "$file" || { echo "Missing permissions block: $file"; exit 1; }
+          done
+
+      - name: Run conformance tests when present
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ -d tests/conformance ]; then
+            python -m pytest tests/conformance
+          else
+            echo 'No tests/conformance directory found; structural gates remain enforced.'
+          fi
+
+      - name: Verify repository state
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -d .github/workflows
+          echo "Verified commit: $GITHUB_SHA"
+          echo 'Release gate passed.'
