@@ -47,7 +47,7 @@ jobs:
 
       - name: Run conformance suite
         shell: bash
-        run: python -m pytest tests/conformance -q
+        run: python -m pytest tests/conformance kit/uasep -q
 
       - name: Verify repository state
         shell: bash
