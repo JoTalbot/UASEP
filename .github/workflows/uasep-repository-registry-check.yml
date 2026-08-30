@@ -1,0 +1,34 @@
+name: UASEP Repository Registry Check
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Final Release Gate
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  registry-check:
+    name: Registry Validation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Validate repository registry
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f uasep-repository-registry.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('uasep-repository-registry.json').read_text())
+          assert 'repositories' in data
+          assert len(data['repositories']) > 0
+          print('repository_registry=validated')
+          PY
