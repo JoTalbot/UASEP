@@ -1,0 +1,24 @@
+name: UASEP Autonomous Controller
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Release Readiness
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  controller:
+    name: Autonomous Controller Status
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect controller state
+        run: |
+          echo "UASEP Autonomous Controller"
+          echo "Pipeline orchestration state collected"
+          echo "status=ready"
