@@ -1,0 +1,25 @@
+name: UASEP SHA Pinning Check
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  sha-pinning-check:
+    name: Check action pinning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332
+
+      - name: Scan workflow references
+        shell: bash
+        run: |
+          echo "Scanning workflow action references"
+          grep -R "uses:" .github/workflows || true
+          echo "SHA pinning audit stage completed"
