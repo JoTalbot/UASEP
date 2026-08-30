@@ -1,7 +1,7 @@
 name: UASEP Main Conformance
 
-# Technical maintenance commit: keep canonical CI execution bound to main pushes.
-# Every commit pushed to main triggers this verification workflow.
+# Technical maintenance: keep canonical CI execution automatic.
+# Runs on main pushes and scheduled drift checks.
 
 on:
   push:
@@ -10,6 +10,8 @@ on:
   pull_request:
     branches:
       - main
+  schedule:
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions:
