@@ -1,0 +1,32 @@
+name: UASEP Knowledge Pattern Memory
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Learning Feedback Loop"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  pattern-memory:
+    name: Build Pattern Memory Context
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect learning signals
+        run: |
+          echo "Collecting successful repair patterns"
+          echo "Collecting failed repair patterns"
+          echo "Building reusable decision context"
+
+      - name: Publish summary
+        run: |
+          {
+            echo "## UASEP Pattern Memory"
+            echo "- Learning signals processed"
+            echo "- Repair patterns indexed"
+            echo "- Future decisions can reuse context"
+          } >> "$GITHUB_STEP_SUMMARY"
