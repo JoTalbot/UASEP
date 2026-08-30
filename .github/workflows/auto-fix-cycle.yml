@@ -1,0 +1,31 @@
+name: UASEP Auto Fix Cycle
+
+# Autonomous repair cycle controller.
+# Prepares repair branches and validation flow after CI analysis.
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP CI Analyzer
+    types:
+      - completed
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+
+jobs:
+  prepare-repair:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create repair plan marker
+        run: |
+          echo "UASEP autonomous repair cycle started"
+          echo "Source: ${{ github.event.workflow_run.head_sha || github.sha }}"
+
+      - name: Prepare next repair stage
+        run: |
+          echo "Patch generation and PR automation stage ready"
