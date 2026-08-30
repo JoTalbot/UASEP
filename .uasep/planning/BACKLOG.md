@@ -37,6 +37,10 @@ Priority is dynamic. Re-score tasks using user value, dependency readiness, risk
 - [x] UASEP-EXAMPLE-004: Conflict/recovery example.
 - [x] UASEP-EXAMPLE-005: Handoff between agents on different machines.
 
+## P3 — Maintenance hygiene (2026-08-30)
+
+- [x] UASEP-MAINT-M62: Repair canonical CI (restore checkout/setup-python), replace echo-only workflows with behavioral policy tests, minimize the workflow set to four, archive non-normative cycle documentation, remove orphaned root state files, add LICENSE/CODEOWNERS, and reconcile durable state. — evidence: `.uasep/evidence/EV-UASEP-MAINT-M62-2026-08-30.json`.
+
 ## P2 — Quality
 
 - [x] UASEP-QUALITY-001: Documentation consistency self-audit — active-tree consistency rules documented; historical index results remain non-authoritative.

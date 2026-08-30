@@ -1,0 +1,24 @@
+{
+  "task_id": "UASEP-MAINT-M62-2026-08-30",
+  "owner": "arena-ai-coding-agent",
+  "branch": "main",
+  "write_set": [
+    ".github/workflows/",
+    ".github/CODEOWNERS",
+    "tests/conformance/",
+    "docs/archive/",
+    "README.md",
+    "LICENSE",
+    "protocol/SELF_MAINTENANCE.md",
+    "CHANGELOG.md",
+    ".uasep/state/",
+    ".uasep/evidence/",
+    ".uasep/planning/"
+  ],
+  "claim_time": "2026-08-30 UTC",
+  "expected_completion": "Same session: CI repair, workflow minimization, documentation archive, and durable-state reconciliation",
+  "status": "ACTIVE",
+  "last_refresh": "2026-08-30 UTC",
+  "transfer_to": null,
+  "release_reason": null
+}

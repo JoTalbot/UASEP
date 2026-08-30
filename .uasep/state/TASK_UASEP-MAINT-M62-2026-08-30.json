@@ -1,0 +1,40 @@
+{
+  "id": "UASEP-MAINT-M62-2026-08-30",
+  "objective": "Repair the broken canonical conformance CI, replace echo-only workflows with real policy tests, archive non-normative cycle documentation, and reconcile durable state with repository reality.",
+  "owner": "arena-ai-coding-agent",
+  "branch": "main",
+  "write_set": [
+    ".github/workflows/",
+    ".github/CODEOWNERS",
+    "tests/conformance/",
+    "docs/archive/",
+    "README.md",
+    "LICENSE",
+    "protocol/SELF_MAINTENANCE.md",
+    "CHANGELOG.md",
+    ".uasep/state/",
+    ".uasep/evidence/",
+    ".uasep/planning/"
+  ],
+  "dependencies": [],
+  "conflicts": [],
+  "acceptance": [
+    "Canonical conformance workflow restores pinned checkout and setup-python and executes the pytest suite",
+    "Conformance suite passes locally with behavioral workflow-policy tests",
+    "Workflow set is reduced to four real workflows and locked by an inventory test",
+    "Supplemental C-cycle documentation is archived out of the active tree",
+    "README matches the actual repository structure",
+    "LICENSE and CODEOWNERS are present",
+    "Durable state and evidence record the maintenance result accurately, including the discovered CI breakage"
+  ],
+  "risk": "MEDIUM",
+  "verification": [
+    "python -m pytest tests/conformance (54 tests) green locally at every commit of the batch",
+    "Canonical UASEP Main Conformance run observed green on main after the batch is pushed"
+  ],
+  "status": "PARTIALLY_VERIFIED",
+  "evidence": [
+    ".uasep/evidence/EV-UASEP-MAINT-M62-2026-08-30.json"
+  ],
+  "next_action": "Push the batch to main, observe the canonical conformance run, then update this contract, the evidence record, and the handoff with the observed result."
+}

@@ -25,6 +25,7 @@ Branch: main
 | M59 | Conformance suite coverage-gap review | `tests/conformance/` | M42-M58 | low | pytest/review | dependent |
 | M60 | Fresh canonical CI acceptance pass | `.github/workflows/`, evidence/state | M42-M59 | low | canonical CI | dependent |
 | M61 | Durable-state reconciliation after M42-M60 | `.uasep/state/`, planning, evidence | M60 | low | state review + CI | dependent |
+| M62 | CI repair, workflow minimization, documentation archive, and hygiene | workflows/tests/docs/state | M61 | medium | pytest + canonical CI | dependent |
 
 ## Execution policy
 
@@ -38,7 +39,8 @@ M42-M44, M48-M49, M52-M53, and M55 may be analyzed independently when write sets
 - M24-M30: **VERIFIED / COMPLETE**; canonical run #101.
 - M31-M40: **VERIFIED / COMPLETE**; canonical run #108.
 - M41: **VERIFIED / COMPLETE**; canonical run #120 at commit `bfb852e6d734b81256f930603c30cac68708c4a5`.
-- M42-M61: **PLANNED / NOT STARTED**.
+- M42-M61: **COMPLETE / PARTIALLY_VERIFIED at the individual-item level**; reviewed via repository inspection (see `EV-M43-M61-2026-08-29.json` and the M60/M61 CI acceptance in durable state).
+- M62: **VERIFIED locally (54/54 conformance tests)**; canonical CI acceptance pending observation — see `EV-UASEP-MAINT-M62-2026-08-30.json`.
 - No runtime implementation is introduced.
 
 ## Re-scoring rule

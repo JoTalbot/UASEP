@@ -11,7 +11,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 Runtime-free. No UASEP daemon, CLI, scheduler, database, supervisor, or executable package is required.
 
 ## Current phase
-Adopted; documentation-first protocol hardening is complete for the current scope.
+Adopted; documentation-first protocol hardening is complete for the current scope. Repository hygiene pass M62 (2026-08-30) repaired the canonical CI and minimized the workflow set.
 
 ## Verified
 - `main` uses the pre-AIOS2 baseline.
@@ -29,9 +29,11 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - M31-M40 maintenance verification gate is satisfied by canonical CI run #108 at commit `ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec`.
 - M41 added conformance guards that bind `VERSION` to durable protocol version and protect the canonical workflow's read-only, main-bounded checkout policy; run #120 succeeded at commit `bfb852e6d734b81256f930603c30cac68708c4a5`.
 - M42 audited supplemental C81-C90 documentation; no executable runtime drift was found. Documentation-scope ambiguity is recorded as a maintenance finding.
+- M62 (2026-08-30) repaired the canonical conformance workflow (checkout and setup-python had been removed by commit `0926002`, leaving the CI unable to run tests), replaced brittle string invariants with behavioral YAML-parsed checks, reduced the workflow set from 91 to 4 real workflows with policy enforced by `tests/conformance/test_workflow_policy.py`, removed nine orphaned root automation-engine state files, archived 456 non-normative documents to `docs/archive/`, rewrote the README to match reality, and added LICENSE and CODEOWNERS. Local conformance suite: 54 passed.
 
 ## Unknown
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
+- Canonical GitHub Actions acceptance of the M62 batch is pending observation; see `.uasep/evidence/EV-UASEP-MAINT-M62-2026-08-30.json` for the recorded state at push time.
 
 ## Next best actions
 1. Perform repository-native periodic conformance/drift audits.
@@ -42,4 +44,4 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 Do not reintroduce executable runtime work unless a concrete user requirement demonstrates that chat + GitHub-connected agents cannot provide the needed behavior.
 
 ## Supplemental documentation
-C81-C90 are retained as non-normative architecture documentation. They are not adopted roadmap stages and must not be interpreted as permission to add executable infrastructure without an explicit requirement.
+C81-C90 and the other non-normative cycle documents are archived under `docs/archive/`. They are not adopted roadmap stages and must not be interpreted as permission to add executable infrastructure without an explicit requirement.

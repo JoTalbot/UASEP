@@ -1,0 +1,35 @@
+{
+  "evidence_id": "EV-UASEP-MAINT-M62-2026-08-30",
+  "task_id": "UASEP-MAINT-M62-2026-08-30",
+  "timestamp": "2026-08-30T07:01:00Z",
+  "agent": "arena-ai-coding-agent",
+  "operation": "M62 maintenance: canonical CI repair, workflow minimization, documentation archive, and repository hygiene",
+  "scope": ".github/workflows/, .github/CODEOWNERS, tests/conformance/, docs/archive/, README.md, LICENSE, protocol/SELF_MAINTENANCE.md, CHANGELOG.md, .uasep/state/, .uasep/evidence/, .uasep/planning/",
+  "result": "PARTIALLY_VERIFIED",
+  "source": "local conformance suite (python -m pytest tests/conformance) and git history on main",
+  "observed": "Findings: commit 0926002 removed checkout and setup-python from .github/workflows/conformance.yml, so the canonical CI could not execute the test suite, and invariant test_canonical_workflow_is_read_only_and_main_bounded failed (1 failed, 43 passed). Repairs: checkout/setup-python restored with full-SHA pins and a daily drift cron; the brittle invariant was rewritten as a YAML-parsed behavioral check; 87 non-functional workflows deleted (4 retained); release-gate made deliberate (manual dispatch) with dependency install; nine orphaned root automation-engine state files removed; 456 non-normative documents archived to docs/archive/; README rewritten to match reality; MIT LICENSE and CODEOWNERS added; documentation-restraint rules added to protocol/SELF_MAINTENANCE.md. Local conformance suite after each commit: 54 passed.",
+  "commit": null,
+  "changed_files": [
+    ".github/workflows/conformance.yml",
+    ".github/workflows/release-gate.yml",
+    ".github/workflows/ (87 workflows removed)",
+    ".github/CODEOWNERS",
+    "tests/conformance/test_protocol_invariants.py",
+    "tests/conformance/test_workflow_policy.py",
+    "docs/archive/ (456 files)",
+    "README.md",
+    "LICENSE",
+    "protocol/SELF_MAINTENANCE.md",
+    "CHANGELOG.md",
+    ".uasep/state/TASK_UASEP-MAINT-M62-2026-08-30.json",
+    ".uasep/state/OWNERSHIP_UASEP-MAINT-M62-2026-08-30.json"
+  ],
+  "verification": "Local pytest conformance suite only; the canonical GitHub Actions run for the pushed batch had not been observed when this record was written",
+  "limitations": [
+    "Canonical GitHub Actions acceptance of the pushed batch is pending observation at recording time"
+  ],
+  "related": [
+    "EV-UASEP-MAINT-M11-20-2026-08-28.json",
+    "EV-M43-M61-2026-08-29.json"
+  ]
+}

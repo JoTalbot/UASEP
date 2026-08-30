@@ -24,8 +24,8 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed M31-M40: workflow-policy, evidence freshness, stale-reference, ownership, handoff, status, acceptance linkage, decision/failure, and maintenance-runbook audits.
 - Completed M41: VERSION-to-state consistency and canonical CI read-only/main-bounded policy guards.
 - Completed M42: audited C81-C90 supplemental documentation against canonical runtime-free scope; no executable architecture drift found.
-- Completed M60: Canonical CI acceptance pass. Main Conformance run 33275234855 succeeded after evidence schema corrections.
-- Completed M61: durable-state reconciliation after successful canonical validation.
+- Completed M60-M61: canonical CI acceptance pass (run 33275234855) and durable-state reconciliation.
+- Completed M62 (2026-08-30): repaired the broken canonical conformance workflow, replaced echo-only workflows with real policy tests, minimized the workflow set to four, archived 456 non-normative documents to docs/archive/, reconciled README and root state files, added LICENSE and CODEOWNERS, and codified documentation restraint.
 - Current maintenance batches: COMPLETE. No active task.
 
 ## Evidence
@@ -34,13 +34,16 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Canonical conformance: VERIFIED / SUCCESS.
 - M60 verification: VERIFIED by successful GitHub Actions run 33275234855.
 - M61 reconciliation: VERIFIED by durable state update after CI acceptance.
+- M62 finding: VERIFIED — commit 0926002 had removed checkout/setup-python from the canonical conformance workflow, so the canonical CI could not execute the test suite (local run: 1 failed, 43 passed). The runs recorded earlier as "canonical acceptance" (#651, #295) exercised only trivial file-existence/echo workflows that M62 removed.
+- M62 repair: VERIFIED locally — python -m pytest tests/conformance: 54 passed after the repair batch. Canonical CI acceptance of the pushed batch: see EV-UASEP-MAINT-M62-2026-08-30.json.
 
 ## Decisions
 
 - UASEP remains runtime-free. Do not add executable infrastructure unless a concrete connector/chat limitation requires it.
 - `.uasep/state/` is the canonical durable operational state.
 - `protocol/` is normative; `AGENTS.md` is the mandatory project contract; `skills/` are reusable procedures; examples illustrate compliant behavior.
-- C81-C90 are supplemental architecture documentation, not adopted normative roadmap stages, unless a concrete future requirement explicitly promotes them.
+- M62: the GitHub Actions workflow set is deliberately minimal (conformance, release-gate, automated-release, release-verification). Workflow policy is enforced by tests/conformance/test_workflow_policy.py, not by decorative workflows. Releases are deliberate: the gate is manual dispatch and automated release only fires after a passing gate.
+- M62: non-normative cycle documentation lives in docs/archive/ and never authorizes executable infrastructure.
 
 ## Next action
 
@@ -48,4 +51,4 @@ Perform repository-native periodic conformance/drift audits. Open a new maintena
 
 ## Updated
 
-- 2026-08-29 UTC
+- 2026-08-30 UTC
