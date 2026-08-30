@@ -1,0 +1,27 @@
+name: UASEP Repair Branch Executor
+
+on:
+  workflow_dispatch:
+    inputs:
+      repair_branch:
+        description: Repair branch name
+        required: true
+        default: repair/auto-fix
+
+permissions:
+  contents: write
+
+jobs:
+  prepare-repair-branch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare repair execution context
+        run: |
+          echo "repair_branch=${{ inputs.repair_branch }}" >> repair-executor-state.txt
+          echo "status=ready" >> repair-executor-state.txt
+
+      - name: Upload repair executor state
+        uses: actions/upload-artifact@v4
+        with:
+          name: uasep-repair-executor-state
+          path: repair-executor-state.txt
