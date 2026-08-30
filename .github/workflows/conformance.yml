@@ -1,5 +1,8 @@
 name: UASEP Main Conformance
 
+# Technical maintenance commit: keep canonical CI execution bound to main pushes.
+# Every commit pushed to main triggers this verification workflow.
+
 on:
   push:
     branches:
