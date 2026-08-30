@@ -2,13 +2,12 @@
 
 ## Automated gates
 
-- [ ] Repository audit passes
-- [ ] Conformance tests pass
-- [ ] Production-hardening checks pass
-- [ ] No credentials or token material is committed
+- [ ] Canonical conformance suite passes (tests/conformance, all checks)
+- [ ] Workflow policy checks pass (permissions, SHA pinning, inventory)
+- [ ] No credentials or token material is committed (secret scan)
 - [ ] Required workflow permissions are explicit
-- [ ] Release prerequisites are verified
-- [ ] Release metadata is generated from the verified commit
+- [ ] Release gate succeeds on the exact commit being released
+- [ ] Release tag is derived from the VERSION file
 - [ ] Evidence is persisted for material operations
 - [ ] Failed verification blocks release completion
 

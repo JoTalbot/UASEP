@@ -185,6 +185,26 @@ def test_automated_release_only_fires_after_the_gate():
     )
 
 
+def test_automated_release_tags_track_the_version_file():
+    workflow = _load(WORKFLOWS_DIR / "automated-release.yml")
+    joined = "\n".join(str(step.get("run", "")) for step in _steps(workflow))
+    assert "VERSION" in joined, "release tags must be derived from the VERSION file"
+    assert "--sort=-version:refname" not in joined, (
+        "release tags must not be auto-incremented independently of VERSION"
+    )
+
+
+def test_dependabot_tracks_github_actions_updates():
+    """SHA-pinned actions need automated updates (the node20 -> node24 lesson)."""
+    path = ROOT / ".github" / "dependabot.yml"
+    assert path.is_file(), "dependabot.yml must exist so pinned actions stay current"
+    config = yaml.safe_load(path.read_text(encoding="utf-8"))
+    ecosystems = {
+        str(update.get("package-ecosystem")) for update in (config.get("updates") or [])
+    }
+    assert "github-actions" in ecosystems
+
+
 def test_no_secrets_are_committed_to_the_repository():
     for path in ROOT.rglob("*"):
         if not path.is_file():

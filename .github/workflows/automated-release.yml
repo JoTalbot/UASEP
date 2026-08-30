@@ -25,21 +25,17 @@ jobs:
           ref: ${{ github.event.workflow_run.head_sha }}
           fetch-depth: 0
 
-      - name: Compute next patch tag
+      - name: Determine release tag from VERSION
         id: version
         shell: bash
         run: |
           set -euo pipefail
-          latest=$(git tag --list 'v*' --sort=-version:refname | head -n1 || true)
-          if [[ -z "$latest" ]]; then
-            next='v0.1.0'
-          else
-            version="${latest#v}"
-            IFS=. read -r major minor patch <<< "$version"
-            next="v${major}.${minor}.$((patch + 1))"
+          version="$(tr -d '[:space:]' < VERSION)"
+          if [[ ! "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid VERSION content: '${version}'"; exit 1
           fi
-          echo "tag=$next" >> "$GITHUB_OUTPUT"
-          echo "Next release: $next"
+          echo "tag=v${version}" >> "$GITHUB_OUTPUT"
+          echo "Release tag: v${version} (from VERSION)"
 
       - name: Ensure tag does not already exist
         shell: bash

@@ -1,5 +1,7 @@
 # UASEP
 
+[![UASEP Main Conformance](https://github.com/JoTalbot/UASEP/actions/workflows/conformance.yml/badge.svg)](https://github.com/JoTalbot/UASEP/actions/workflows/conformance.yml)
+
 **Universal Autonomous Engineering & Self-Maintenance Protocol**
 
 UASEP is a repository-native operating protocol for AI agents working on software projects through chat and GitHub-connected tools.
