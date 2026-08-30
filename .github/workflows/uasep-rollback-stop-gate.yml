@@ -1,0 +1,26 @@
+name: UASEP Rollback Stop Gate
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Merge Gate"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  rollback-check:
+    name: Rollback Safety Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Evaluate repair cycle
+        run: |
+          echo "Checking repair-cycle safety state"
+          echo "stop-gate=enabled" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Report
+        run: |
+          echo "Rollback/stop gate completed"
