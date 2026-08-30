@@ -1,0 +1,34 @@
+name: UASEP Auto Repair Branch Executor
+
+on:
+  workflow_dispatch:
+    inputs:
+      repair_branch:
+        description: Repair branch name
+        required: false
+        default: repair/auto-generated
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  prepare-repair:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare repair execution context
+        run: |
+          echo "Repair branch requested: ${{ inputs.repair_branch }}"
+          echo "Repository: ${{ github.repository }}"
+          echo "Commit: ${{ github.sha }}"
+
+      - name: Create repair marker
+        run: |
+          mkdir -p repair-state
+          echo "ready" > repair-state/status.txt
+
+      - name: Upload repair state
+        uses: actions/upload-artifact@v4
+        with:
+          name: uasep-repair-state
+          path: repair-state/
