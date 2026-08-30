@@ -35,9 +35,9 @@
     "python -m pytest tests/conformance kit/uasep -q (64 tests) green locally",
     "Canonical UASEP Main Conformance run green on main after push"
   ],
-  "status": "IN_PROGRESS",
+  "status": "DONE",
   "evidence": [
     ".uasep/evidence/EV-UASEP-MAINT-M63-2026-08-30.json"
   ],
-  "next_action": "Push, observe canonical CI, release v3.5.0 through the manual release gate, then finalize evidence."
+  "next_action": "None. M63 closed: v3.5.0 released and adopted downstream (AIOS2)."
 }

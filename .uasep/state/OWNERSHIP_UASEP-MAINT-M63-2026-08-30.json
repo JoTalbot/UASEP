@@ -16,9 +16,9 @@
     "README.md"
   ],
   "claim_time": "2026-08-30 UTC",
-  "expected_completion": "Same session: v3.5.0 protocol changes pushed, CI green, release published",
-  "status": "ACTIVE",
+  "expected_completion": "Completed 2026-08-30: v3.5.0 published.",
+  "status": "RELEASED",
   "last_refresh": "2026-08-30 UTC",
   "transfer_to": null,
-  "release_reason": null
+  "release_reason": "v3.5.0 released (tag on 708e80c) after green CI and release gate; task DONE."
 }

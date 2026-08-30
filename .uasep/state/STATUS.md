@@ -10,9 +10,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Current task
 
-- ID: UASEP-MAINT-M63-2026-08-30
-- Owner: arena-ai-coding-agent
-- Scope: v3.5.0 adoption hardening (fold AIOS2 dogfooding findings into the protocol)
+- ID: NONE
 
 ## Progress
 
@@ -56,3 +54,5 @@ Perform repository-native periodic conformance/drift audits. Open a new maintena
 ## Updated
 
 - 2026-08-30 UTC
+
+- Completed M63: v3.5.0 released (tag on 708e80c, gate run 33301038397) — uasep_runtime const + project_runtime/project manifest extensions, ADOPTION reference-vs-copy guidance, LEGACY_MIGRATION skill, branch lifecycle rules (patch-equivalence via git cherry), portable conformance kit at kit/ shipped and adopted by AIOS2 (first external adopter; their CI runs it on every PR).

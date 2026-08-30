@@ -1,6 +1,6 @@
-Current task: UASEP-MAINT-M63-2026-08-30.
+Current task: NONE.
 
-Current step: M63 is implementing protocol v3.5.0 from the seven AIOS2 adoption findings (schema uasep_runtime semantics + project_runtime/project extension, ADOPTION guidance reference-vs-copy, LEGACY_MIGRATION skill, branch lifecycle rules, portable conformance kit at kit/). Local verification complete: 64/64 tests (conformance suite + kit; the kit run also found and fixed two legacy task contracts violating the task schema). Next: push, observe canonical CI, release v3.5.0 through the manual gate, finalize evidence, then migrate the AIOS2 adopter to 3.5.0 and apply the kit there.
+Current step: M63 is closed. v3.5.0 (adoption hardening) was released through the deliberate release flow: canonical CI green on 708e80c (runs 33300982151, 33301020720; 64 tests = 57 conformance + 7 kit), release gate run 33301038397 success, tag v3.5.0 on 708e80c, published release verified. The kit was immediately adopted downstream: AIOS2 migrated to protocol 3.5.0, runs the kit in its CI (green, PR #94 merged, AIOS2 v1.9.0 released automatically), stabilized its flaky concurrency test, isolated test data writes from tracked data/*.jsonl, and deleted 38 patch-equivalent stale branches with git cherry evidence. No open tasks; the next maintenance batch can claim ownership through a fresh task contract.
 
 # Handoff
 

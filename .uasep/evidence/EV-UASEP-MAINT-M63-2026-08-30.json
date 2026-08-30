@@ -5,10 +5,10 @@
   "agent": "arena-ai-coding-agent",
   "operation": "M63: fold AIOS2 adoption findings into protocol v3.5.0",
   "scope": "schemas/, tests/conformance/, kit/, examples/ADOPTION.md, skills/LEGACY_MIGRATION.md, protocol/OWNERSHIP.md, protocol/CONFORMANCE.md, VERSION, .uasep/, CHANGELOG.md, README.md",
-  "result": "PARTIALLY_VERIFIED",
+  "result": "VERIFIED",
   "source": "local pytest runs (conformance suite + conformance kit), jsonschema validation",
-  "observed": "Schema: manifest runtime -> uasep_runtime (const NONE) with new optional project_runtime and project extension object; readiness runtime -> uasep_runtime. Guidance: ADOPTION.md reference-vs-copy and rebuild-state-from-git-facts. New skill LEGACY_MIGRATION.md. Branch lifecycle rules appended to OWNERSHIP.md (patch-equivalence over ancestry under rebase merges). Portable conformance kit at kit/ (schema snapshots + 7 tests); first run against UASEP itself found two legacy task contracts violating task.schema.json (missing 'conflicts'; unexpected 'completed_commit'/'verification_run') — both normalized with content preserved. Version 3.5.0 set across VERSION, manifest, state.json, CONFORMANCE.md; tests read the version dynamically. Local: 64 tests passed (57 conformance + 7 kit). Canonical CI acceptance pending observation at recording time.",
-  "commit": null,
+  "observed": "Schema: manifest runtime -> uasep_runtime (const NONE) with new optional project_runtime and project extension object; readiness runtime -> uasep_runtime. Guidance: ADOPTION.md reference-vs-copy and rebuild-state-from-git-facts. New skill LEGACY_MIGRATION.md. Branch lifecycle rules appended to OWNERSHIP.md (patch-equivalence over ancestry under rebase merges). Portable conformance kit at kit/ (schema snapshots + 7 tests); first run against UASEP itself found two legacy task contracts violating task.schema.json (missing 'conflicts'; unexpected 'completed_commit'/'verification_run') — both normalized with content preserved. Version 3.5.0 set across VERSION, manifest, state.json, CONFORMANCE.md; tests read the version dynamically. Local: 64 tests passed (57 conformance + 7 kit). Canonical CI acceptance pending observation at recording time. Release: tag v3.5.0 on 708e80c via release-gate run 33301038397 (success); published at https://github.com/JoTalbot/UASEP/releases/tag/v3.5.0. Canonical CI now runs 64 tests (57 conformance + 7 kit): runs 33300982151 and 33301020720 both success.",
+  "commit": "708e80c (tag v3.5.0)",
   "changed_files": [
     "schemas/manifest.schema.json",
     "schemas/readiness.schema.json",
@@ -28,10 +28,8 @@
     "CHANGELOG.md",
     "README.md"
   ],
-  "verification": "Local: python -m pytest tests/conformance kit/uasep -q -> 64 passed. Canonical GitHub Actions run: pending at recording time.",
-  "limitations": [
-    "Canonical CI acceptance of the pushed batch is pending observation at recording time"
-  ],
+  "verification": "Local: 64 passed (57 conformance + 7 kit self-test). CI: 33300982151 success, 33301020720 success (pytest tests/conformance kit/uasep -q). Release gate: 33301038397 success; tag v3.5.0 + GitHub release published. Cross-repo validation: the kit was adopted by AIOS2 in the same session (tests/uasep/, 7/7 checks, green in their CI run 33301390739; PR #94 merged, AIOS2 v1.9.0 released) — the first external adoption of v3.5.0.",
+  "limitations": [],
   "related": [
     "EV-UASEP-MAINT-M62-2026-08-30.json",
     "EV-UASEP-RELEASE-V3.4.0-2026-08-30.json"

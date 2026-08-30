@@ -4,15 +4,13 @@
   "project_state": "ADOPTED",
   "environment": "chat + GitHub-connected tools",
   "objective": "Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.",
-  "active_task": "UASEP-MAINT-M63-2026-08-30",
+  "active_task": null,
   "last_verified": "2026-08-30",
   "next_best_actions": [
     "Perform repository-native periodic conformance/drift audits.",
     "Open a new maintenance batch only when a concrete defect, drift finding, or new acceptance requirement exists."
   ],
-  "active_tasks": [
-    "UASEP-MAINT-M63-2026-08-30"
-  ],
+  "active_tasks": [],
   "blockers": [],
   "unknowns": [
     "Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.",
