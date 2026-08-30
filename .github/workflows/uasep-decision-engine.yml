@@ -20,7 +20,33 @@ jobs:
           echo "UASEP decision engine started"
           echo "Evaluating repair, retry, stop, release state"
 
+      - name: Produce decision contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p uasep-decision
+          cat > uasep-decision/decision.json <<'EOF'
+          {
+            "schema": "uasep.decision.v1",
+            "decision": "review",
+            "status": "ready",
+            "source_workflow": "UASEP Autonomous Controller",
+            "allowed_actions": ["repair", "retry", "stop", "release"]
+          }
+          EOF
+          cat uasep-decision/decision.json
+
+      - name: Publish decision contract
+        uses: actions/upload-artifact@v4
+        with:
+          name: uasep-decision-contract
+          path: uasep-decision/decision.json
+          if-no-files-found: error
+          retention-days: 7
+
       - name: Decision summary
         run: |
-          echo "decision=review"
-          echo "status=ready"
+          echo "## UASEP Decision Engine" >> "$GITHUB_STEP_SUMMARY"
+          echo "Decision contract: uasep.decision.v1" >> "$GITHUB_STEP_SUMMARY"
+          echo "decision=review" >> "$GITHUB_STEP_SUMMARY"
+          echo "status=ready" >> "$GITHUB_STEP_SUMMARY"
