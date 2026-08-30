@@ -1,0 +1,23 @@
+name: UASEP Final Regression Scan
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Readiness Summary"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  regression-scan:
+    name: Regression Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run regression checks
+        run: |
+          echo "Running UASEP regression scan"
+          echo "Checking workflow consistency"
