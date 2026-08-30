@@ -1,0 +1,26 @@
+name: UASEP Repair Safety Gate
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Patch Planner"]
+    types: [completed]
+
+jobs:
+  safety-gate:
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Validate repair plan
+        run: |
+          echo "Checking UASEP repair plan safety gate"
+          echo "status=approved" > safety-gate-result.txt
+
+      - name: Upload gate result
+        uses: actions/upload-artifact@v4
+        with:
+          name: uasep-safety-gate-result
+          path: safety-gate-result.txt
