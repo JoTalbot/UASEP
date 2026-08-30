@@ -1,21 +1,26 @@
 name: UASEP PR Automation
 
+# Manual compatibility workflow.
+# Automatic PR routing is owned by UASEP Auto PR Generator.
+
 on:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["UASEP Remediation Engine"]
-    types: [completed]
+    inputs:
+      reason:
+        description: Manual PR automation reason
+        required: false
+        default: manual-recovery
 
 permissions:
   contents: read
   pull-requests: write
 
 jobs:
-  pr-automation:
-    name: Prepare PR automation context
+  compatibility:
+    name: Manual PR automation compatibility
     runs-on: ubuntu-latest
     steps:
-      - name: Create automation report
+      - name: Report compatibility mode
         run: |
-          echo "UASEP PR automation stage ready"
-          echo "Next: generate patch and open pull request"
+          echo "Legacy UASEP PR Automation is manual-only compatibility mode."
+          echo "Reason: ${{ inputs.reason }}"
