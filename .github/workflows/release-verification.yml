@@ -1,0 +1,37 @@
+name: UASEP Release Verification
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  verify-release:
+    name: Verify published release
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout release tag
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          fetch-depth: 0
+
+      - name: Verify release metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f README.md
+          test -f release-readiness/UASEP_RELEASE_CHECKLIST.md
+          echo "Verified release: ${{ github.event.release.tag_name }}"
+
+      - name: Verify tag points to checkout
+        shell: bash
+        run: |
+          set -euo pipefail
+          current=$(git rev-parse HEAD)
+          tagged=$(git rev-list -n 1 "${{ github.event.release.tag_name }}")
+          test "$current" = "$tagged"
+          echo 'Release tag integrity verified.'
