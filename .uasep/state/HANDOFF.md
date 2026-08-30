@@ -1,3 +1,5 @@
+Current task: UASEP-MAINT-M63-2026-08-30.
+
 Current step: M63 is implementing protocol v3.5.0 from the seven AIOS2 adoption findings (schema uasep_runtime semantics + project_runtime/project extension, ADOPTION guidance reference-vs-copy, LEGACY_MIGRATION skill, branch lifecycle rules, portable conformance kit at kit/). Local verification complete: 64/64 tests (conformance suite + kit; the kit run also found and fixed two legacy task contracts violating the task schema). Next: push, observe canonical CI, release v3.5.0 through the manual gate, finalize evidence, then migrate the AIOS2 adopter to 3.5.0 and apply the kit there.
 
 # Handoff
