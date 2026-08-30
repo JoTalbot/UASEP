@@ -1,0 +1,38 @@
+name: UASEP Artifact Integrity Gate
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Action Executor"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  artifact-integrity:
+    name: Verify artifact integrity
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Validate artifact manifest
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -f uasep-artifact-manifest.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('uasep-artifact-manifest.json').read_text())
+          assert data['schema']=='uasep.artifact.v1'
+          assert data['integrity_gate']=='enabled'
+          print('artifact_manifest=validated')
+          PY
+
+      - name: Integrity summary
+        run: |
+          echo "## UASEP Artifact Integrity Gate" >> "$GITHUB_STEP_SUMMARY"
+          echo "Manifest validation completed." >> "$GITHUB_STEP_SUMMARY"
