@@ -1,0 +1,61 @@
+name: UASEP Automated Release
+
+on:
+  workflow_run:
+    workflows: ["UASEP Release Gate"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: uasep-automated-release-main
+  cancel-in-progress: false
+
+jobs:
+  release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout verified commit
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          fetch-depth: 0
+
+      - name: Compute next patch tag
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          latest=$(git tag --list 'v*' --sort=-version:refname | head -n1 || true)
+          if [[ -z "$latest" ]]; then
+            next='v0.1.0'
+          else
+            version="${latest#v}"
+            IFS=. read -r major minor patch <<< "$version"
+            next="v${major}.${minor}.$((patch + 1))"
+          fi
+          echo "tag=$next" >> "$GITHUB_OUTPUT"
+          echo "Next release: $next"
+
+      - name: Ensure tag does not already exist
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git rev-parse "refs/tags/${{ steps.version.outputs.tag }}" >/dev/null 2>&1; then
+            echo "Release tag already exists: ${{ steps.version.outputs.tag }}"
+            exit 1
+          fi
+
+      - name: Create immutable tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api --method POST "repos/${{ github.repository }}/git/refs" -f "ref=refs/tags/${{ steps.version.outputs.tag }}" -f "sha=${{ github.event.workflow_run.head_sha }}"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "${{ steps.version.outputs.tag }}" --target "${{ github.event.workflow_run.head_sha }}" --generate-notes --verify-tag
