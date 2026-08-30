@@ -1,0 +1,39 @@
+name: UASEP Auto Repair
+
+# Autonomous CI failure analysis helper.
+# Captures failed conformance runs and creates diagnostics for repair cycles.
+
+on:
+  workflow_run:
+    workflows:
+      - UASEP Main Conformance
+    types:
+      - completed
+
+permissions:
+  actions: read
+  contents: read
+  issues: write
+
+jobs:
+  analyze-failure:
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect failure metadata
+        run: |
+          echo "Workflow: ${{ github.event.workflow_run.name }}" > ci-failure-report.txt
+          echo "Run ID: ${{ github.event.workflow_run.id }}" >> ci-failure-report.txt
+          echo "Commit: ${{ github.event.workflow_run.head_sha }}" >> ci-failure-report.txt
+
+      - name: Create repair report
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const body = `Automated CI failure detected.\n\nWorkflow: ${context.payload.workflow_run.name}\nRun ID: ${context.payload.workflow_run.id}\nCommit: ${context.payload.workflow_run.head_sha}`;
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: 'UASEP CI failure requires repair',
+              body
+            });
