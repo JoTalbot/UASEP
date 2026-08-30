@@ -13,6 +13,6 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@ca5c0c16c8f10f6e7c7d7b0c1ddc2c5d9b7a3e1f
         with:
           generate_release_notes: true
