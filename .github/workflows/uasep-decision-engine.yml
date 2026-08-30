@@ -18,7 +18,7 @@ jobs:
       - name: Collect controller state
         run: |
           echo "UASEP decision engine started"
-          echo "Evaluating repair, retry, stop, release state"
+          echo "Evaluating repair, retry, stop, release, review state"
 
       - name: Produce decision contract
         shell: bash
@@ -31,7 +31,7 @@ jobs:
             "decision": "review",
             "status": "ready",
             "source_workflow": "UASEP Autonomous Controller",
-            "allowed_actions": ["repair", "retry", "stop", "release"]
+            "allowed_actions": ["repair", "retry", "stop", "release", "review"]
           }
           EOF
           cat uasep-decision/decision.json
