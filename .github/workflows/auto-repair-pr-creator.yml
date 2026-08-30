@@ -1,0 +1,38 @@
+name: UASEP Auto Repair PR Creator
+
+on:
+  workflow_dispatch:
+    inputs:
+      repair_branch:
+        description: Repair branch name
+        required: true
+        default: repair/auto-generated
+      base_branch:
+        description: Base branch
+        required: true
+        default: main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  create-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare repair PR context
+        run: |
+          echo "Repair branch: ${{ inputs.repair_branch }}"
+          echo "Base branch: ${{ inputs.base_branch }}"
+          echo "Automatic PR creation stage prepared"
+
+      - name: Create repair marker
+        run: |
+          mkdir -p repair-state
+          echo "repair-requested" > repair-state/status.txt
+
+      - name: Upload repair state
+        uses: actions/upload-artifact@v4
+        with:
+          name: repair-pr-state
+          path: repair-state/status.txt
