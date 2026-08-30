@@ -1,7 +1,8 @@
 name: UASEP Main Conformance
 
 # Technical maintenance: keep canonical CI execution automatic.
-# Runs on main pushes and scheduled drift checks.
+# Runs on main pushes, scheduled drift checks, and manual dispatch.
+# Workflow reindex touch: ensure GitHub Actions registers the workflow metadata.
 
 on:
   push:
