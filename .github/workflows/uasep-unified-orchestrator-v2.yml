@@ -55,7 +55,7 @@ jobs:
           PY
 
       - name: Publish orchestration contract
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         with:
           name: uasep-orchestration-contract
           path: uasep-orchestrator/orchestration.json
