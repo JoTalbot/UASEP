@@ -1,0 +1,25 @@
+name: UASEP Readiness Summary
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Final Audit
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  readiness:
+    name: Generate readiness summary
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare summary
+        run: |
+          echo "## UASEP Readiness Summary" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Final audit chain completed." >> "$GITHUB_STEP_SUMMARY"
+          echo "Review workflow results before release." >> "$GITHUB_STEP_SUMMARY"
