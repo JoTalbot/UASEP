@@ -1,0 +1,20 @@
+name: UASEP State Analyzer
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP State Store"]
+    types: [completed]
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  analyze-state:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Analyze stored state
+        run: |
+          echo "state_analyzer=ready"
+          echo "next_action=decision_review"
