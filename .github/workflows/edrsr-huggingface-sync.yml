@@ -1,0 +1,50 @@
+name: EDRSR → Hugging Face
+
+on:
+  workflow_dispatch:
+    inputs:
+      years:
+        description: "Years, comma-separated (for example: 2026 or 2024,2025,2026)"
+        required: true
+        default: "2026"
+  schedule:
+    # Run after the official daily EDRSR refresh window.
+    - cron: "30 4 * * *"
+
+permissions:
+  contents: read
+
+jobs:
+  sync:
+    name: Sync official EDRSR dataset
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        with:
+          python-version: "3.12"
+
+      - name: Install sync dependency
+        run: python -m pip install --disable-pip-version-check --no-input huggingface_hub
+
+      - name: Sync EDRSR archives
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_DATASET_REPO: ${{ vars.HF_DATASET_REPO }}
+          YEARS: ${{ inputs.years || '2026' }}
+        run: |
+          set -euo pipefail
+          test -n "$HF_TOKEN"
+          test -n "$HF_DATASET_REPO"
+          IFS=',' read -ra YEAR_LIST <<< "$YEARS"
+          for year in "${YEAR_LIST[@]}"; do
+            year="$(echo "$year" | xargs)"
+            test -n "$year"
+            python scripts/edrsr_sync.py --year "$year" --repo "$HF_DATASET_REPO"
+          done
