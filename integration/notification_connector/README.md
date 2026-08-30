@@ -1,20 +1,14 @@
 # UASEP Notification Connector
 
-## Purpose
+Event notification integration for automation workflows.
 
-Provide event notification integration for automation workflows.
+## Responsibilities
 
-## Flow
+- publish automation status events
+- deliver failure and recovery alerts
+- summarize executions
+- preserve notification evidence
 
-Event
-→ Notification Connector
-→ Delivery Channel
-→ Execution History
-→ Evidence
+## Safety
 
-## Capabilities
-
-- status notifications
-- failure alerts
-- automation events
-- execution summaries
+Notifications must not contain secrets or credentials. Delivery failures are recorded without blocking core state persistence unless policy explicitly requires delivery confirmation.
