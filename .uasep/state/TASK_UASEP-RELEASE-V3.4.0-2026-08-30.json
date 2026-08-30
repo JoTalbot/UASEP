@@ -1,0 +1,35 @@
+{
+  "id": "UASEP-RELEASE-V3.4.0-2026-08-30",
+  "objective": "Publish the first deliberate UASEP release (v3.4.0) through the manual release gate and verify the released artifact.",
+  "owner": "arena-ai-coding-agent",
+  "branch": "main",
+  "write_set": [
+    ".github/workflows/automated-release.yml",
+    ".github/dependabot.yml",
+    "release-readiness/",
+    ".uasep/state/",
+    ".uasep/evidence/",
+    "README.md"
+  ],
+  "dependencies": [
+    "UASEP-MAINT-M62-2026-08-30"
+  ],
+  "conflicts": [],
+  "acceptance": [
+    "Release gate is dispatched manually and completes successfully",
+    "Tag v3.4.0 points to the exact gated commit",
+    "GitHub release is published and non-draft",
+    "Release evidence is recorded in durable state"
+  ],
+  "risk": "LOW",
+  "verification": [
+    "GitHub Actions runs 33299034737 and 33299048999 succeeded",
+    "Tags API confirms v3.4.0 -> df12ee3",
+    "Release API confirms published release"
+  ],
+  "status": "DONE",
+  "evidence": [
+    ".uasep/evidence/EV-UASEP-RELEASE-V3.4.0-2026-08-30.json"
+  ],
+  "next_action": "Future releases: bump VERSION, merge Dependabot updates, then dispatch the release gate."
+}

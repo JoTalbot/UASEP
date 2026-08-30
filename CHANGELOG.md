@@ -11,6 +11,10 @@
 - Archived 456 non-normative C-cycle and retired-runtime documents to `docs/archive/`; `.uasep/` now contains only canonical durable state.
 - Rewrote the README to match the actual repository structure; added an MIT LICENSE and CODEOWNERS.
 - Added documentation-restraint rules to `protocol/SELF_MAINTENANCE.md`.
+- Released **v3.4.0** through the deliberate release flow (tag on the gated commit `df12ee3`).
+- Added Dependabot for the SHA-pinned actions (first update merged: actions/checkout v7.0.1).
+- Fixed the release-verification gap: events caused by `GITHUB_TOKEN` do not trigger workflows, so automated releases now verify tag and release target in-workflow.
+- Deleted five retired branches; unique histories preserved under `archive/*` tags.
 
 ## 3.4.0 — Runtime-free protocol hardening
 

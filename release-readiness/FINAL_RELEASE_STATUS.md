@@ -11,8 +11,8 @@
 
 1. A commit lands on `main` and the canonical conformance suite passes.
 2. A maintainer dispatches **UASEP Release Gate** on the commit to release.
-3. On gate success, **UASEP Automated Release** tags the verified commit with `v$(VERSION)` and creates the GitHub release.
-4. **UASEP Release Verification** confirms the published tag integrity.
+3. On gate success, **UASEP Automated Release** tags the verified commit with `v$(VERSION)`, creates the GitHub release, and verifies the tag and release target in-workflow (events caused by `GITHUB_TOKEN` do not trigger other workflows, so the automated path cannot rely on the `release` event).
+4. **UASEP Release Verification** additionally confirms tag integrity for releases published by other means (manual PAT/API publishes).
 
 ## Release Rule
 

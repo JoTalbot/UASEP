@@ -1,0 +1,25 @@
+{
+  "evidence_id": "EV-UASEP-RELEASE-V3.4.0-2026-08-30",
+  "task_id": "UASEP-RELEASE-V3.4.0-2026-08-30",
+  "timestamp": "2026-08-30T07:30:00Z",
+  "agent": "arena-ai-coding-agent",
+  "operation": "First deliberate release of UASEP v3.4.0 through the manual release gate",
+  "scope": "release-readiness/, .github/workflows/automated-release.yml, durable state",
+  "result": "VERIFIED",
+  "source": "GitHub Actions runs 33299034737 (gate) and 33299048999 (automated release), tags/releases API",
+  "observed": "UASEP Release Gate run 33299034737 dispatched manually on main and completed successfully (full conformance suite, 56 passed). UASEP Automated Release run 33299048999 then created tag v3.4.0 on verified commit df12ee3 and published the GitHub release https://github.com/JoTalbot/UASEP/releases/tag/v3.4.0. Tag integrity verified via the tags API (v3.4.0 -> df12ee3, the exact gated commit). Defect found and fixed: the release event caused by GITHUB_TOKEN does not trigger other workflows, so release-verification.yml never runs for automated releases; in-workflow tag and release-target verification steps were added to automated-release.yml for all future releases.",
+  "commit": "df12ee3",
+  "changed_files": [
+    ".github/workflows/automated-release.yml",
+    "release-readiness/FINAL_RELEASE_STATUS.md",
+    "release-readiness/UASEP_RELEASE_CHECKLIST.md",
+    ".github/dependabot.yml"
+  ],
+  "verification": "Gate run 33299034737 success; automated-release run 33299048999 success; tags API confirms v3.4.0 -> df12ee3; release API confirms published, non-draft release at the verified target",
+  "limitations": [
+    "release-verification.yml itself did not run for v3.4.0 because events caused by GITHUB_TOKEN do not trigger workflows; integrity was verified directly via the API instead, and automated releases now verify in-workflow"
+  ],
+  "related": [
+    "EV-UASEP-MAINT-M62-2026-08-30.json"
+  ]
+}

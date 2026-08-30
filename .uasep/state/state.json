@@ -20,6 +20,7 @@
     "Fresh-agent acceptance verified and recorded as EV-UASEP-ACCEPT-2026-08-28.",
     "Canonical conformance run #108 succeeded at commit ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec.",
     "M41 verification: canonical UASEP Main Conformance run #120 succeeded on commit bfb852e6d734b81256f930603c30cac68708c4a5.",
-    "M62 (2026-08-30): canonical CI repaired after checkout removal in 0926002; VERIFIED — local suite 54 passed and canonical UASEP Main Conformance run 33298430803 succeeded on commit 52a8911; evidence EV-UASEP-MAINT-M62-2026-08-30.json."
+    "M62 (2026-08-30): canonical CI repaired after checkout removal in 0926002; VERIFIED — local suite 54 passed and canonical UASEP Main Conformance run 33298430803 succeeded on commit 52a8911; evidence EV-UASEP-MAINT-M62-2026-08-30.json.",
+    "Release v3.4.0 published through the deliberate release flow: gate run 33299034737 and automated-release run 33299048999 succeeded; tag v3.4.0 -> df12ee3 verified. Evidence: EV-UASEP-RELEASE-V3.4.0-2026-08-30.json."
   ]
 }

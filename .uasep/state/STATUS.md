@@ -26,6 +26,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed M42: audited C81-C90 supplemental documentation against canonical runtime-free scope; no executable architecture drift found.
 - Completed M60-M61: canonical CI acceptance pass (run 33275234855) and durable-state reconciliation.
 - Completed M62 (2026-08-30): repaired the broken canonical conformance workflow, replaced echo-only workflows with real policy tests, minimized the workflow set to four, archived 456 non-normative documents to docs/archive/, reconciled README and root state files, added LICENSE and CODEOWNERS, and codified documentation restraint.
+- Released v3.4.0 (2026-08-30) through the deliberate release flow; merged Dependabot PR #66 (actions/checkout v7.0.1).
 - Current maintenance batches: COMPLETE. No active task.
 
 ## Evidence
@@ -44,6 +45,8 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - `protocol/` is normative; `AGENTS.md` is the mandatory project contract; `skills/` are reusable procedures; examples illustrate compliant behavior.
 - M62: the GitHub Actions workflow set is deliberately minimal (conformance, release-gate, automated-release, release-verification). Workflow policy is enforced by tests/conformance/test_workflow_policy.py, not by decorative workflows. Releases are deliberate: the gate is manual dispatch and automated release only fires after a passing gate.
 - M62: non-normative cycle documentation lives in docs/archive/ and never authorizes executable infrastructure.
+
+- Release v3.4.0: VERIFIED — gate run 33299034737, automated-release run 33299048999, tag v3.4.0 -> df12ee3, published release confirmed. Evidence: EV-UASEP-RELEASE-V3.4.0-2026-08-30.json.
 
 ## Next action
 
