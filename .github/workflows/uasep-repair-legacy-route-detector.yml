@@ -1,0 +1,23 @@
+name: UASEP Repair Legacy Route Detector
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Repair Status Gate
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  detect:
+    name: Detect legacy repair routes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Scan status
+        run: |
+          echo "Checking legacy repair routes"
+          echo "Expected route: Router -> Context -> Gate -> Patch -> PR -> Validation"
