@@ -1,0 +1,9 @@
+metrics:
+  automation_success_rate: true
+  repository_compliance_score: true
+  release_health: true
+  workflow_statistics: true
+
+outputs:
+  - dashboard
+  - reporting
