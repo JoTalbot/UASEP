@@ -1,0 +1,7 @@
+runtime_api:
+  enabled: true
+  endpoints:
+    - task
+    - status
+    - health
+  validation_required: true
