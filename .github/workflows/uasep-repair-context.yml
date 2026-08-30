@@ -1,0 +1,34 @@
+name: UASEP Repair Context
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Repair Router
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  context:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create shared repair context
+        run: |
+          mkdir -p repair-state
+          cat > repair-state/context.json <<EOF
+          {
+            "system": "UASEP",
+            "stage": "repair-context",
+            "status": "ready"
+          }
+          EOF
+
+      - name: Upload context artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: uasep-repair-context
+          path: repair-state/context.json
