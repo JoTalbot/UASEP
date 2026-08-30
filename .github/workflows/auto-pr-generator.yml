@@ -3,7 +3,7 @@ name: UASEP Auto PR Generator
 on:
   workflow_run:
     workflows:
-      - UASEP Auto Repair
+      - UASEP Auto Repair Orchestrator
     types:
       - completed
 
