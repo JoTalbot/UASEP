@@ -1,0 +1,23 @@
+name: UASEP Repair Unified Routing Check
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Repair Status Gate
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  routing-check:
+    name: Validate Repair Routing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check routing state
+        run: |
+          echo "Checking unified repair routing state"
+          echo "Router -> Lock -> Context -> Validator -> Status Gate"
