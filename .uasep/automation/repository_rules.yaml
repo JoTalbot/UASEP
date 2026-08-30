@@ -1,0 +1,25 @@
+rules:
+  ci:
+    required: true
+    checks:
+      - workflow_exists
+      - tests_enabled
+
+  release:
+    required: true
+    checks:
+      - versioning
+      - changelog
+      - release_notes
+
+  security:
+    required: true
+    checks:
+      - dependency_scan
+      - secret_scan
+
+  evidence:
+    required: true
+    checks:
+      - record_result
+      - preserve_artifacts
