@@ -1,6 +1,6 @@
 name: UASEP Auto Fix Cycle
 
-# Legacy compatibility controller. The canonical repair entrypoint is
+# Legacy compatibility controller. The canonical automated repair entrypoint is
 # UASEP Auto Repair Orchestrator; this workflow remains manually runnable.
 on:
   workflow_dispatch:
