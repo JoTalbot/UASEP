@@ -5,10 +5,10 @@
   "environment":"chat + GitHub-connected tools",
   "objective":"Maintain UASEP as a complete runtime-free operating protocol for AI agents working through chat and GitHub-connected tools.",
   "active_task":null,
-  "last_verified":"2026-08-29",
+  "last_verified":"2026-08-30",
   "next_best_actions":["Perform repository-native periodic conformance/drift audits.","Open a new maintenance batch only when a concrete defect, drift finding, or new acceptance requirement exists."],
   "active_tasks":[],
   "blockers":[],
-  "unknowns":["Historical search indexes may retain provenance from retired runtime/AIOS2 architecture."],
-  "evidence":["Fresh-agent acceptance verified and recorded as EV-UASEP-ACCEPT-2026-08-28.","Canonical conformance run #108 succeeded at commit ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec.","M21-M23 verification gate satisfied by runs #94 and #95.","M24-M30 verification gate satisfied by CI run #101 on commit 8f2998ecabe2a56ad3f2691d6a0cccbcf9d8e2ca.","M31-M40 verification gate satisfied by CI run #108 on commit ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec.","M41 verification: canonical UASEP Main Conformance run #120 succeeded on commit bfb852e6d734b81256f930603c30cac68708c4a5; version and CI-policy guards passed."]
+  "unknowns":["Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.","M43-M61 remain partially verified at the individual-item level because no dedicated pytest suite exists for every maintenance item."],
+  "evidence":["Fresh-agent acceptance verified and recorded as EV-UASEP-ACCEPT-2026-08-28.","Canonical conformance run #108 succeeded at commit ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec.","M21-M23 verification gate satisfied by runs #94 and #95.","M24-M30 verification gate satisfied by CI run #101 on commit 8f2998ecabe2a56ad3f2691d6a0cccbcf9d8e2ca.","M31-M40 verification gate satisfied by CI run #108 on commit ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec.","M41 verification: canonical UASEP Main Conformance run #120 succeeded on commit bfb852e6d734b81256f930603c30cac68708c4a5; version and CI-policy guards passed.","Fresh canonical UASEP Conformance run #651 succeeded on commit b342c83d50788868789adca19e273f4728c493ac; Runtime Validation run #295 also succeeded on the same commit."]
 }
