@@ -26,14 +26,10 @@ jobs:
           echo "Run ID: ${{ github.event.workflow_run.id }}" >> ci-failure-report.txt
           echo "Commit: ${{ github.event.workflow_run.head_sha }}" >> ci-failure-report.txt
 
-      - name: Create repair report
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const body = `Automated CI failure detected.\n\nWorkflow: ${context.payload.workflow_run.name}\nRun ID: ${context.payload.workflow_run.id}\nCommit: ${context.payload.workflow_run.head_sha}`;
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: 'UASEP CI failure requires repair',
-              body
-            });
+      - name: Create repair report issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "UASEP CI failure requires repair" \
+            --body "Automated CI failure detected.\n\nWorkflow: ${{ github.event.workflow_run.name }}\nRun ID: ${{ github.event.workflow_run.id }}\nCommit: ${{ github.event.workflow_run.head_sha }}"
