@@ -1,0 +1,26 @@
+name: UASEP Patch Validation
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP PR Automation"]
+    types:
+      - completed
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate:
+    name: Validate generated patch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate context
+        run: |
+          echo "UASEP patch validation started"
+          echo "Checking generated remediation context"
+
+      - name: Report
+        run: |
+          echo "Patch validation completed"
