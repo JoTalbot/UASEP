@@ -1,0 +1,21 @@
+name: UASEP PR Automation
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Remediation Engine"]
+    types: [completed]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  pr-automation:
+    name: Prepare PR automation context
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create automation report
+        run: |
+          echo "UASEP PR automation stage ready"
+          echo "Next: generate patch and open pull request"
