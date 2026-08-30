@@ -1,0 +1,8 @@
+{
+  "schema": "uasep.healing-state.v1",
+  "mode": "self-healing",
+  "status": "ready",
+  "attempts": 0,
+  "last_action": null,
+  "validation": "pending"
+}
