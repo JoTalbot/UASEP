@@ -1,0 +1,31 @@
+name: UASEP Repair State Manager
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Main Conformance
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  state:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect repair state
+        run: |
+          mkdir -p repair-state
+          echo "workflow=${{ github.event.workflow_run.name || 'manual' }}" > repair-state/state.txt
+          echo "run_id=${{ github.event.workflow_run.id || github.run_id }}" >> repair-state/state.txt
+          echo "sha=${{ github.event.workflow_run.head_sha || github.sha }}" >> repair-state/state.txt
+
+      - name: Upload repair state
+        uses: actions/upload-artifact@v4
+        with:
+          name: uasep-repair-state
+          path: repair-state/state.txt
