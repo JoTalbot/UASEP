@@ -1,0 +1,12 @@
+version: 1
+rollout:
+  status: initialized
+  processed_repositories: []
+  pending_repositories: []
+
+last_action:
+  type: bootstrap
+  result: completed
+
+verification:
+  state: PARTIALLY_VERIFIED
