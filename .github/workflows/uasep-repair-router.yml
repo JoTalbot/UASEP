@@ -1,5 +1,9 @@
 name: UASEP Repair Router
 
+# Canonical repair routing entrypoint.
+# Automatic failure routing is owned by UASEP Auto Repair Orchestrator.
+# This workflow remains available for explicit/manual routing requests.
+
 on:
   workflow_dispatch:
     inputs:
@@ -18,10 +22,11 @@ jobs:
     name: Route repair flow
     runs-on: ubuntu-latest
     steps:
-      - name: Build repair context
+      - name: Validate canonical route
         run: |
           echo "UASEP Repair Router started"
           echo "Source: ${{ inputs.source || 'manual' }}"
+          echo "Canonical automatic entrypoint: UASEP Auto Repair Orchestrator"
           echo "Single repair path enforced"
 
       - name: Select repair stages
