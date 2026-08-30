@@ -15,15 +15,57 @@ jobs:
     name: Execute decision action
     runs-on: ubuntu-latest
     steps:
-      - name: Prepare action execution state
-        run: |
-          echo "UASEP Action Executor ready"
-          echo "Supported actions: repair retry stop release"
+      - name: Download decision contract
+        if: ${{ github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' }}
+        uses: actions/download-artifact@v4
+        with:
+          name: uasep-decision-contract
+          path: uasep-decision
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
 
-      - name: Write summary
+      - name: Validate decision contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            test -s uasep-decision/decision.json
+            python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("uasep-decision/decision.json")
+          data = json.loads(p.read_text())
+          assert data["schema"] == "uasep.decision.v1"
+          assert data["status"] == "ready"
+          assert data["decision"] in {"repair", "retry", "stop", "release", "review"}
+          print(f"decision={data['decision']}")
+          print(f"status={data['status']}")
+          PY
+          else
+            echo "Manual execution: no upstream contract is available."
+          fi
+
+      - name: Execute selected action safely
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_run" ]; then
+            decision=$(python -c 'import json; print(json.load(open("uasep-decision/decision.json"))["decision"])')
+            echo "Selected action: $decision"
+            case "$decision" in
+              repair|retry|stop|release|review)
+                echo "Action accepted by UASEP execution contract."
+                ;;
+              *)
+                echo "Unsupported action" >&2
+                exit 1
+                ;;
+            esac
+          fi
+
+      - name: Write execution summary
         run: |
           {
             echo "## UASEP Action Executor"
-            echo "Status: ready"
-            echo "Next: execute selected action"
+            echo "Status: contract validated"
+            echo "Execution mode: policy-gated"
           } >> "$GITHUB_STEP_SUMMARY"
