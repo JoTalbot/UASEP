@@ -1,0 +1,21 @@
+version: 1
+name: UASEP Automation Manifest
+status: active
+
+repository_automation:
+  enabled: true
+  standards:
+    - ci
+    - release
+    - security
+    - health-check
+
+engines:
+  scanner: enabled
+  generator: enabled
+  verifier: enabled
+  orchestrator: enabled
+
+state:
+  evidence_required: true
+  verification_model: VERIFIED
