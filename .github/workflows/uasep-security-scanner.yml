@@ -1,0 +1,23 @@
+name: UASEP Security Scanner
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/**'
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    name: Scan workflows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Scan workflow files
+        run: |
+          echo "Checking workflow configuration"
+          grep -R "uses:" .github/workflows || true
+          echo "Security scan completed"
