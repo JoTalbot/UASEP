@@ -1,0 +1,7 @@
+adapter: github
+version: 1
+capabilities:
+  - repository_scan
+  - workflow_generation
+  - release_validation
+  - evidence_sync
