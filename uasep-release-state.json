@@ -1,8 +1,0 @@
-{
-  "schema": "uasep.release-state.v1",
-  "pipeline": "UASEP",
-  "status": "validated",
-  "decision": "success",
-  "execution": "success",
-  "release_gate": "passed"
-}
