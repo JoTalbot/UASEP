@@ -1,0 +1,27 @@
+name: UASEP Master Orchestrator
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["UASEP Main Conformance"]
+    types: [completed]
+
+jobs:
+  orchestrate:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'failure' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+
+    steps:
+      - name: Collect pipeline context
+        run: |
+          echo "UASEP master orchestration started"
+          echo "sha=${{ github.sha }}"
+          echo "run=${{ github.run_id }}"
+
+      - name: Generate orchestration summary
+        run: |
+          echo "## UASEP Master Orchestrator" >> $GITHUB_STEP_SUMMARY
+          echo "Repair pipeline coordination layer active" >> $GITHUB_STEP_SUMMARY
