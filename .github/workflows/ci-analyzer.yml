@@ -21,7 +21,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh run view ${{ github.event.workflow_run.id }} --log > ci.log || true
+          gh run view ${{ github.event.workflow_run.id }} --repo JoTalbot/UASEP --log > ci.log || true
           echo "UASEP CI FAILURE ANALYSIS" > analysis.txt
           if grep -qi "dependency\|pip\|package" ci.log; then
             echo "Category: dependency" >> analysis.txt
@@ -39,5 +39,6 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh issue create \
+            --repo JoTalbot/UASEP \
             --title "UASEP automated failure analysis" \
             --body "Automated classification completed. Check CI logs for repair action."
