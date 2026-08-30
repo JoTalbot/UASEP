@@ -1,0 +1,23 @@
+name: UASEP Repair Status Gate
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Repair State Validator
+    types:
+      - completed
+
+permissions:
+  contents: read
+  actions: read
+
+jobs:
+  status-gate:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate repair status
+        run: |
+          echo "UASEP repair status: READY"
+          echo "Next stage: patch and validation flow"
