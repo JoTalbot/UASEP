@@ -1,0 +1,23 @@
+name: UASEP Repository Health Check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Repository audit
+        run: |
+          echo "UASEP repository health audit"
+          test -f README.md
+          test -d .github/workflows || true
+          echo "Audit completed"
