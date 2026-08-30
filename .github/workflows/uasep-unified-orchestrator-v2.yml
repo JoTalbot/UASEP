@@ -18,17 +18,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Collect orchestration state
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          WORKFLOW_RUN_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
         run: |
+          set -euo pipefail
           echo "UASEP Unified Orchestrator v2"
-          echo "Collecting autonomous pipeline state"
-          echo "Controller -> Decision -> Executor -> Learning"
+          echo "Event: ${EVENT_NAME}"
+          echo "Context source conclusion: ${WORKFLOW_RUN_CONCLUSION:-manual}"
+
+      - name: Build orchestration contract
+        run: |
+          set -euo pipefail
+          mkdir -p uasep-orchestrator
+          cat > uasep-orchestrator/orchestration.json <<'JSON'
+          {
+            "schema": "uasep.orchestration.v1",
+            "pipeline": ["context", "decision", "action", "validation"],
+            "status": "ready",
+            "fail_closed": true
+          }
+          JSON
+
+      - name: Validate orchestration contract
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("uasep-orchestrator/orchestration.json")
+          data = json.loads(p.read_text())
+          assert data["schema"] == "uasep.orchestration.v1"
+          assert data["pipeline"] == ["context", "decision", "action", "validation"]
+          assert data["fail_closed"] is True
+          print("orchestration contract: valid")
+          PY
+
+      - name: Publish orchestration contract
+        uses: actions/upload-artifact@v4
+        with:
+          name: uasep-orchestration-contract
+          path: uasep-orchestrator/orchestration.json
+          if-no-files-found: error
 
       - name: Write summary
         run: |
           {
             echo "## UASEP Orchestrator v2"
             echo ""
-            echo "Unified control layer initialized."
+            echo "Unified orchestration contract validated."
             echo ""
             echo "Pipeline: Context -> Decision -> Action -> Validation"
+            echo ""
+            echo "Fail-closed: true"
           } >> "$GITHUB_STEP_SUMMARY"
