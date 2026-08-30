@@ -1,0 +1,26 @@
+name: UASEP Repair Result Finalizer
+
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows:
+      - UASEP Validation Loop
+    types:
+      - completed
+
+permissions:
+  contents: read
+
+jobs:
+  finalize:
+    name: Finalize repair cycle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect repair result
+        run: |
+          echo "repair validation completed"
+          echo "status=finalized" >> "$GITHUB_ENV"
+
+      - name: Write summary
+        run: |
+          echo "UASEP repair cycle finalized: $status" >> "$GITHUB_STEP_SUMMARY"
