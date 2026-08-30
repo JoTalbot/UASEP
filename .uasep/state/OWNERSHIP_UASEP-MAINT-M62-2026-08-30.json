@@ -17,8 +17,8 @@
   ],
   "claim_time": "2026-08-30 UTC",
   "expected_completion": "Same session: CI repair, workflow minimization, documentation archive, and durable-state reconciliation",
-  "status": "ACTIVE",
+  "status": "RELEASED",
   "last_refresh": "2026-08-30 UTC",
   "transfer_to": null,
-  "release_reason": null
+  "release_reason": "M62 complete: CI repaired, workflows minimized, documentation archived, durable state synchronized; canonical CI acceptance observed (run 33298430803)."
 }

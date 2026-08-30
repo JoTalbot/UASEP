@@ -29,11 +29,11 @@ Adopted; documentation-first protocol hardening is complete for the current scop
 - M31-M40 maintenance verification gate is satisfied by canonical CI run #108 at commit `ec3cef1e8ec1aac01dd07c66218eeee88a9d50ec`.
 - M41 added conformance guards that bind `VERSION` to durable protocol version and protect the canonical workflow's read-only, main-bounded checkout policy; run #120 succeeded at commit `bfb852e6d734b81256f930603c30cac68708c4a5`.
 - M42 audited supplemental C81-C90 documentation; no executable runtime drift was found. Documentation-scope ambiguity is recorded as a maintenance finding.
-- M62 (2026-08-30) repaired the canonical conformance workflow (checkout and setup-python had been removed by commit `0926002`, leaving the CI unable to run tests), replaced brittle string invariants with behavioral YAML-parsed checks, reduced the workflow set from 91 to 4 real workflows with policy enforced by `tests/conformance/test_workflow_policy.py`, removed nine orphaned root automation-engine state files, archived 456 non-normative documents to `docs/archive/`, rewrote the README to match reality, and added LICENSE and CODEOWNERS. Local conformance suite: 54 passed.
+- M62 (2026-08-30) repaired the canonical conformance workflow (checkout and setup-python had been removed by commit `0926002`, leaving the CI unable to run tests), replaced brittle string invariants with behavioral YAML-parsed checks, reduced the workflow set from 91 to 4 real workflows with policy enforced by `tests/conformance/test_workflow_policy.py`, removed nine orphaned root automation-engine state files, archived 456 non-normative documents to `docs/archive/`, rewrote the README to match reality, and added LICENSE and CODEOWNERS. Local conformance suite: 54 passed; canonical UASEP Main Conformance run 33298430803 succeeded on commit 52a8911.
 
 ## Unknown
 - Historical search indexes may retain provenance from retired runtime/AIOS2 architecture.
-- Canonical GitHub Actions acceptance of the M62 batch is pending observation; see `.uasep/evidence/EV-UASEP-MAINT-M62-2026-08-30.json` for the recorded state at push time.
+- (resolved) Canonical CI acceptance of the M62 batch was observed: run 33298430803 succeeded on commit 52a8911; see `.uasep/evidence/EV-UASEP-MAINT-M62-2026-08-30.json`.
 
 ## Next best actions
 1. Perform repository-native periodic conformance/drift audits.

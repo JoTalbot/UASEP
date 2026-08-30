@@ -32,9 +32,9 @@
     "python -m pytest tests/conformance (54 tests) green locally at every commit of the batch",
     "Canonical UASEP Main Conformance run observed green on main after the batch is pushed"
   ],
-  "status": "PARTIALLY_VERIFIED",
+  "status": "DONE",
   "evidence": [
     ".uasep/evidence/EV-UASEP-MAINT-M62-2026-08-30.json"
   ],
-  "next_action": "Push the batch to main, observe the canonical conformance run, then update this contract, the evidence record, and the handoff with the observed result."
+  "next_action": "Return to periodic conformance/drift audits; open another maintenance task only for a concrete finding or new requirement."
 }

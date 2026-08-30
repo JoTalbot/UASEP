@@ -35,7 +35,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - M60 verification: VERIFIED by successful GitHub Actions run 33275234855.
 - M61 reconciliation: VERIFIED by durable state update after CI acceptance.
 - M62 finding: VERIFIED — commit 0926002 had removed checkout/setup-python from the canonical conformance workflow, so the canonical CI could not execute the test suite (local run: 1 failed, 43 passed). The runs recorded earlier as "canonical acceptance" (#651, #295) exercised only trivial file-existence/echo workflows that M62 removed.
-- M62 repair: VERIFIED locally — python -m pytest tests/conformance: 54 passed after the repair batch. Canonical CI acceptance of the pushed batch: see EV-UASEP-MAINT-M62-2026-08-30.json.
+- M62 repair: VERIFIED — local conformance suite 54 passed, and canonical UASEP Main Conformance run 33298430803 succeeded on commit 52a8911 (job log: '54 passed'). Evidence: EV-UASEP-MAINT-M62-2026-08-30.json.
 
 ## Decisions
 
