@@ -22,6 +22,12 @@ jobs:
     name: Validate main
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout canonical main
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: main
+          fetch-depth: 1
+
       - name: Show environment diagnostics
         run: |
           python --version || true

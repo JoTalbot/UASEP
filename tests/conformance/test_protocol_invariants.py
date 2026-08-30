@@ -90,10 +90,10 @@ def test_version_file_matches_durable_protocol_version():
 
 def test_canonical_workflow_is_read_only_and_main_bounded():
     workflow = _read(".github/workflows/conformance.yml")
-    assert "permissions:\n  contents: read" in workflow
-    assert "uses: actions/checkout@v4" in workflow
+    assert "uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09" in workflow
     assert "ref: main" in workflow
     assert "fetch-depth: 1" in workflow
+    assert "permissions:\n  contents: read" in workflow
     assert "contents: write" not in workflow
 
 
