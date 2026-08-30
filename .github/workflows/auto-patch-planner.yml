@@ -1,0 +1,34 @@
+name: UASEP Auto Patch Planner
+
+on:
+  workflow_run:
+    workflows:
+      - UASEP CI Analyzer
+    types:
+      - completed
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  generate-plan:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate repair plan
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Automated repair planning triggered" > repair-plan.md
+          echo "Source workflow: ${{ github.event.workflow_run.name }}" >> repair-plan.md
+          echo "Run ID: ${{ github.event.workflow_run.id }}" >> repair-plan.md
+          echo "Next step: inspect failure classification and prepare patch" >> repair-plan.md
+
+      - name: Create repair issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "UASEP automated patch plan" \
+            --body "A repair plan was generated automatically from CI analysis."
