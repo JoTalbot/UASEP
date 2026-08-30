@@ -6,7 +6,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 
 ## Phase
 
-- Phase: MAINTENANCE (M63, v3.5.0)
+- Phase: ADOPTED
 
 ## Current task
 
@@ -28,7 +28,7 @@ Maintain UASEP as a complete runtime-free operating protocol for AI agents worki
 - Completed M62 (2026-08-30): repaired the broken canonical conformance workflow, replaced echo-only workflows with real policy tests, minimized the workflow set to four, archived 456 non-normative documents to docs/archive/, reconciled README and root state files, added LICENSE and CODEOWNERS, and codified documentation restraint.
 - Released v3.4.0 (2026-08-30) through the deliberate release flow; merged Dependabot PR #66 (actions/checkout v7.0.1).
 - Completed M63 (2026-08-30): protocol v3.5.0 — uasep_runtime schema semantics, project_runtime/project extension, reference-vs-copy adoption guidance, LEGACY_MIGRATION skill, branch lifecycle rules, portable conformance kit.
-- Current maintenance batches: M63 in progress.
+- Current maintenance batches: M63 in progress (protocol v3.5.0); the reference project itself remains ADOPTED.
 
 ## Evidence
 
