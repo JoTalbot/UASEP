@@ -1,0 +1,21 @@
+{
+  "schema": "uasep.repository-registry.v1",
+  "repositories": [
+    {
+      "name": "JoTalbot/UASEP",
+      "role": "orchestrator",
+      "status": "active"
+    },
+    {
+      "name": "JoTalbot/AIOS2",
+      "role": "managed-project",
+      "status": "pending"
+    },
+    {
+      "name": "JoTalbot/AIOS",
+      "role": "managed-project",
+      "status": "pending"
+    }
+  ],
+  "orchestration": "enabled"
+}
