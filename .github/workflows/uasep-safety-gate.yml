@@ -6,6 +6,9 @@ on:
     workflows: ["UASEP Patch Planner"]
     types: [completed]
 
+permissions:
+  contents: read
+
 jobs:
   safety-gate:
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
@@ -20,7 +23,7 @@ jobs:
           echo "status=approved" > safety-gate-result.txt
 
       - name: Upload gate result
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: uasep-safety-gate-result
           path: safety-gate-result.txt
