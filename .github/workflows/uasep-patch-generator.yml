@@ -15,10 +15,9 @@ jobs:
     name: Generate remediation patch context
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
       - name: Generate patch context
         run: |
+          set -euo pipefail
           echo "UASEP Patch Generator"
           echo "Preparing remediation patch context"
           echo "status=ready" >> "$GITHUB_STEP_SUMMARY"
