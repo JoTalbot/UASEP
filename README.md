@@ -34,22 +34,43 @@ There is no UASEP daemon, CLI, Python runtime, scheduler, database, or agent sup
 ## Repository layout
 
 ```text
-AGENTS.md
-skills/
-docs/
-protocol/
+AGENTS.md                  mandatory agent contract
+protocol/                  normative protocol documents (CORE, CONFORMANCE, …)
+skills/                    reusable operational workflows
+docs/                      operating guides (connector, batching, maintenance)
+docs/archive/              non-normative archived documentation (provenance only)
+schemas/                   machine-readable JSON schemas
+examples/                  adoption, batch, recovery, and acceptance scenarios
+adapters/github/           GitHub connector guidance
+templates/github-actions/  CI/security/release workflow templates
+bootstrap/UASEP_BOOTSTRAP.md  universal session bootstrap
+release-readiness/         release checklist and status
+tests/conformance/         repository-native pytest conformance suite
 .uasep/
-  manifest.yaml
-  planning/
-  state/
-  knowledge/
-  evidence/
-bootstrap/
-examples/
-adapters/
-schemas/
-tests/
+  manifest.yaml            project manifest (protocol version, autonomy level)
+  state/                   durable status, task contracts, ownership, handoff
+  planning/                master plan, backlog, maintenance queue
+  knowledge/               decisions, failures, lessons
+  evidence/                machine-readable evidence records
+  decisions/               architecture decision records
+.github/workflows/         four real CI workflows (see below)
 ```
+
+## Continuous integration
+
+The workflow set is deliberately minimal — four workflows, all of which do
+real work:
+
+| Workflow | Trigger | Purpose |
+|---|---|---|
+| `conformance.yml` | push/PR to `main`, daily drift check | runs the pytest conformance suite |
+| `release-gate.yml` | manual dispatch | pre-release verification |
+| `automated-release.yml` | after a passing release gate | tags the verified commit and creates the release |
+| `release-verification.yml` | on release publish | verifies the published tag |
+
+Workflow policy (explicit permissions, full-SHA action pinning, write
+allowlist, no echo-only workflows, secret scan) is enforced by
+`tests/conformance/test_workflow_policy.py` — not by decorative workflows.
 
 ## Standard agent cycle
 
