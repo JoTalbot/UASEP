@@ -1,0 +1,13 @@
+module: template_applier
+version: 1
+
+capabilities:
+  - select_templates
+  - generate_workflows
+  - validate_changes
+  - update_evidence
+
+templates:
+  - ci-standard
+  - release-standard
+  - security-standard
